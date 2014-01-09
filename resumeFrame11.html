@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Orthographe grammaticale</title>
+<script type="text/javascript" src="jquery.js"></script>
+
+<script type="text/javascript" src="oGram11.js?version=43"></script>
+
+<style type="text/css"> 
+
+div.resume{
+ position: absolute;
+ top: 50px; left: 40px;
+ height: 500px; width: 900px;
+ background-color: #999999;
+ z-index: 10;}
+ 
+</style>
+
+<script type="text/javascript">
+
+function initResume() {
+  //console.log("init resumeFrame");
+  myFrames = window.frames;
+
+  $('p',myFrames['Resume2'].document).addClass('hidden');
+  $('.hidden',myFrames['Resume2'].document).hide();
+  continuer();
+  document.getElementById("Resume").style.visibility='visible';
+  document.getElementById("Resume2").style.visibility='visible';
+  document.getElementById("BinfoCompl").style.visibility='hidden';
+  myFrames['Resume2'].window.scrollTo(0,3000); //
+}
+
+</script>
+</head>
+<body onLoad="javascript:initResume();">
+<div class="resume" id="Resume" style="visibility:hidden">
+<iframe id="Resume2" name="Resume2" src="resumeP1A1.html?version=43" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=494 width=894 frameborder=0 scrolling = yes>
+</iframe>
+<button Id="Bcontinuer" style="position:absolute; top:530px; left:400px; z-index: 20; width:100px" onclick = "javascript:continuer();"  type="button">Continuer</button>
+<button Id="BinfoCompl" style="position:absolute; top:530px; left:600px; z-index: 20; width:250px" onclick = "javascript:infoCompl();"  type="button">Informations complémentaires</button></div>
+</body>

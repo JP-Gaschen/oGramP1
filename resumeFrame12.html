@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Orthographe grammaticale</title>
+<script type="text/javascript" src="jquery.js"></script>
+
+<script type="text/javascript" src="oGram12.js"></script>
+
+<style type="text/css"> 
+
+div.resume{
+ position: absolute;
+ top: 50px; left: 40px;
+ height: 500px; width: 900px;
+ background-color: #999999;
+ z-index: 10;}
+ 
+</style>
+
+<script type="text/javascript">
+
+function initLocal() {
+  //console.log("init resumeFrame");
+  myFrames = window.frames;
+
+  //console.log(myFrames.length)
+  $('p',myFrames['Resume2'].document).addClass('hidden');
+  $('.hidden',myFrames['Resume2'].document).hide();
+  continuer();
+  document.getElementById("Resume").style.visibility='visible';
+  myFrames['Resume2'].window.scrollTo(0,3000); //
+}
+
+</script>
+</head>
+<body onLoad="javascript:initLocal();">
+<div class="resume" id="Resume" style="visibility:hidden">
+<iframe id="Resume2" name="Resume2" src="resumeP1A2.html?version=43" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=494 width=894 frameborder=0 scrolling = yes>
+</iframe>
+<button Id="Bcontinuer" style="position:absolute; top:530px; left:400px; z-index: 20; width:100px" onclick = "javascript:continuer();"  type="button">Continuer</button>
+</div>
+</body>

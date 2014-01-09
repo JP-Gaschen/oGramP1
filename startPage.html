@@ -1,0 +1,304 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Orthographe grammaticale</title>
+<script type="text/javascript" src="jquery.js"></script>
+
+
+<style type="text/css"> 
+
+body,td,th {
+ font-family: Georgia, Times New Roman, Times, serif;
+}
+div.box1 {
+ position: absolute;
+ top: 190px; left: 20px;
+ height: 305px; width: 180px;
+ border-style : solid;
+ border-width : 30px;
+ border-color: #00ff00;
+ 
+ background-color: #ffffff;
+ z-index: 1;}
+
+div.box2 {
+ position: absolute;
+ top: 505px; left: 20px;
+ height: 100px; width: 460px;
+  border-style : solid;
+ border-width : 30px;
+ border-color: #ffe000;
+ background-color: #ffffff;
+ z-index: 1;}
+
+div.box2b {
+ position: absolute;
+ top: 602px; left: 60px;
+ height: 13px; width: 130px;
+ border-style : solid;
+ border-top : solid 30px white;
+ border-left : solid 30px #ffe000;
+ border-right : solid 30px #ffe000;
+ border-bottom: solid 30px white;
+ background-color: #ffffff;
+ z-index: 10;}
+
+div.box3 {
+ position: absolute;
+ top: 140px; left: 210px;
+ height: 355px; width: 270px;
+  border-style : solid;
+ border-width : 30px;
+ border-color: #9400d3;
+ background-color: #ffffff;
+ z-index: 1;}
+
+div.box4 {
+ position: absolute;
+ top: 615px; left: 20px;
+ height: 80px; width: 460px;
+ border-style : solid;
+ border-width : 30px;
+ border-color: #ff0000;
+ background-color: #ffffff;
+ z-index: 1;}
+
+div.box5 {
+ position: absolute;
+ top: 618px; left: 60px;
+ height: 30px; width: 130px;
+ 
+ border-top : solid 30px white;
+ border-left : solid 30px #ffe000;
+ border-right : solid 30px #ffe000;
+ border-bottom: solid 30px #ffe000;
+ background-color: #ffffff;
+ z-index: 11;}
+
+div.box6 {
+ position: absolute;
+ top: 20px; left: 20px;
+ height: 110px; width: 460px;
+ color: white;
+  border-style : solid;
+ border-width : 30px;
+ border-color: #a0522d;
+ background-color: #ffffff;
+ z-index: 1;}
+
+div.box6b {
+ position: absolute;
+ top: 40px; left: 477px;
+ height: 70px; width: 13px;
+ border-top : solid 30px #a0522d;
+ border-left : solid 30px white;
+ border-right : solid 30px white;
+ border-bottom: solid 30px #a0522d;
+ background-color: #ffffff;
+ z-index: 10;}
+
+div.box7 {
+ position: absolute;
+ top: 140px; left: 490px;
+ height: 465px; width: 470px;
+  border-style : solid;
+ border-width : 30px;
+ border-color: #ff8c00;
+ background-color: #ffffff;
+ z-index: 1;}
+
+div.box8 {
+ position: absolute;
+ top: 20px; left: 490px;
+ height: 110px; width: 470px;
+  border-style : solid;
+ border-width : 30px;
+ border-color: #0000ff;
+ background-color: #ffffff;
+ z-index: 1;}
+
+div.box9 {
+ position: absolute;
+ top: 40px; left: 493px;
+ height: 70px; width: 70px;
+ border-top : solid 30px #a0522d;
+ border-left : solid 30px white;
+ border-right : solid 30px #a0522d;
+ border-bottom: solid 30px #a0522d;
+ background-color: #ffffff;
+ z-index: 10;}
+
+div.box10 {
+ position: absolute;
+ top: 615px; left: 490px;
+ height: 80px; width: 235px;
+  border-style : solid;
+ border-width : 30px;
+ border-color: #000000;
+ background-color: #ffffff;
+ z-index: 1;}
+
+div.box11 {
+ position: absolute;
+ top: 615px; left: 725px;
+ height: 80px; width: 235px;
+ border-top : solid 30px #000000;
+ border-left : solid 30px white;
+ border-right : solid 30px #000000;
+ border-bottom: solid 30px #000000;;
+ background-color: #ffffff;
+ z-index: 1;}
+
+div.box12 {
+ position: absolute;
+ top: 140px; left: 20px;
+ height: 40px; width: 80px;
+  border-style : solid;
+ border-width : 30px;
+ border-color: #696969;
+ background-color: #ffffff;
+ z-index: 1;}
+
+div.box13 {
+ position: absolute;
+ top: 130px; left: 100px;
+ height: 60px; width: 110px;
+  border-style : solid;
+ border-width : 30px;
+ border-color: white;
+ background-color: #ffffff;
+ z-index: 1;}
+
+</style>
+
+<script type="text/javascript">
+var tops=[190,505,602,140,615,618,20,40,140,20,40,615,615,140,130];
+var lefts=[20,20,60,210,20,60,20,477,490,490,493,490,725,20,100];
+var heights=[305,100,13,355,80,30,110,70,465,110,70,80,80,40,60];
+var widths=[180,460,130,270,460,130,460,13,470,470,70,235,235,80,110];
+var top0 = [];
+var left0 = [];
+var cTop = [];
+var cLeft = [];
+var rayon = [];
+var phi0 = [];
+var gIntervalId;
+var growIndex = 0;
+function init() {
+
+  $('div').each(function (index) {
+    //top0[index] = parseInt(tops[index]+heights[index] + Math.random());
+    //left0[index] = parseInt(lefts[index]+widths[index] + Math.random());
+    top0[index]= 400;
+    left0[index]= 400;
+    var d = Math.sqrt(Math.pow(tops[index] - top0[index],2) + Math.pow(lefts[index] -left0[index],2));
+    //alert(d);
+    rayon[index] = d/2;
+    //alert(rayon[index]);
+    cTop[index] = (tops[index] + top0[index])/2;
+    cLeft[index] = (lefts[index] + left0[index])/2;
+    var sin0 =  -(top0[index] - cTop[index])/rayon[index];
+    phi0[index] = Math.asin(sin0);
+    //alert(phi0[index]);
+    var nHeight = parseInt(index);
+    var nWidth =  parseInt(index);
+  
+    $(this).css('top', top0[index].toString()+"px");
+    $(this).css('left', left0[index].toString()+"px");
+    $(this).css('height', nHeight.toString()+"px");
+    $(this).css('width', nWidth.toString()+"px");
+  });
+   gIntervalId = window.setInterval("grow()",40);
+
+}
+function grow() {
+  var nTop;
+  var nLeft;
+  var nHeight;
+  var nWidth;
+  var bw = 3;
+  growIndex +=1;
+  if (growIndex > 99) {window.clearInterval(gIntervalId);}
+  $('div').each(function (index) {
+    if (growIndex > 99) {
+      nTop = tops[index]; // + bw;
+      nLeft = lefts[index];// + bw;
+      nHeight = heights[index] - 2*bw;
+      nWidth = widths[index] - 2*bw;
+      nBW = bw;
+    } else {
+      var phi =  phi0[index] + (1 - 2*(index%2)) * 3 * growIndex*Math.PI/100;
+      var r = growIndex * rayon[index]/100.
+      nTop = parseInt(cTop[index]-r*Math.sin(phi));
+   // if (index==1) {alert(nTop);}
+      nLeft = parseInt(cLeft[index]+r*Math.cos(phi));
+      nHeight = parseInt((growIndex*heights[index])/100);
+      nWidth = parseInt((growIndex*widths[index])/100);
+      nBW = parseInt(50 + growIndex*(bw-50)/100);
+    }
+    $(this).css('top', nTop.toString()+"px");
+    $(this).css('left', nLeft.toString()+"px");
+    $(this).css('height', nHeight.toString()+"px");
+    $(this).css('width', nWidth.toString()+"px");
+    $(this).css('border-width', nBW.toString()+"px");
+  });
+    if (growIndex > 99) {var toId = setTimeout(displayFrame,1500);}
+}
+function displayFrame() {
+  prog= parent.ba.program;
+  parent.og.location = 'frame' + prog.toString() + '.html?version=43';
+}
+</script>
+</head>
+
+<body onLoad="javascript:init();">
+
+<div class="box1">
+</div>
+
+<div class="box2" id = "B2">
+</div>
+
+<div class="box2b">
+</div>
+
+<div class="box3">
+</div>
+
+<div class="box4">
+</div>
+
+<div class="box5">
+</div>
+
+<div class="box6">
+</div>
+
+<div class="box6b">
+</div>
+
+<div class="box7">
+</div>
+
+<div class="box8">
+</div>
+
+<div class="box9">
+</div>
+
+<div class="box10">
+</div>
+
+<div class="box11">
+</div>
+
+<div class="box12">
+</div>
+
+<div class="box13">
+</div>
+
+
+</body>
+</html>
