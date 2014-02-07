@@ -257,7 +257,7 @@ function continuer() {
       parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
     }
  
-  frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
+  setTimeout(frames['Resume2'].window.scrollTo(0,3000),100); //window.scrollTo(0,3000); //
 }
 
 function animate3 (id,widthF,leftD,widthD,duration) {
