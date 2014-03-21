@@ -9,12 +9,12 @@
 <style type="text/css"> 
 
 body,td,th {
- font-family: Georgia, Times New Roman, Times, serif;
+ font-family: "Comic Sans MS", sans-serif;
 }
 div.box1 {
  position: absolute;
- top: 190px; left: 20px;
- height: 305px; width: 180px;
+ top: 160px; left: 10px;
+ height: 260px; width: 180px;
  border-style : solid;
  border-width : 30px;
  border-color: #00ff00;
@@ -24,8 +24,8 @@ div.box1 {
 
 div.box2 {
  position: absolute;
- top: 505px; left: 20px;
- height: 100px; width: 460px;
+ top: 430px; left: 10px;
+ height: 90px; width: 475px;
   border-style : solid;
  border-width : 30px;
  border-color: #ffe000;
@@ -34,8 +34,8 @@ div.box2 {
 
 div.box2b {
  position: absolute;
- top: 602px; left: 60px;
- height: 13px; width: 130px;
+ top: 517px; left: 60px;
+ height: 10px; width: 130px;
  border-style : solid;
  border-top : solid 30px white;
  border-left : solid 30px #ffe000;
@@ -46,9 +46,9 @@ div.box2b {
 
 div.box3 {
  position: absolute;
- top: 140px; left: 210px;
- height: 355px; width: 270px;
-  border-style : solid;
+ top: 110px; left: 200px;
+ height: 310px; width: 285px;
+ border-style : solid;
  border-width : 30px;
  border-color: #9400d3;
  background-color: #ffffff;
@@ -56,8 +56,8 @@ div.box3 {
 
 div.box4 {
  position: absolute;
- top: 615px; left: 20px;
- height: 60px; width: 460px;
+ top: 530px; left: 10px;
+ height: 60px; width: 475px;
  border-style : solid;
  border-width : 30px;
  border-color: #ff0000;
@@ -170,13 +170,61 @@ div.box13 {
  background-color: #ffffff;
  z-index: 1;}
 
+div.bordnoir {
+ position: absolute;
+ top: 0px; left: 0px;
+ height: 760px; width: 1280px;
+ background-color: #000000;
+ z-index: 0;}
+ 
+ div.bordvert{
+ position: absolute;
+ top: 30px; left: 100px;
+ height: 700px; width: 1080px;
+ background-color: #00bb00;
+ z-index: 1;}
+ 
+ div.bordblanc {
+ position: absolute;
+ top: 50px; left: 50px;
+ height: 600px; width: 980px;
+ background-color: #ffffff;
+ z-index: 2;}
+ 
+ #verticalContainerG {
+   position:absolute;
+   top:330px;
+   width:700px;
+   left:-325px;
+   height:40px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    z-index: 5;
+}
+ #verticalContainerD {
+   position:absolute;
+   top:330px;
+   width:700px;
+   left:705px;
+   height:40px;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    z-index: 5;
+}
+
 </style>
 
 <script type="text/javascript">
-var tops=[180,495,592,130,605,608,10,30,130,10,30,605,605,130,120];
-var lefts=[20,20,60,210,20,60,20,477,490,490,493,490,725,20,100];
-var heights=[305,100,13,355,60,30,110,70,465,110,70,60,60,40,60];
-var widths=[180,460,130,270,460,130,460,13,470,470,70,235,235,80,110];
+var tops=[160,430,517,110,530,533,10,30,110,10,30,530,530,110,100];
+var lefts=[10,10,60,200,10,60,10,482,495,495,498,495,732,10,90];
+var heights=[260,90,10,310,60,30,90,50,410,90,50,60,60,40,60];
+var widths=[180,475,130,285,475,130,475,13,475,475,70,237,238,80,80];
 var top0 = [];
 var left0 = [];
 var cTop = [];
@@ -187,7 +235,9 @@ var gIntervalId;
 var growIndex = 0;
 function init() {
 
-  $('div').each(function (index) {
+  document.getElementById('titre').innerHTML = parent.ba.titre;
+
+  $('[class^="box"]').each(function (index) {
     //top0[index] = parseInt(tops[index]+heights[index] + Math.random());
     //left0[index] = parseInt(lefts[index]+widths[index] + Math.random());
     top0[index]= 400;
@@ -220,7 +270,7 @@ function grow() {
   var bw = 3;
   growIndex +=1;
   if (growIndex > 99) {window.clearInterval(gIntervalId);}
-  $('div').each(function (index) {
+  $('[class^="box"]').each(function (index) {
     if (growIndex > 99) {
       nTop = tops[index]; // + bw;
       nLeft = lefts[index];// + bw;
@@ -255,6 +305,11 @@ function displayFrame() {
 </head>
 
 <body onLoad="javascript:init();">
+
+<div class = "bordnoir">
+<div class = "bordvert">
+<div class = "bordblanc">
+
 
 <div class="box1">
 </div>
@@ -300,6 +355,23 @@ function displayFrame() {
 
 <div class="box13">
 </div>
+<img id="pointerimg" style="visibility:hidden;position:absolute;top:710px;left:500px;z-index:20" SRC="fing5_nw.gif" />
+
+</div>
+
+<div id='verticalContainerG'>
+<div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
+</div>
+<div id='verticalContainerD'>
+<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >Module 1  V 0.44</div>
+</div>
+<div style="position:absolute; top:5px; left:50px;width:980px;height:40px;">
+ <div Id ="titre" style="font-size:24px;vertical-align:middle;text-align:center"></div>
+</div>
+
+</div>
+</div>
+
 
 
 </body>

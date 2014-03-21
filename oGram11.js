@@ -15,7 +15,7 @@ var gIgnoreClick = false;
 var gInfoCompl = false;
 
 function init() {
-  parent.ba.document.getElementById("enCours").style.visibility="visible";
+
   var pc = parent.corpus;
   var pcd = pc.corData;
   pc.iData = 0;
@@ -26,6 +26,7 @@ function init() {
   gNbMotsOk = 0;
   gNbMotsKo = 0;
   
+  parent.og.document.getElementById("titre").innerHTML =  parent.ba.titre;
   //top.moveTo(0,0); 
   //top.resizeTo(1280,800); 
   
@@ -73,7 +74,7 @@ function rediffusePhrase() {
   
   gIgnoreClick = false;
 
-  //parent.boutons.document.getElementById('diffuse').innerHTML = "" + gNbPhrasesOk + " " + pcd[pc.iData][0].replace(/_/g,"-");;
+
   var pn = pc.iData + 1;
   var ds = "" + parent.ba.serie;
   while (ds.length < 2) {ds = "0" + ds;}
@@ -97,7 +98,7 @@ function continuer() {
     }
   } else {
     parent.ba.init();
-    parent.og.location = 'menu.html?version=43';
+    parent.og.location = 'menu.html?version=44';
     parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
   }
  
@@ -107,7 +108,7 @@ function infoCompl() {
   myframes = window.frames;
   gInfoCompl = true;
   document.getElementById("Resume2").style.visibility='hidden';
-  $('#Resume2').attr("src", "infoComplP1A1.html?version=43");
+  $('#Resume2').attr("src", "infoComplP1A1.html?version=44");
   document.getElementById("Bcontinuer").innerHTML = 'Continuer';
   document.getElementById("BinfoCompl").style.visibility='hidden';
   $('#Resume2').load(initResume);
@@ -120,7 +121,6 @@ function clear_all() {
     //alert(i);
     myframes[i].document.getElementById('Sp').innerHTML = "";
     }
-  parent.boutons.document.getElementById('diffuse').innerHTML = "";
 }
 
 function clearBGC() {
@@ -147,7 +147,7 @@ function auSuivant() {
   } else {
     
     if (parent.isDemo) {
-      setTimeout(parent.boutons.displayMenu,2000);
+      setTimeout(parent.boutons.showMenu,2000);
     } else {
         var nEx = pc.corData.length;
         var nOk = nEx - gNbRate;
@@ -157,10 +157,8 @@ function auSuivant() {
         parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
         parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
         parent.boutons.document.getElementById('Breecouter').style.visibility='hidden';
-        if (parent.ba.serie == 4)  parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=43";
-        else setTimeout(parent.boutons.displayMenu,2000);
-        //parent.ba.document.getElementById("enCours").style.visibility="visible";
-        //parent.ba.document.getElementById("enCours").innerHTML="Programme " +  parent.ba.program + " Activité " + parent.ba.activity + " Résumé ";
+        if (parent.ba.serie == 4)  parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=44";
+        else setTimeout(parent.boutons.showMenu,2000);
     }
   } 
 }

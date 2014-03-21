@@ -7,167 +7,195 @@
   <title></title>
   <script type="text/javascript" src="jquery.js"></script>
 <style type="text/css"> 
-.navigation {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  background: #000;
-  color: #fff;
-  width: 270px;
-  font: 1.2em "Trebuchet MS", sans-serif;
-  font-size: 1.2em;
-}
-.navigation a, .navigation span {
-  display: block;
-  padding: 4px 10px;
-  color: #fff;
-  text-decoration: none;
-  background: #000;
+body {
+  font-family: "Comic Sans MS", sans-serif;
 }
 
-.navigation .lev1Menu {
-  font-size: 1.1em;
-  background: #aaa ;
-  margin: 0;
-  padding: 0;
-  border-bottom: 1px solid #666;
+
+div.bordnoir {
+ position: absolute;
+ top: 0px; left: 0px;
+ height: 760px; width: 1280px;
+ background-color: #000000;
+ z-index: 0;}
+ 
+div.bordvert{
+ position: absolute;
+ top: 30px; left: 100px;
+ height: 700px; width: 1080px;
+ background-color: #00bb00;
+ z-index: 1;}
+ 
+  #verticalContainerG {
+   position:absolute;
+   top:330px;
+   width:700px;
+   left:-325px;
+   height:40px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    z-index: 5;
 }
-.navigation ul.lev1Menu a {
-  background: none;
-  padding: 3px 20px;
+ #verticalContainerD {
+   position:absolute;
+   top:330px;
+   width:700px;
+   left:705px;
+   height:40px;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    z-index: 5;
 }
-.navigation .lev2Menu {
-  font-size: 1.0em;
-  background: #bbb;
-  margin: 0;
-  padding: 0;
-  border-bottom: 1px solid #666;
-}
-.navigation ul.lev2Menu a {
-  background: none;
-  padding: 3px 40px;
-}
-.navigation .lev3Menu {
-  font-size: .9em;
-  background: #ccc;
-  margin: 0;
-  padding: 0;
-  border-bottom: 1px solid #666;
-}
-.navigation ul.lev3Menu a {
-  background: none;
-  padding: 3px 60px;
-}
-.navigation .hilighted a{ 
-  color: #f00;
-}
-.navigation .hilighted {
-  background: #0f0 ;
-}
+
+div.zoneMenu{
+ position: absolute;
+ top: 50px; left: 50px;
+ height: 600px; width: 980px;
+ background-color: #00ff00;
+ z-index: 2;}
+
 </style>
 
 <script type="text/javascript">
+var activites =[
+   [],
+   ["Reconnaître un nom, un déterminant, un adjectif"],
+   ["Se préparer: pluriel des noms"],
+   ["Accorder le nom avec son déterminant"],
+   ["Se préparer : accord des adjectifs"],
+   ["Accorder les adjectifs avec les noms"],
+   ["Maîtriser l'accord déterminant, nom, adjectif"],
+   ["Se tester"]
+  ];
+  
+  
+var series = [
+ [],
+ [
+  [],
+  ["startDemo(1,1,1);","Observer"],
+  ["startSerie(1,1,1,1);","Série 1"],
+  ["startSerie(1,1,2,1);","Série 2"],
+  ["startSerie(1,1,3,1);","Série 3"],
+  ["startSerie(1,1,4,1);","Série 4"],
+  ["startSerie(1,1,5,1);","Série 5"],
+  ["startSerie(1,1,6,1);","Série 6"],
+  ["displayResume(1,1);","Résumé"]
+ ],
+ [ 
+  [],
+  ["startDemo(1,2);","Observer"],
+  ["startSerie(1,2,1,1);","Série 1"],
+  ["startSerie(1,2,2,1);","Série 2"],
+  ["startSerie(1,2,3,1);","Série 3"],
+  ["startSerie(1,2,4,1);","Série 4"],
+  ["startSerie(1,2,5,1);","Série 5"],
+  ["startSerie(1,2,6,1);","Série 6"],
+  ["startSerie(1,2,7,1);","Série 7"],
+  ["startSerie(1,2,8,1);","Série 8"],
+  ["startSerie(1,2,9,1);","Série 9"],
+  ["startSerie(1,2,10,1);","Série 10"],
+  ["displayResume(1,2);","Résumé"]
+ ],
+ [ 
+  [],
+  ["startDemo(1,3,1);","Observer"],
+  ["startSerie(1,3,1,1,1);","S1 Expérimenter"],
+  ["startSerie(1,3,1,2,1);","S1 S'évaluer"],
+  ["startSerie(1,3,2,1,2);","S2 Expérimenter"],
+  ["startSerie(1,3,2,2,2);","S2 S'évaluer"],
+  ["startSerie(1,3,3,1,3);" ,"S3 Expérimenter"],
+  ["startSerie(1,3,3,2,3);","S3 S'évaluer"],
+  ["startSerie(1,3,4,1,4);","S4 Expérimenter"],
+  ["startSerie(1,3,4,2,4);","S4 S'évaluer"],
+  ["startSerie(1,3,5,1,5);","S5 Expérimenter"],
+  ["startSerie(1,3,5,2,5);","S5 S'évaluer"],
+  ["startSerie(1,3,6,1,6);","S6 Expérimenter"],
+  ["startSerie(1,3,6,2,6);","S6 S'évaluer"],
+  ["startSerie(1,3,7,1,7);","S7 Expérimenter"],
+  ["startSerie(1,3,7,2,7);","S7 S'évaluer"],
+  ["displayResume(1,3);" ,"Résumé"]
+ ],
+ [ 
+  [],
+  ["startDemo(1,4);","Observer"],
+  ["startSerie(1,4,1,1);","Série 1"],
+  ["startSerie(1,4,2,1);","Série 2"],
+  ["startSerie(1,4,3,1);","Série 3"],
+  ["startSerie(1,4,4,1);","Série 4"],
+  ["startSerie(1,4,5,1);","Série 5"],
+  ["startSerie(1,4,6,1);","Série 6"],
+  ["startSerie(1,4,7,1);","Série 7"],
+  ["startSerie(1,4,8,1);","Série 8"],
+  ["startSerie(1,4,9,1);","Série 9"],
+  ["startSerie(1,4,10,1);","Série 10"],
+  ["displayResume(1,4);","Résumé"]
+ ],
+ [ 
+  [],
+  ["startDemo(1,5,1);","Observer"],
+  ["startSerie(1,5,1,1,1);","S1 Expérimenter"],
+  ["startSerie(1,5,1,2,1);","S1 S'évaluer"],
+  ["startSerie(1,5,2,1,2);","S2 Expérimenter"],
+  ["startSerie(1,5,2,2,2);","S2 S'évaluer"],
+  ["startSerie(1,5,3,1,3);","S3 Expérimenter"],
+  ["startSerie(1,5,3,2,3);","S3 S'évaluer"],
+  ["startSerie(1,5,4,1,4);","S4 Expérimenter"],
+  ["startSerie(1,5,4,2,4);","S4 S'évaluer"],
+  ["startSerie(1,5,5,1,5);","S5 Expérimenter"],
+  ["startSerie(1,5,5,2,5);","S5 S'évaluer"],
+  ["startSerie(1,5,6,1,6);","S6 Expérimenter"],
+  ["startSerie(1,5,6,2,6);","S6 S'évaluer"],
+  ["displayResume(1,5);","Résumé"]
+ ],
+ [ 
+  [],
+  ["startDemo(1,6);","Observer"],
+  ["startSerie(1,6,1,1);","Série 1"],
+  ["startSerie(1,6,2,1);","Série 2"],
+  ["startSerie(1,6,3,1);","Série 3"],
+  ["startSerie(1,6,4,1);","Série 4"],
+  ["startSerie(1,6,5,1);","Série 5"],
+  ["startSerie(1,6,6,1);","Série 6"],
+  ["displayResume(1,6);","Résumé"]
+ ],
+ [ 
+  [],
+  ["startDemo(1,7);","Observer"],
+  ["startSerie(1,7,1,1);","Test A"],
+  ["startSerie(1,7,2,1);","Test B"],
+  ["displayResume(1,6);","Résumé"]
+ ]
+]
 $(window).load( function () {
  ////console.log("menu ready");
  });
  
 $(document).ready( function () {
-   
-    //alert("menu document ready");
-    // On cache les sous-menus :
-    
-    $(".navigation ul.lev1Menu").hide();
-    $(".navigation ul.lev2Menu").hide();
-    $(".navigation ul.lev3Menu").hide();
-    // On sélectionne tous les items de liste portant la classe "toggleLev1Menu"
+  var activity = parent.ba.activity;
+  //console.log("menu document ready");
+  if (activity > 0) {
+    parent.ba.activity = 0;
+    page2(activity);
+  } else {
+    var txt = "<div style='position:absolute; left:50px; font-size:32px; width:800px'>";
+    var tPos;
+    for (var i=1; i<activites.length; i++)  {
+      tPos = 50 + 60*i;
+    //<a href="#" onclick="dosomething(); return(false);">Some text here</a>
 
-    // et on remplace l'élément span qu'ils contiennent par un lien :
-    $(".navigation li.toggleLev1Menu span.lev1").each( function () {
-        // On stocke le contenu du span :
-        var TexteSpan = $(this).text();
-        //alert("1 " + TexteSpan);
-        $(this).replaceWith('<a class="lev1" href="" title="Afficher les activités">' + TexteSpan + '<\/a>') ;
-    } ) ;
-    $(".navigation li.toggleLev2Menu span.lev2").each( function () {
-        // On stocke le contenu du span :
-        var TexteSpan = $(this).text();
-        //alert("2 " + TexteSpan);
-        $(this).replaceWith('<a class="lev2" href="" title="Afficher les séries">' + TexteSpan + '<\/a>') ;
-    } ) ;
-    $(".navigation li.toggleLev3Menu span.lev3").each( function () {
-        // On stocke le contenu du span :
-        var TexteSpan = $(this).text();
-        //alert("1 " + TexteSpan);
-        $(this).replaceWith('<a class="lev1" href="" title="Afficher les sous-séries">' + TexteSpan + '<\/a>') ;
-    } ) ;
-    // On modifie l'évènement "click" sur les liens dans les items de liste
-    // qui portent la classe "toggleLev1Menu" :
-    $(".navigation li.toggleLev1Menu > a").click( function () {
-        //alert($(this));
-        // Si le sous-menu était déjà ouvert, on le referme :
-        if ($(this).next("ul.lev1Menu:visible").length != 0) {
-            $(this).next("ul.lev1Menu").slideUp("normal", function () {
-             $(this).parent().removeClass("open") });
-        }
-        // Si le sous-menu est caché, on ferme les autres et on l'affiche :
-        else {
-            $(".navigation ul.lev1Menu").slideUp("normal", function () {
-             $(this).parent().removeClass("open") });
-            $(this).next("ul.lev1Menu").slideDown("normal", function () {
-             $(this).parent().addClass("open") });
-        }
-        // On empêche le navigateur de suivre le lien :
-        return false;
-    });    
-    $(".navigation li.toggleLev2Menu > a").click( function () {
-        // Si le sous-menu était déjà ouvert, on le referme :
-        if ($(this).next("ul.lev2Menu:visible").length != 0) {
-            $(this).next("ul.lev2Menu").slideUp("normal", function () {
-             $(this).parent().removeClass("open") } );
-        }
-        // Si le sous-menu est caché, on ferme les autres et on l'affiche :
-        else {
-            $(".navigation ul.lev2Menu").slideUp("normal", function () {
-             $(this).parent().removeClass("open")});
-            $(this).next("ul.lev2Menu").slideDown("normal", function () {
-             $(this).parent().addClass("open") });
-        }
-        // On empêche le navigateur de suivre le lien :
-        return false;
-    });    
-    $(".navigation li.toggleLev3Menu > a").click( function () {
-        //alert($(this));
-        // Si le sous-menu était déjà ouvert, on le referme :
-        if ($(this).next("ul.lev3Menu:visible").length != 0) {
-            $(this).next("ul.lev3Menu").slideUp("normal", function () {
-             $(this).parent().removeClass("open") });
-        }
-        // Si le sous-menu est caché, on ferme les autres et on l'affiche :
-        else {
-            $(".navigation ul.lev3Menu").slideUp("normal", function () {
-             $(this).parent().removeClass("open") });
-            $(this).next("ul.lev3Menu").slideDown("normal", function () {
-             $(this).parent().addClass("open") });
-        }
-        // On empêche le navigateur de suivre le lien :
-        return false;
-    });    
-    $(".navigation li.toggleLev1Menu").show();
-    $(parent.ba.contentDocument).ready(function() {
-      //console.log("banner is ready in menu");
-      //console.log("menu init " + parent.ba.program);
-      if (parent.ba.program > 0) {
-        $(".navigation li.toggleLev1Menu:eq(" + (parent.ba.program - 1) + ") > a").click();
-        $(".navigation li.toggleLev1Menu:eq(" + (parent.ba.program - 1) + ")").find("li.toggleLev2Menu:eq(" + (parent.ba.activity - 1) + ") > a").click();
-        if (parent.ba.group > 0) {
-           $(".navigation li.toggleLev1Menu:eq(" + (parent.ba.program - 1) + ")").find("li.toggleLev2Menu:eq(" + (parent.ba.activity - 1) + ")").find("li.toggleLev3Menu:eq(" + (parent.ba.group - 1) + ") > a").click();
-        }
-      }
-      //$(".navigation li.leaf").addClass('hilighted');
-      //$(".navigation li.leaf").each(function () {console.log("------" + this.outerHTML);});
-      //$(".navigation").find('li.toggleLev1Menu:eq(0)').addClass('hilighted');
-    });
-    
+
+      txt += "<a href='#'' id='m"+i+"' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none;' onClick='page2("+i+")'>"+ activites[i]+ "</a>";
+    }
+  //console.log(txt);
+    document.getElementById('zm').innerHTML = txt + "</div>";
+  }
 
   
 
@@ -175,30 +203,55 @@ $(document).ready( function () {
 
 } ) ;
 
+function page2(activity) {
+  //console.log("page2 pour " + activity);
+  parent.og.document.getElementById("titre").innerHTML =  activites[activity];
+  
+  parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+  var txt = "<div style='position:absolute; left:50px; font-size:32px; width:800px'>";
+  var tPos;
+  var lPos;
+  //console.log(series[activity].length);
+  for (var i=1; i<series[activity].length; i++)  {
+    if (i < 10) {
+      tPos = 50*i + 10;
+      lPos = 50;
+    } else {
+      tPos = 50*i - 440;
+      lPos = 400;
+    }
+    txt += "<a href='#' style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; color:#000000;text-decoration: none;' onClick='"+series[activity][i][0]+";'>"+series[activity][i][1]+"</a>";
+  }
+  //console.log(txt);
+  document.getElementById('zm').innerHTML = txt + "</div>";
+}
+
 function startDemo(l,m,n,k,g) {
   parent.ba.program = l;
   parent.ba.activity = m;
   parent.ba.serie = n;
   parent.ba.group = 0;
   if (g) parent.ba.group = g;
-  parent.ba.document.getElementById("enCours").style.visibility="visible";
-  parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Observer ";
+
   parent.isDemo = true;
   parent.gPhase = 1;
+  
+  parent.ba.titre = "Démo pour " + parent.ba.activites[m];
+  
   if ((l==3 && m==4) || (l==4 && m==1)) {
-    var fname =  "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=43";
+    var fname =  "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=44";
   //console.log(fname);
-    parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=43";
-    parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Série " + n.toString() + " Observer ";
+    parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=44";
+    //parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Série " + n.toString() + " Observer ";
   } else {
-    parent.corpus.location = "corpus" + l.toString() + m.toString() + "Demo.html?version=43";
-    parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Observer ";
+    parent.corpus.location = "corpus" + l.toString() + m.toString() + "Demo.html?version=44";
+    //parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Observer ";
   }
   $(parent.corpus.contentDocument).ready(function() {
     //console.log("corpus is ready in menu demo");
-    //parent.og.location = "startPage" + l + ".html?version=43";
-  //parent.og.location = "frame" +  l + m + ".html?version=43";
-    //parent.boutons.location = "boutons.html?version=43"; 
+    //parent.og.location = "startPage" + l + ".html?version=44";
+  //parent.og.location = "frame" +  l + m + ".html?version=44";
+    //parent.boutons.location = "boutons.html?version=44"; 
   });
   
 }
@@ -210,9 +263,11 @@ function startSerie(l,m,n,k,g) {
     [""," Expérimenter"," S'évaluer"],
     [""," Expérimenter"," S'évaluer"],
     [""," Expérimenter"," S'évaluer"],
+    [""," Expérimenter"," S'évaluer"],
     [""," Expérimenter"," S'évaluer"]
   ];
-  parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + ".html?version=43";
+  
+  
   
   parent.ba.program = l;
   parent.ba.activity = m;
@@ -227,24 +282,26 @@ function startSerie(l,m,n,k,g) {
 
   parent.isDemo = false;
   //alert(parent.ba.activity);
-  parent.ba.document.getElementById("enCours").style.visibility="visible";
-  parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Série " + n.toString() + phaseTxt;
+  
+  parent.ba.titre = activites[m] + " Série " + n.toString() + phaseTxt;
+  parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + ".html?version=44";
   $(parent.corpus.contentDocument).ready(function() {
   //console.log("corpus is ready in menu serie");
-    //parent.og.location = "frame" +  l + m + ".html?version=43";
-    //parent.boutons.location = "boutons.html?version=43";
+    //parent.og.location = "frame" +  l + m + ".html?version=44";
+    //parent.boutons.location = "boutons.html?version=44";
   });
 
 }
 
 function displayResume(l,m) {
   //console.log("displayResume");
-  //parent.boutons.location = "boutons.html?version=43";
+  //parent.boutons.location = "boutons.html?version=44";
   parent.ba.program = l;
   parent.ba.activity = m;
-  parent.og.location = "resumeFrame" +  l + m + ".html?version=43";
-  parent.ba.document.getElementById("enCours").style.visibility="visible";
-  parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Résumé ";
+  parent.ba.titre = "Résumé pour " +  parent.ba.activites[m];
+  parent.og.location = "resumeFrame" +  l + m + ".html?version=44";
+  //parent.ba.document.getElementById("enCours").style.visibility="visible";
+  //parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Résumé ";
   
   parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
 
@@ -257,500 +314,27 @@ function init() {
 </script> 
 </head>
 <body >
-<br><br><br>
-<ul class="navigation">
-  <li class="toggleLev1Menu"><span class="lev1">Programme 1</span>
-    <ul class="lev1Menu">
-       <li class="toggleLev2Menu"><span class="lev2">Activité 1</span>
-        <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(1,1,1);" title="Observer">Observer</a></li>
-          <li><a href="#" onClick="startSerie(1,1,1,1);" title="Série 1">Série 1</a></li>
-          <li><a href="#" onClick="startSerie(1,1,2,1); "title="Série 2">Série 2</a></li>
-          <li><a href="#" onClick="startSerie(1,1,3,1);" title="Série 3">Série 3</a></li>
-          <li><a href="#" onClick="startSerie(1,1,4,1);" title="Série 4">Série 4</a></li>
-          <li><a href="#" onClick="displayResume(1,1);" title="Résumé">Résumé</a></li>
-        </ul>
-      </li>
-       <li class="toggleLev2Menu"><span class="lev2">Activité 2</span>
-        <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(1,2,1);" title="Observer">Observer</a></li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 1</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(1,2,1,1,1);" title="S1 Expérimenter">Expérimenter</a></li>
-            <li><a href="#" onClick="startSerie(1,2,1,2,1);" title="S1 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          
-          <li class="toggleLev3Menu"><span class="lev3">Série 2</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(1,2,2,1,2);" title="S2 Expérimenter">Expérimenter</a></li>
-            <li><a href="#" onClick="startSerie(1,2,2,2,2);" title="S2 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 3</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(1,2,3,1,3);" title="S3 Expérimenter">Expérimenter</a></li>
-            <li><a href="#" onClick="startSerie(1,2,3,2,3);" title="S3 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 4</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(1,2,4,1,4);" title="S4 Expérimenter">Expérimenter</a></li>
-            <li><a href="#" onClick="startSerie(1,2,4,2,4);" title="S4 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 5</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(1,2,5,1,5);" title="S5 Expérimenter">Expérimenter</a></li>
-            <li><a href="#" onClick="startSerie(1,2,5,2,5);" title="S5 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 6</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(1,2,6,1,6);" title="S6 Expérimenter">Expérimenter</a></li>
-            <li><a href="#" onClick="startSerie(1,2,6,2,6);" title="S6 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 7</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(1,2,7,1,7);" title="S7 Expérimenter">Expérimenter</a></li>
-            <li><a href="#" onClick="startSerie(1,2,7,2,7);" title="S7 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 8</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(1,2,8,1,8);" title="S8 Expérimenter">Expérimenter</a></li>
-            <li><a href="#" onClick="startSerie(1,2,8,2,8);" title="S8 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li><a href="#" onClick="displayResume(1,2);" title="Résumé">Résumé</a></li>
+<div class = "bordnoir">
+<div class = "bordvert">
 
-        </ul>
-      </li>
-      <li class="toggleLev2Menu"><span class="lev2">Activité 3</span>
-        <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(1,3,1);" title="Observer">Observer</a></li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 1</span>
-           <ul class="lev3Menu">
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,1,1,1);" title="S1 Expérimenter">Expérimenter</a></li>
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,1,2,1);" title="S1 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          
-          <li class="toggleLev3Menu"><span class="lev3">Série 2</span>
-           <ul class="lev3Menu">
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,2,1,2);" title="S2 Expérimenter">Expérimenter</a></li>
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,2,2,2);" title="S2 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 3</span>
-           <ul class="lev3Menu">
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,3,1,3);" title="S3 Expérimenter">Expérimenter</a></li>
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,3,2,3);" title="S3 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 4</span>
-           <ul class="lev3Menu">
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,4,1,4);" title="S4 Expérimenter">Expérimenter</a></li>
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,4,2,4);" title="S4 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 5</span>
-           <ul class="lev3Menu">
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,5,1,5);" title="S5 Expérimenter">Expérimenter</a></li>
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,5,2,5);" title="S5 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 6</span>
-           <ul class="lev3Menu">
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,6,1,6);" title="S6 Expérimenter">Expérimenter</a></li>
-            <li class="leaf"><a href="#" onClick="startSerie(1,3,6,2,6);" title="S6 S'évaluer">S'évaluer</a></li>
-           </ul>
-          </li>
-          <li class="leaf"><a href="#" onClick="displayResume(1,3);" title="Résumé">Résumé</a></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  
-  <li class="toggleLev1Menu"><span class="lev1">Programme 2</span>
-    <ul class="lev1Menu">
-       <li class="toggleLev2Menu"><span class="lev2">Activité 1</span>
-        <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(2,1,1);" title="Observer">Observer</a></li>
-          <li><a href="#" onClick="startSerie(2,1,1,1);" title="Série 1">Série 1</a></li>
-          <li><a href="#" onClick="startSerie(2,1,2,1);" title="Série 2">Série 2</a></li>
-          <li><a href="#" onClick="startSerie(2,1,3,1);" title="Série 3">Série 3</a></li>
-          <li><a href="#" onClick="startSerie(2,1,4,1);" title="Série 4">Série 4</a></li>
-          <li><a href="#" onClick="displayResume(2,1);" title="Résumé">Résumé</a></li>
-        </ul>
-       </li>
-       <li class="toggleLev2Menu"><span class="lev2">Activité 2</span>
-        <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(2,2,1);" title="Observer">Observer</a></li>
-          <li><a href="#" onClick="startSerie(2,2,1,1);" title="Série 1">Série 1</a></li>
-          <li><a href="#" onClick="startSerie(2,2,2,1);" title="Série 2">Série 2</a></li>
-          <li><a href="#" onClick="startSerie(2,2,3,1);" title="Série 3">Série 3</a></li>
-          <li><a href="#" onClick="startSerie(2,2,4,1);" title="Série 4">Série 4</a></li>
-          <li><a href="#" onClick="displayResume(2,2);" title="Résumé">Résumé</a></li>
-        </ul>
-      </li>
-      <li class="toggleLev2Menu"><span class="lev2">Activité 3</span>
-        <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(2,3,1);" title="Observer">Observer</a></li>
-          <li><a href="#" onClick="startSerie(2,3,1,1);" title="Série 1">Série 1</a></li>
-          <li><a href="#" onClick="startSerie(2,3,2,1);" title="Série 2">Série 2</a></li>
-          <li><a href="#" onClick="startSerie(2,3,3,1);" title="Série 3">Série 3</a></li>
-          <li><a href="#" onClick="startSerie(2,3,4,1);" title="Série 4">Série 4</a></li>
-          <li><a href="#" onClick="displayResume(2,3);" title="Résumé">Résumé</a></li>
-        </ul>
-      </li>
-      <li class="toggleLev2Menu"><span class="lev2">Activité 4</span>
-        <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(2,4,1,1);" title="Observer">Observer</a></li>
-          <li><a href="#" onClick="startSerie(2,4,1,1);" title="Série 1">Série 1</a></li>
-          <li><a href="#" onClick="startSerie(2,4,2,1);" title="Série 2">Série 2</a></li>
-          <li><a href="#" onClick="startSerie(2,4,3,1);" title="Série 3">Série 3</a></li>
-          <li><a href="#" onClick="startSerie(2,4,4,1);" title="Série 4">Série 4</a></li>
-          <li><a href="#" onClick="displayResume(2,4);" title="Résumé">Résumé</a></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li class="toggleLev1Menu"><span class="lev1">Programme 3</span>
-    <ul class="lev1Menu">
-       <li class="toggleLev2Menu"><span class="lev2">Activité 1</span>
-        <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(3,1);" title="Observer">Observer</a></li>
-          <li class="toggleLev3Menu"><span class="lev3">Expérimenter 1-6</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(3,1,1,1,1);" title="Série 1">Série 1</a></li>
-            <li><a href="#" onClick="startSerie(3,1,2,1,1);" title="Série 2">Série 2</a></li>
-            <li><a href="#" onClick="startSerie(3,1,3,1,1);" title="Série 3">Série 3</a></li>
-            <li><a href="#" onClick="startSerie(3,1,4,1,1);" title="Série 4">Série 4</a></li>
-            <li><a href="#" onClick="startSerie(3,1,5,1,1);" title="Série 5">Série 5</a></li>
-            <li><a href="#" onClick="startSerie(3,1,6,1,1);" title="Série 6">Série 6</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Expérimenter 7-12</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(3,1,7,1,2);" title="Série 7">Série 7</a></li>
-            <li><a href="#" onClick="startSerie(3,1,8,1,2);" title="Série 8">Série 8</a></li>
-            <li><a href="#" onClick="startSerie(3,1,9,1,2);" title="Série 9">Série 9</a></li>
-            <li><a href="#" onClick="startSerie(3,1,10,1,2);" title="Série 10">Série 10</a></li>
-            <li><a href="#" onClick="startSerie(3,1,11,1,2);" title="Série 11">Série 11</a></li>
-            <li><a href="#" onClick="startSerie(3,1,12,1,2);" title="Série 12">Série 12</a></li>
-           </ul>
-          </li>
-        </ul>
-      </li>
-      <li class="toggleLev2Menu"><span class="lev2">Activité 2</span>
-        <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(3,2);" title="Observer">Observer</a></li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 1-6</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(3,2,1,2,1);" title="Série 1">Série 1</a></li>
-            <li><a href="#" onClick="startSerie(3,2,2,2,1);" title="Série 2">Série 2</a></li>
-            <li><a href="#" onClick="startSerie(3,2,3,2,1);" title="Série 3">Série 3</a></li>
-            <li><a href="#" onClick="startSerie(3,2,4,2,1);" title="Série 4">Série 4</a></li>
-            <li><a href="#" onClick="startSerie(3,2,5,2,1);" title="Série 5">Série 5</a></li>
-            <li><a href="#" onClick="startSerie(3,2,6,2,1);" title="Série 6">Série 6</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 7-12</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(3,2,7,2,2);" title="Série 7">Série 7</a></li>
-            <li><a href="#" onClick="startSerie(3,2,8,2,2);" title="Série 8">Série 8</a></li>
-            <li><a href="#" onClick="startSerie(3,2,9,2,2);" title="Série 9">Série 9</a></li>
-            <li><a href="#" onClick="startSerie(3,2,10,2,2);" title="Série 10">Série 10</a></li>
-            <li><a href="#" onClick="startSerie(3,2,11,2,2);" title="Série 11">Série 11</a></li>
-            <li><a href="#" onClick="startSerie(3,2,12,2,2);" title="Série 12">Série 12</a></li>
-           </ul>
-          </li>
-        </ul>
-      </li>
-      <li class="toggleLev2Menu"><span class="lev2">Activité 3</span>
-        <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(3,3);" title="Observer">Observer</a></li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 1-6</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(3,3,1,2,1);" title="Série 1">Série 1</a></li>
-            <li><a href="#" onClick="startSerie(3,3,2,2,1);" title="Série 2">Série 2</a></li>
-            <li><a href="#" onClick="startSerie(3,3,3,2,1);" title="Série 3">Série 3</a></li>
-            <li><a href="#" onClick="startSerie(3,3,4,2,1);" title="Série 4">Série 4</a></li>
-            <li><a href="#" onClick="startSerie(3,3,5,2,1);" title="Série 5">Série 5</a></li>
-            <li><a href="#" onClick="startSerie(3,3,6,2,1);" title="Série 6">Série 6</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 7-12</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(3,3,7,2,2);" title="Série 7">Série 7</a></li>
-            <li><a href="#" onClick="startSerie(3,3,8,2,2);" title="Série 8">Série 8</a></li>
-            <li><a href="#" onClick="startSerie(3,3,9,2,2);" title="Série 9">Série 9</a></li>
-            <li><a href="#" onClick="startSerie(3,3,10,2,2);" title="Série 10">Série 10</a></li>
-            <li><a href="#" onClick="startSerie(3,3,11,2,2);" title="Série 11">Série 11</a></li>
-            <li><a href="#" onClick="startSerie(3,3,12,2,2);" title="Série 12">Série 12</a></li>
-           </ul>
-          </li>
-        </ul>
-      </li>
-      <li class="toggleLev2Menu"><span class="lev2">Activité 4</span>
-        <ul class="lev2Menu">
-         <li class="toggleLev3Menu"><span class="lev3">Série 1</span>
-          <ul class="lev3Menu">
-           <li><a href="#" onClick="startDemo(3,4,1,0,1);" title="S1 Observer">Observer</a></li>
-           <li><a href="#" onClick="startSerie(3,4,1,1,1);" title="S1 Expérimenter">Expérimenter</a></li>
-           <li><a href="#" onClick="startSerie(3,4,1,2,1);" title="S1 S'évaluer">S'évaluer</a></li>
-          </ul>
-         </li>
-         <li class="toggleLev3Menu"><span class="lev3">Série 2</span>
-          <ul class="lev3Menu">
-           <li><a href="#" onClick="startDemo(3,4,2,0,2);" title="S2 Observer">Observer</a></li>
-           <li><a href="#" onClick="startSerie(3,4,2,1,2);" title="S2 Expérimenter">Expérimenter</a></li>
-           <li><a href="#" onClick="startSerie(3,4,2,2,2);" title="S2 S'évaluer">S'évaluer</a></li>
-          </ul>
-         </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 3</span>
-          <ul class="lev3Menu">
-           <li><a href="#" onClick="startDemo(3,4,3,0,3);" title="S3 Observer">Observer</a></li>
-           <li><a href="#" onClick="startSerie(3,4,3,1,3);" title="S3 Expérimenter">Expérimenter</a></li>
-           <li><a href="#" onClick="startSerie(3,4,3,2,3);" title="S3 S'évaluer">S'évaluer</a></li>
-          </ul>
-         </li>
-         <li class="toggleLev3Menu"><span class="lev3">Série 4</span>
-          <ul class="lev3Menu">
-           <li><a href="#" onClick="startDemo(3,4,4,0,4);" title="S4 Observer">Observer</a></li>
-           <li><a href="#" onClick="startSerie(3,4,4,1,4);" title="S4 Expérimenter">Expérimenter</a></li>
-           <li><a href="#" onClick="startSerie(3,4,4,2,4);" title="S4 S'évaluer">S'évaluer</a></li>
-          </ul>
-         </li>
-         <li class="toggleLev3Menu"><span class="lev3">Série 5</span>
-          <ul class="lev3Menu">
-           <li><a href="#" onClick="startDemo(3,4,5,0,5);" title="S5 Observer">Observer</a></li>
-           <li><a href="#" onClick="startSerie(3,4,5,1,5);" title="S5 Expérimenter">Expérimenter</a></li>
-           <li><a href="#" onClick="startSerie(3,4,5,2,5);" title="S5 S'évaluer">S'évaluer</a></li>
-          </ul>
-         </li>
-         <li class="toggleLev3Menu"><span class="lev3">Série 6</span>
-          <ul class="lev3Menu">
-           <li><a href="#" onClick="startDemo(3,4,6,0,6);" title="S6 Observer">Observer</a></li>
-           <li><a href="#" onClick="startSerie(3,4,6,1,6);" title="S6 Expérimenter">Expérimenter</a></li>
-           <li><a href="#" onClick="startSerie(3,4,6,2,6);" title="S6 S'évaluer">S'évaluer</a></li>
-          </ul>
-         </li>
-          <li><a href="#" onClick="displayResume(3,4);" title="Résumé">Résumé</a></li>
-        </ul>
-      </li>
-      <li class="toggleLev2Menu"><span class="lev2">Activité 5</span>
-       <ul class="lev2Menu">
-        <li><a href="#" onClick="startDemo(3,5);" title="Observer">Observer</a></li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 1-6</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(3,5,1,2,1);" title="Série 1">Série 1</a></li>
-            <li><a href="#" onClick="startSerie(3,5,2,2,1);" title="Série 2">Série 2</a></li>
-            <li><a href="#" onClick="startSerie(3,5,3,2,1);" title="Série 3">Série 3</a></li>
-            <li><a href="#" onClick="startSerie(3,5,4,2,1);" title="Série 4">Série 4</a></li>
-            <li><a href="#" onClick="startSerie(3,5,5,2,1);" title="Série 5">Série 5</a></li>
-            <li><a href="#" onClick="startSerie(3,5,6,2,1);" title="Série 6">Série 6</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 7-12</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(3,5,7,2,2);" title="Série 7">Série 7</a></li>
-            <li><a href="#" onClick="startSerie(3,5,8,2,2);" title="Série 8">Série 8</a></li>
-            <li><a href="#" onClick="startSerie(3,5,9,2,2);" title="Série 9">Série 9</a></li>
-            <li><a href="#" onClick="startSerie(3,5,10,2,2);" title="Série 10">Série 10</a></li>
-            <li><a href="#" onClick="startSerie(3,5,11,2,2);" title="Série 11">Série 11</a></li>
-            <li><a href="#" onClick="startSerie(3,5,12,2,2);" title="Série 12">Série 12</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 13-18</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(3,5,13,2,3);" title="Série 13">Série 13</a></li>
-            <li><a href="#" onClick="startSerie(3,5,14,2,3);" title="Série 14">Série 14</a></li>
-            <li><a href="#" onClick="startSerie(3,5,15,2,3);" title="Série 15">Série 15</a></li>
-            <li><a href="#" onClick="startSerie(3,5,16,2,3);" title="Série 16">Série 16</a></li>
-            <li><a href="#" onClick="startSerie(3,5,17,2,3);" title="Série 17">Série 17</a></li>
-            <li><a href="#" onClick="startSerie(3,5,18,2,3);" title="Série 18">Série 18</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 19-24</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(3,5,19,2,4);" title="Série 19">Série 19</a></li>
-            <li><a href="#" onClick="startSerie(3,5,20,2,4);" title="Série 20">Série 20</a></li>
-            <li><a href="#" onClick="startSerie(3,5,21,2,4);" title="Série 21">Série 21</a></li>
-            <li><a href="#" onClick="startSerie(3,5,22,2,4);" title="Série 22">Série 22</a></li>
-            <li><a href="#" onClick="startSerie(3,5,23,2,4);" title="Série 23">Série 23</a></li>
-            <li><a href="#" onClick="startSerie(3,5,24,2,4);" title="Série 24">Série 24</a></li>
-           </ul
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li class="toggleLev1Menu"><span class="lev1">Programme 4</span>
-    <ul class="lev1Menu">
-       <li class="toggleLev2Menu"><span class="lev2">Activité 1</span>
-        <ul class="lev2Menu">
-          <li class="toggleLev3Menu"><span class="lev3">Série 1</span>
-            <ul class="lev3Menu">
-              <li><a href="#" onClick="startDemo(4,1,1,1,1);" title="S1 Observer">Observer</a></li>
-              <li><a href="#" onClick="startSerie(4,1,1,1,1);" title="S1 Expérimenter">Expérimenter</a></li>
-              <li><a href="#" onClick="startSerie(4,1,1,2,1);" title="S1 S'évaluer">S'évaluer</a></li>
-            </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 2</span>
-            <ul class="lev3Menu">
-              <li><a href="#" onClick="startDemo(4,1,2,1,2);" title="S2 Observer">Observer</a></li>
-              <li><a href="#" onClick="startSerie(4,1,2,1,2);" title="S2 Expérimenter">Expérimenter</a></li>
-              <li><a href="#" onClick="startSerie(4,1,2,2,2);" title="S2 S'évaluer">S'évaluer</a></li>
-            </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 3</span>
-            <ul class="lev3Menu">
-              <li><a href="#" onClick="startDemo(4,1,3,1,3);" title="S3 Observer">Observer</a></li>
-              <li><a href="#" onClick="startSerie(4,1,3,1,3);" title="S3 Expérimenter">Expérimenter</a></li>
-              <li><a href="#" onClick="startSerie(4,1,3,2,3);" title="S3 S'évaluer">S'évaluer</a></li>
-            </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 4</span>
-            <ul class="lev3Menu">
-              <li><a href="#" onClick="startDemo(4,1,4,1,4);" title="S4 Observer">Observer</a></li>
-              <li><a href="#" onClick="startSerie(4,1,4,1,4);" title="S4 Expérimenter">Expérimenter</a></li>
-              <li><a href="#" onClick="startSerie(4,1,4,2,4);" title="S4 S'évaluer">S'évaluer</a></li>
-            </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 5</span>
-            <ul class="lev3Menu">
-              <li><a href="#" onClick="startDemo(4,1,5,1,5);" title="S5 Observer">Observer</a></li>
-              <li><a href="#" onClick="startSerie(4,1,5,1,5);" title="S5 Expérimenter">Expérimenter</a></li>
-              <li><a href="#" onClick="startSerie(4,1,5,2,5);" title="S5 S'évaluer">S'évaluer</a></li>
-            </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">Série 6</span>
-            <ul class="lev3Menu">
-              <li><a href="#" onClick="startDemo(4,1,6,1,6);" title="S6 Observer">Observer</a></li>
-              <li><a href="#" onClick="startSerie(4,1,6,1,6);" title="S6 Expérimenter">Expérimenter</a></li>
-              <li><a href="#" onClick="startSerie(4,1,6,2,6);" title="S6 S'évaluer">S'évaluer</a></li>
-            </ul>
-          </li>
-          <li><a href="#" onClick="displayResume(4,1);" title="Résumé">Résumé</a></li>
-        </ul>
-        <li class="toggleLev2Menu"><span class="lev2">Activité 2</span>
-         <ul class="lev2Menu">
-           
-           <li><a href="#" onClick="startSerie(4,2,1,2);" title="Série 1">S'évaluer 1</a></li>
-           <li><a href="#" onClick="startSerie(4,2,2,2); "title="Série 2">S'évaluer 2</a></li>
-           <li><a href="#" onClick="startSerie(4,2,3,2);" title="Série 3">S'évaluer 3</a></li>
-           <li><a href="#" onClick="startSerie(4,2,4,2);" title="Série 4">S'évaluer 4</a></li>
-           <li><a href="#" onClick="startSerie(4,2,5,2);" title="Série 5">S'évaluer 5</a></li>
-           <li><a href="#" onClick="displayResume(4,2);" title="Résumé">Résumé</a></li>
-         </ul>
-      </li>
-      <li class="toggleLev2Menu"><span class="lev2">Activité 3</span>
-         <ul class="lev2Menu">
-           <li><a href="#" onClick="startDemo(4,3);" title="Observer">Observer</a></li>
-           <li><a href="#" onClick="startSerie(4,3,1,2);" title="Série 1">S'évaluer 1</a></li>
-           <li><a href="#" onClick="startSerie(4,3,2,2); "title="Série 2">S'évaluer 2</a></li>
-           <li><a href="#" onClick="startSerie(4,3,3,2);" title="Série 3">S'évaluer 3</a></li>
-           <li><a href="#" onClick="startSerie(4,3,4,2);" title="Série 4">S'évaluer 4</a></li>
-           <li><a href="#" onClick="startSerie(4,3,5,2);" title="Série 5">S'évaluer 5</a></li>
-           <li><a href="#" onClick="startSerie(4,3,6,2);" title="Série 6">S'évaluer 6</a></li>
-           <li><a href="#" onClick="startSerie(4,3,7,2);" title="Série 7">S'évaluer 7</a></li>
-           <li><a href="#" onClick="startSerie(4,3,8,2);" title="Série 8">S'évaluer 8</a></li>
-           <li><a href="#" onClick="displayResume(4,3);" title="Résumé">Résumé</a></li>
-         </ul>
-      </li>
-    </ul>
-  </li>
-  <li class="toggleLev1Menu"><span class="lev1">Programme 5</span>
-    <ul class="lev1Menu">
-       <li class="toggleLev2Menu"><span class="lev2">Activité 1</span>
-         <ul class="lev2Menu">
-           <li><a href="#" onClick="startDemo(5,1,1);" title="Observer">Observer</a></li>
-           <li><a href="#" onClick="startSerie(5,1,1,1);" title="Série 1">Expérimenter 1</a></li>
-           <li><a href="#" onClick="startSerie(5,1,2,1); "title="Série 2">Expérimenter 2</a></li>
-           <li><a href="#" onClick="startSerie(5,1,3,1);" title="Série 3">Expérimenter 3</a></li>
-           <li><a href="#" onClick="startSerie(5,1,4,1);" title="Série 4">Expérimenter 4</a></li>
-           <li><a href="#" onClick="displayResume(5,1);" title="Résumé">Résumé</a></li>
-         </ul>
-       </li>
-       <li class="toggleLev2Menu"><span class="lev2">Activité 2</span>
-         <ul class="lev2Menu">
-           <li><a href="#" onClick="startDemo(5,2,1);" title="Observer">Observer</a></li>
-           <li><a href="#" onClick="startSerie(5,2,1,2);" title="Série 1">S'évaluer 1</a></li>
-           <li><a href="#" onClick="startSerie(5,2,2,2); "title="Série 2">S'évaluer 2</a></li>
-           <li><a href="#" onClick="startSerie(5,2,3,2);" title="Série 3">S'évaluer 3</a></li>
-           <li><a href="#" onClick="startSerie(5,2,4,2);" title="Série 4">S'évaluer 4</a></li>
-           <li><a href="#" onClick="startSerie(5,2,5,2);" title="Série 1">S'évaluer 5</a></li>
-           <li><a href="#" onClick="startSerie(5,2,6,2); "title="Série 2">S'évaluer 6</a></li>
-           <li><a href="#" onClick="startSerie(5,2,7,2);" title="Série 3">S'évaluer 7</a></li>
-           <li><a href="#" onClick="startSerie(5,2,8,2);" title="Série 4">S'évaluer 8</a></li>
-           <li><a href="#" onClick="displayResume(5,2);" title="Résumé">Résumé</a></li>
-         </ul>
-      </li>
-      <li class="toggleLev2Menu"><span class="lev2">Activité 3</span>
-         <ul class="lev2Menu">
-           <li><a href="#" onClick="startDemo(5,3,1);" title="Observer">Observer</a></li>
-           <li class="toggleLev3Menu"><span class="lev3">S'évaluer 1-6</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(5,3,1,2,1);" title="Série 1">Série 1</a></li>
-            <li><a href="#" onClick="startSerie(5,3,2,2,1);" title="Série 2">Série 2</a></li>
-            <li><a href="#" onClick="startSerie(5,3,3,2,1);" title="Série 3">Série 3</a></li>
-            <li><a href="#" onClick="startSerie(5,3,4,2,1);" title="Série 4">Série 4</a></li>
-            <li><a href="#" onClick="startSerie(5,3,5,2,1);" title="Série 5">Série 5</a></li>
-            <li><a href="#" onClick="startSerie(5,3,6,2,1);" title="Série 6">Série 6</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 7-12</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(5,3,7,2,2);" title="Série 7">Série 7</a></li>
-            <li><a href="#" onClick="startSerie(5,3,8,2,2);" title="Série 8">Série 8</a></li>
-            <li><a href="#" onClick="startSerie(5,3,9,2,2);" title="Série 9">Série 9</a></li>
-            <li><a href="#" onClick="startSerie(5,3,10,2,2);" title="Série 10">Série 10</a></li>
-            <li><a href="#" onClick="startSerie(5,3,11,2,2);" title="Série 11">Série 11</a></li>
-            <li><a href="#" onClick="startSerie(5,3,12,2,2);" title="Série 12">Série 12</a></li>
-           </ul>
-          </li>
-         </ul>
-      </li>
-      <li class="toggleLev2Menu"><span class="lev2">Activité 4</span>
-         <ul class="lev2Menu">
-          <li><a href="#" onClick="startDemo(5,4,1);" title="Observer">Observer</a></li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 1-6</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(5,4,1,2,1);" title="Série 1">Série 1</a></li>
-            <li><a href="#" onClick="startSerie(5,4,2,2,1);" title="Série 2">Série 2</a></li>
-            <li><a href="#" onClick="startSerie(5,4,3,2,1);" title="Série 3">Série 3</a></li>
-            <li><a href="#" onClick="startSerie(5,4,4,2,1);" title="Série 4">Série 4</a></li>
-            <li><a href="#" onClick="startSerie(5,4,5,2,1);" title="Série 5">Série 5</a></li>
-            <li><a href="#" onClick="startSerie(5,4,6,2,1);" title="Série 6">Série 6</a></li>
-           </ul>
-          </li>
-          <li class="toggleLev3Menu"><span class="lev3">S'évaluer 7-12</span>
-           <ul class="lev3Menu">
-            <li><a href="#" onClick="startSerie(5,4,7,2,2);" title="Série 7">Série 7</a></li>
-            <li><a href="#" onClick="startSerie(5,4,8,2,2);" title="Série 8">Série 8</a></li>
-            <li><a href="#" onClick="startSerie(5,4,9,2,2);" title="Série 9">Série 9</a></li>
-            <li><a href="#" onClick="startSerie(5,4,10,2,2);" title="Série 10">Série 10</a></li>
-            <li><a href="#" onClick="startSerie(5,4,11,2,2);" title="Série 11">Série 11</a></li>
-            <li><a href="#" onClick="startSerie(5,4,12,2,2);" title="Série 12">Série 12</a></li>
-           </ul>
-          </li>
-         </ul>
-      </li>
-    </ul>
-  </li>
-  <li class="toggleLev1Menu"><span class="lev1">Programme 6</span>
-    <ul class="lev1Menu">
-       <li class="toggleLev2Menu"><span class="lev2">Activité 1</span>
-         <ul class="lev2Menu">
-           <li><a href="#" onClick="startSerie(6,1,1,1);" title="Série 1">Expérimenter 1</a></li>
-         </ul>
-       </li>
-    </ul>
-  </li>
-</ul>
+<div id='verticalContainerG'>
+<div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
+</div>
+<div id='verticalContainerD'>
+<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >Module 1  V 0.44</div>
+</div>
+
+<div style="position:absolute; top:5px; left:50px;width:980px;height:40px;">
+ <div Id ="titre" style="font-size:24px;  text-align:center;"></div>
+</div>
+
+<div class = "zoneMenu" id="zm"></div>
+
+
+
+</div>
+</div>
+</div>
 </body>
 
 </html>

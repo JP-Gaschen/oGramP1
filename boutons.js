@@ -3,7 +3,7 @@
 function init() {
   //console.log("init boutons");
   
-  //parent.ba.document.getElementById("enCours").style.visibility="visible";
+
   
   document.getElementById('Bvalider').style.visibility='hidden';
   document.getElementById('Brejouer').style.visibility='hidden';
@@ -11,7 +11,7 @@ function init() {
   document.getElementById('displayMenu').style.visibility='hidden';
   parent.document.getElementById('verbe6').style.visibility='hidden';
 
-  document.getElementById('diffuse').innerHTML = "";
+  
   $(document).keydown(function (e) {
     var keyCode = e.keyCode || e.which;
 
@@ -23,13 +23,14 @@ function init() {
   });
  
 }
-function displayMenu() {
+function showMenu() {
+  //console.log("showMenu");
   init();
   //parent.ba.location.reload();
-  parent.ba.document.getElementById("enCours").innerHTML="";
+
   parent.ba.hideCarres();
 
-  parent.og.location = 'menu.html?version=43';
+  parent.og.location = 'menu.html?version=44';
 }
 function displayResume() {
   var myFrames = parent.og.window.frames;
@@ -60,7 +61,6 @@ function rejouer() {
 
 function reecouter() {
   //console.log("Réécouter");
-  document.getElementById('diffuse').innerHTML = "";
   setTimeout(parent.og.rediffusePhrase,200);
   if (parent.og.frames[0]) parent.og.frames[0].focus();
   if (parent.ba.program == 4 && parent.ba.activity == 3){

@@ -1,16 +1,22 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-  <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="generator" content="PSPad editor, www.pspad.com">
   <title></title>
   <script type="text/javascript" src="jquery.js"></script>
   
   <style type="text/css"> 
+  
+  <style type="text/css"> 
+
+body {
+ font-family: "Comic Sans MS", sans-serif;
+}
   div.exercice {
    position: absolute;
    top: 50px;
-   height: 10px; width: 10px;
+   height: 20px; width: 20px;
    background-color: #ffffff;
    border-style : solid;
    border-width : 1px;
@@ -45,13 +51,25 @@ div.verticalBar {
   var serie = 0;
   var group = 0;
   var version = 8;
+  var titre = '';
+  var activites =[
+   [],
+   ["Reconnaître un nom, un déterminant, un adjectif"],
+   ["Se préparer: pluriel des noms"],
+   ["Accorder le nom avec son déterminant"],
+   ["Se préparer : accord des adjectifs"],
+   ["Accorder les adjectifs avec les noms"],
+   ["Maîtriser l'accord déterminant, nom, adjectif"],
+   ["Se tester"]
+  ];
+  
   $(document).ready( function () {
     init();
   });
 
 function init() {
   ////console.log("banner init");
-  parent.ba.document.getElementById("enCours").innerHTML="";
+
 
 }
 function hideCarres () {
@@ -62,18 +80,21 @@ function hideCarres () {
   
 }
 function showCarres (n1,n2) {
-//console.log("showCarres " + n1 + " , " + n2);
+  //console.log("showCarres " + n1 + " , " + n2);
   $(".exercice").each(function() {
     $(this).css("visibility","visible");
     $(this).css("backgroundColor","#ffffff");
     var ind = 1 + $(".exercice").index(this);
     if (ind <= n1) {
-      $(this).css("top","50px");
-      var leftPos = 5 + ind*15;
+      var top = 50 + ind*25;
+      $(this).css("top","" + top + "px");
+      var leftPos = 30;
       $(this).css("left","" + leftPos + "px");
     } else  if (ind <= n1 + n2){
-    $(this).css("top","65px");
-      var leftPos = 5 + (ind - n1)*15;
+      var top = 50 + (ind-n1)*25;
+      $(this).css("top","" + top + "px");
+      
+      var leftPos = 60;
       $(this).css("left","" + leftPos + "px");
     } else {$(this).css("visibility","hidden");}
     
@@ -85,8 +106,6 @@ function showCarres (n1,n2) {
   </head>
   <body>
  
-  <div id="title" style="position:absolute; top:10px; left:20px; font-size:1em">Orthographe grammaticale V 0.43</div>
-  <div Id ="enCours" style="position:absolute; top:30px; left:20px; font-size:1em" ></div>
   
   <div class="exercice" id = "c1" ></div>
   <div class="exercice" id = "c2" ></div>
@@ -118,6 +137,16 @@ function showCarres (n1,n2) {
   <div class="exercice" id = "c28"></div>
   <div class="exercice" id = "c29"></div>
   <div class="exercice" id = "c30"></div>
+  <div class="exercice" id = "c31"></div>
+  <div class="exercice" id = "c32"></div>
+  <div class="exercice" id = "c33"></div>
+  <div class="exercice" id = "c34"></div>
+  <div class="exercice" id = "c35"></div>
+  <div class="exercice" id = "c36"></div>
+  <div class="exercice" id = "c37"></div>
+  <div class="exercice" id = "c38"></div>
+  <div class="exercice" id = "c39"></div>
+  <div class="exercice" id = "c40"></div>
 
   </body>
 </html>

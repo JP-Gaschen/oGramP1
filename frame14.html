@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Orthographe grammaticale</title>
+<script type="text/javascript" src="jquery.js"></script>
+
+<script type="text/javascript" src="oGram14.js"></script>
+<script type="text/javascript" src="boutons14.js"></script>
+
+<style type="text/css"> 
+
+table {
+  table-layout:fixed;
+  left : 0px;
+}
+
+body {
+ font-family: "Comic Sans MS", sans-serif;
+}
+
+
+
+div.bordnoir {
+ position: absolute;
+ top: 0px; left: 0px;
+ height: 760px; width: 1280px;
+ background-color: #000000;
+ z-index: 0;}
+ 
+ div.bordvert{
+ position: absolute;
+ top: 30px; left: 100px;
+ height: 700px; width: 1080px;
+ background-color: #00bb00;
+ z-index: 1;}
+
+ #verticalContainerG {
+   position:absolute;
+   top:330px;
+   width:700px;
+   left:-325px;
+   height:40px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    z-index: 5;
+}
+ #verticalContainerD {
+   position:absolute;
+   top:330px;
+   width:700px;
+   left:705px;
+   height:40px;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    z-index: 5;
+}
+
+div.textinput {
+ position: absolute;
+ top: 655px; left: 50px;
+ height: 40px; width: 980px;
+ background-color: #00ff00;
+ z-index: 3;}
+
+
+div.mots{
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:180px;
+  height:40px;
+  font-size:24px;
+  color:#00ff00;
+}
+</style>
+<script language=javascript>
+
+$(window).load(function(){
+  init();
+});
+
+</script>
+</head>
+
+<body>
+
+<div class = "bordnoir">
+<div class = "bordvert">
+<div id='verticalContainerG'>
+<div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
+</div>
+<div id='verticalContainerD'>
+<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >Module 1  V 0.44</div>
+</div>
+<div style="position:absolute; top:0px; left:50px;width:980px;">
+ <div Id ="titre" style="font-size:24px;vertical-align:middle;text-align:center"></div>
+</div>
+
+
+
+
+<div Id="t01" class="mots"></div>
+<div Id="t02" class="mots"></div>
+<div Id="t03" class="mots"></div>
+<div Id="t04" class="mots"></div>
+<div Id="t05" class="mots"></div>
+<div Id="t06" class="mots"></div>
+<div Id="t07" class="mots"></div>
+<div Id="t08" class="mots"></div>
+<div Id="t09" class="mots"></div>
+<div Id="t10" class="mots"></div>
+<div Id="t11" class="mots"></div>
+<div Id="t12" class="mots"></div>
+<div Id="t13" class="mots"></div>
+<div Id="t14" class="mots"></div>
+<div Id="t15" class="mots"></div>
+<div Id="t16" class="mots"></div>
+<div Id="t17" class="mots"></div>
+<div Id="t18" class="mots"></div>
+<div Id="t19" class="mots"></div>
+<div Id="t20" class="mots"></div>
+<div Id="t21" class="mots"></div>
+<div Id="t22" class="mots"></div>
+<div Id="t23" class="mots"></div>
+<div Id="t24" class="mots"></div>
+
+<div  class="textinput" >
+  <span Id ="phrase" style="font-size:26px; margin-left:20px;vertical-align:center";></span>
+</div>
+
+
+
+<img id="pointerimg" style="visibility:hidden;position:absolute;top:710px;left:500px;z-index:20;" SRC="fing5_nw.gif" />
+
+</div>
+</div>
+
+</body>
+</html>

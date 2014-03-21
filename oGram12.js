@@ -1,210 +1,233 @@
 var gNbPhrasesOk;
-var gNbMotsOk;
-var gNbMotsKo;
+
+
 var gNbErrors = 0;
-var gNbRejoues = 0;
-var gDemoFrame;
-var gX0,gY0;
-var gPlay_html5_audio = false;
-var gIntervalId;
-var gNglide;
+
+
 var gNbRate = 0;
-var gPhase = 1;
+
+var gPlay_html5_audio = false;
 
 var gIgnoreClick = false;
-var gInnerHtmlSaved = [[]];
-
-var gPhase2Delay = 1000;
-var gCligneDelay = 250;
-var gAbstractions0 = [];
-var gAffTxt = [[]];
-var gSavedAffTxt = [[]];
-var sp = ["","s","p"];
 
 
+
+
+var selectedSingulier = 0;
+var motAttendu;
+var motReecrit;
 
 
 function cligne(obj,n,cmd) {
   gCligne = 0;
-  //alert("cligne n" + n);
+//console.log("cligne n" + n + " " + obj.innerHTML);
   window.setTimeout(function() {hideCligne(obj,n,cmd)},gCligneDelay);
 }
 function hideCligne(obj,n,cmd) {
-  //alert("hide " + gCligne);
+//console.log("hide " + gCligne);
   if (n <= 0) {
     //alert("stop cligne " + cmd);
-    obj.style.visibility = 'visible';
+    //obj.style.visibility = 'visible';
+    obj.style.color = '#000000';
+  //console.log("calling eval " + cmd);
     eval(cmd);
   } else {
-    obj.style.visibility = 'hidden';
+    //obj.style.visibility = 'hidden';
+    obj.style.color = '#ffffff';
     window.setTimeout(function () {showCligne(obj,n,cmd)},gCligneDelay);
   }
 }
 function showCligne(obj,n,cmd) {
-  //alert("show " + gCligne);
+//console.log("show " + gCligne + " " + obj.innerHTML);
   if (n <= 0) {
-    obj.style.visibility = 'visible';
+    //obj.style.visibility = 'visible';
+    obj.style.color = '#000000';
   } else {
     
-    obj.style.visibility = 'visible';
+    //obj.style.visibility = 'visible';
+    obj.style.color = '#000000';
     window.setTimeout(function() {hideCligne(obj,n-1,cmd)},gCligneDelay);
   }
-}  
+}
+
+
+
 function init() {
-  ////console.log("init .js");
-
-  gAffTxt= [[],["",""],["",""]];
-  gSavedAffTxt= [[],["",""],["",""]];
-  gInnerHtmlSaved = [["",""],["",""]];
-  parent.ba.document.getElementById("enCours").style.visibility="visible";
-  //obj = parent.ba.document.getElementById("enCours");
-  //cligne(obj,4,"alert('init');");
-  if (parent.gPhase == 1) {
-    gPhase = 1;
-    var pc = parent.corpus;
-    var pcd = pc.corData;
-    pc.iData = 0;
-    pc.jData = 0;
-    gX0 = 600;
-    gY0 = 600;
-    gNbPhrasesOk = 0;
-    gNbMotsOk = 0;
-    gNbMotsKo = 0;
+  ////console.log("init og");
   
-  //top.moveTo(0,0); 
-  //top.resizeTo(1280,800); 
-
-    $(".textinput").css("visibility","hidden");
-    montreAbstractions0(0,parent.ba.serie - 1);
-    montreAbstractions0(1,parent.ba.serie - 1);
-    if (parent.isDemo){
-       parent.ba.hideCarres();
-       parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
-       window.setTimeout(startDemo,2000);
-    } else {
-      parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-      parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
-      parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
-    //parent.ba.showCarres(pc.nPhase1,pcd.length-pc.nPhase1);
-    }
-  } else {  // phase 2
-    $("#phrase").css("color", "#aaaaaa");
-    parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-    parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
-    parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
-    gNbPhrasesOk = 0;
-    gNbMotsOk = 0;
-    gNbMotsKo = 0;
-    gPhase = 2;
-    parent.corpus.iData = parent.corpus.nPhase1;
-    parent.corpus.jData = 0;
-    gDemoFrame = null;
-    montreAbstractions0(0,parent.ba.serie);
-    montreAbstractions0(1,parent.ba.serie);
-    frames[0].registerClick2 ("#00ff00");
-    frames[1].registerClick2 ("#00ff00");
-    frames[1].frameElement.style.left = '0px';
-  }
-  diffusePhrase();
-}
+  gPhase = parent.gPhase;
 
 
-function clear_all() {
-  //frames = document.getElementsByTagName("IFRAME");
-  myframes = window.frames;
-  //console.log(myframes.length);
-  for (var i=0; i<myframes.length; i++){
-    $(myframes[i].document).ready(function(){
-//console.log(i);
-      myframes[i].document.getElementById('Sp').innerHTML = "";
-    });
-  }
-  if (gPhase==2) document.getElementById('phrase').innerHTML = "";
-  
-}
-
-function clearBGC() {
-  myframes = window.frames;
-  for (var i=0; i<myframes.length; i++){
-    myframes[i].document.getElementById('P1').style.backgroundColor = "rgb(255,255,255)";
-    }
-}
-
-function copyArray(src, tgt) {
-  for (var i=0; i < src.length; i++) {
-    for (var j=0; j < src[i].length; j++) {
-      tgt[i][j] = src[i][j];
-    }
-  }
-}
-
-function saveStartState()  {
-  copyArray(gAffTxt,gSavedAffTxt);
-  //gSavedAffTxt = gAffTxt.clone();
-  //console.log("saveStart " + gSavedAffTxt.toString());
-  for (var i=1; i<3; i++){
-    var fName1 = "F1" + sp[i];
-    gInnerHtmlSaved[0][i-1] =frames[i-1].document.getElementById('Sp').innerHTML;
-    //console.log (fName2 + " " + gInnerHtmlSaved[0][i-1] );
-    var fName2 = "F2" + sp[i];
-    gInnerHtmlSaved[1][i-1] =frames[i+1].document.getElementById('Sp').innerHTML;
-    //console.log (fName3 + " " + gInnerHtmlSaved[1][i-1] );
-    
-  }
-}
-function restoreStartState()  {
-  //console.log("savedState " + gSavedAffTxt.toString());
-  //console.log("toRestoreState " + gAffTxt.toString());
-  copyArray(gSavedAffTxt,gAffTxt);
-  //console.log("restoredState " + gAffTxt.toString());
-  
-  for (var i=1; i<3; i++){
-    var fName1 = "F1" + sp[i];
-    frames[i-1].document.getElementById('Sp').innerHTML = gInnerHtmlSaved[0][i-1];
-    //console.log (fName2 + " " + gInnerHtmlSaved[0][i-1] );
-    var fName2 = "F2" + sp[i];
-    frames[i+1].document.getElementById('Sp').innerHTML = gInnerHtmlSaved[1][i-1];
-    //console.log (fName3 + " " + gInnerHtmlSaved[1][i-1] );
-    
-  }
-}
-
-function diffusePhrase() {
-  //console.log("diffusePhrase");
-  saveStartState();
-  if (gPhase==2) $("#phrase").css("color", "#aaaaaa");
-  parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-  parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
-  //document.getElementById('Brejouer').style.visibility='hidden';
-  rediffusePhrase();
-}
-function rediffusePhrase() {
-  var fname;
-  var dp = "" + parent.ba.program;
-  //while (dp.length < 2) {dp = "0" + dp;}
-  var da = "" + parent.ba.activity;
-  //while (da.length < 2) {da = "0" + da;}
-  
-  var dirn = "sonsP" + dp + "A" + da;
-  //alert(dirn);
   var pc = parent.corpus;
   var pcd = pc.corData;
-  ////console.log(pcd);
-  
-  gIgnoreClick = false;
 
-  //parent.boutons.document.getElementById('diffuse').innerHTML = "" + gNbPhrasesOk + " " + pcd[pc.iData][0].replace(/_/g,"-");;
-  var pn = pc.iData + 1;
-  if (gPhase == 2) pn = pc.iData + 1 - pc.nPhase1;
-  var ds = "" + parent.ba.serie;
-  while (ds.length < 2) {ds = "0" + ds;}
-  var sn = "" + pn;
-  while (sn.length < 2) {sn = "0" + sn;}
-  //alert(sn);
-  if (parent.isDemo) fname = dirn + "/" + parent.audioType + "/" + "demo" + "d" + sn;
-  else fname = dirn + "/" + parent.audioType + "/" + "s" + ds + "p" + gPhase + "d" + sn;
-  //console.log(fname);
-  parent.play_sound(fname);
+//console.log("rediffuse");
+  
+  pc.iData = 0;
+  pc.jData = 0;
+  
+  gNbPhrasesOk = 0;
+  gNbMotsOk = 0;
+  gNbMotsKo = 0;
+ 
+  parent.og.document.getElementById("titre").innerHTML =  parent.ba.titre;
+  parent.gPhraseOrder = parent.randsort(24);
+   for (var i=0; i<24; i++)  {
+     var j = parent.ranData(i) + 1;
+     var k = j;
+     if (j > 12) k = j-12;
+     var n = '' + (i + 1);
+     if (i < 9) n = '0' +n;
+     var id="t" + n;
+     //console.log(id);
+     var mot = document.getElementById(id);
+
+     var lefti = 150 + 150 * (i % 4);
+     var topi = 200 + 50 * parseInt(i/4);
+     mot.style.left = "" + lefti+"px";
+     mot.style.top = "" + topi+"px";
+     mot.style.color = "#00ff00";
+     //console.log(mot.style.top);
+     var mots = pcd[k-1][0].split(' ');
+     
+     if (j <= 12) mot.innerHTML =  mots[1];
+     else mot.innerHTML =  mots[4];
+  
+  }
+  
+    $(".mots").hover(function() { 
+        $(this).css('cursor','pointer'); }, function() { 
+        $(this).css('cursor','auto'); 
+  })
+  
+   $(".mots").click(function(e){
+     e.stopPropagation();
+     var iMot =  $(".mots").index(this);
+     var n = '' + (iMot + 1);
+     if (iMot < 9) n = '0' +n;
+     var id="t" + n;
+     //console.log(id);
+     var txt = document.getElementById(id).innerHTML;
+     //console.log(txt);
+     selectMot(id,iMot,txt);
+  });
+  
+  $(document).keydown(function (e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode == 13) {   // return
+      parent.boutons.valider();
+      return false;
+    }
+  });
+  
+  
+  if (parent.isDemo){
+    parent.ba.hideCarres();
+    parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
+    //for (var i=0; i<6; i++) parent.gPhraseOrder[i] = i;
+    showPointer();
+    window.setTimeout(startDemo,4000);
+  } else {
+    parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+    //parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
+    var serie = parent.ba.serie;
+    
+    parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
+    //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+    parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+    
+    //for (var i=0; i<6; i++) {console.log(parent.gPhraseOrder[i]);}
+    $('#phrase').keydown(function (e) {
+      var keyCode = e.keyCode || e.which;
+    
+      if (keyCode == 13) {   // return
+        parent.boutons.valider();
+        return false;
+      }
+    });
+  }
+
+  //diffusePhrase();
+
+}
+function selectMot(id,iMot,txt) {
+  var pc = parent.corpus;
+  var pcd = pc.corData;
+  //console.log("selectMot " + iMot + ' ' + txt);
+  var j = parent.ranData(iMot) + 1;
+  var k = j;
+  if (j > 12) k = j-12;
+  //console.log(pcd[k-1][0]);
+  var mots = pcd[k-1][0].split(' ');
+  //console.log(document.getElementById(id).style.color);
+  if (document.getElementById(id).style.color == 'rgb(0, 255, 0)') {
+    if (selectedSingulier == 0) {
+    
+      if (txt == mots[1]) {
+        selectedSingulier = k;
+        document.getElementById(id).style.color = '#007700';
+      } else {
+        //gNbErrors += 1;
+        //console.log("pas un singulier");
+      }
+    } else {
+      if (txt == mots[4] &&  k == selectedSingulier) {
+        var phraseTxt = "";
+        
+          phraseTxt += "<span Id='sp0' style='color:#000000;'>" + mots[0] + " </span>";
+          phraseTxt += "<span Id='sp1' style='color:#000000;'>" + mots[1] + "</span>";
+          phraseTxt += "<span Id='sp2' style='color:#000000;'> " + mots[2] + " </span>";
+          phraseTxt += "<span Id='sp3' style='color:#000000;'>" + mots[3] + " </span>";
+          phraseTxt += "<span Id='sp4' style='color:#000000;'>" + mots[4] + "</span>";
+        
+        //console.log(phraseTxt);
+        document.getElementById('phrase').innerHTML = phraseTxt;
+        selectedSingulier = 0;
+        document.getElementById(id).style.color = '#007700';
+        $('#sp1').keyup(function (e) {
+          //console.log(document.getElementById('sp1').innerHTML);
+          document.getElementById('sp1').innerHTML = document.getElementById('sp1').innerHTML.replace(/oe/,'œ');
+          //console.log(document.getElementById('sp1').innerHTML);
+          document.getElementById('sp1').focus();
+        });
+  
+        $('#sp4').keyup(function (e) {
+          //console.log(document.getElementById('sp4').innerHTML);
+          document.getElementById('sp4').innerHTML = document.getElementById('sp4').innerHTML.replace(/oe/,'œ');
+          //console.log(document.getElementById('sp4').innerHTML);
+          document.getElementById('sp1').focus();
+        });
+  
+        setTimeout(efface,1200);
+      } else {
+        //console.log("mauvais 2e mot");
+        //gNbErrors += 1;
+      }
+    }
+  } else {
+    //gNbErrors += 1;
+    //console.log("déjà pris");
+  }
+}
+
+
+function efface(){
+  if (Date.now() % 2) {
+    motAttendu = document.getElementById('sp1').innerHTML;
+    motReecrit = 'sp1';
+    
+    document.getElementById('sp1').contentEditable = true;
+    document.getElementById('sp1').focus();
+    document.getElementById('sp1').innerHTML = '&nbsp;';
+  } else {
+    motAttendu = document.getElementById('sp4').innerHTML;
+    motReecrit = 'sp4';
+    
+    document.getElementById('sp4').contentEditable = true;
+    document.getElementById('sp4').focus();
+    document.getElementById('sp4').innerHTML = '&nbsp;';
+  }
+  
 }
 
 
@@ -215,489 +238,145 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=43';
+      parent.og.location = 'menu.html?version=44';
       parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
     }
  
   frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
 }
 
-function clear12() {
-var myframes = window.frames;
-  
-  var frameNumbers = [2,3];
-  for (var i=0; i<frameNumbers.length; i++) {
-    j = frameNumbers[i];
-    //console.log(" i " + i + " j " + j + " " + myframes[j].document.getElementById('Sp').innerHTML);
-    myframes[j].document.getElementById('Sp').innerHTML = "";
-  }
-}
+
+
 
 function auSuivant() {
-  //console.log("Au suivant og...");
 
-  if (gPhase == 2) document.getElementById('phrase').innerHTML = "";
-  clear12();
+  //console.log('Au suivant ratés ' + gNbRate);
+  document.getElementById('phrase').innerHTML = "";
   var pc = parent.corpus;
-  pc.iData += 1;
+  var pcd = pc.corData;
+  //console.log("Au suivant og... " + pc.iData );
   
-  gNbMotsOk = 0;
-  gNbMotsKo = 0;
-  if (gPhase == 1 && ((parent.isDemo && pc.iData < pc.corData.length) || pc.iData < pc.nPhase1)) {
-  ////console.log("auSuivant 1");
+
+  
+  pc.kData += 1;
+  
+  gNbErrors = 0;
+  //if (pc.iData < pc.corData.length) {
+  if (pc.kData < pc.corData.length) {
+    //console.log("auSuivant 1");
     pc.jData = 0;
-    diffusePhrase();
     
-    if (parent.isDemo) { setTimeout(startDemo,2000);}
-  } else if (gPhase == 2 && pc.iData < pc.corData.length) {
-    ////console.log("auSuivant 2");
-    pc.jData = 0;
-    //if (gNbPhrasesOk > 8) {showResume(0,0);
-    //} else {
-      diffusePhrase();
-    //}  
-  } else if (gPhase == 2) {
-    ////console.log("auSuivant 3");  // fin de phase 2
-    parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-    //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
-      var nEx = pc.corData.length - pc.nPhase1;
-      var nOk = nEx - gNbRate;
-      alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
-      if (parent.ba.serie == 8)parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=43";
-    else setTimeout(parent.boutons.displayMenu,2000);
+    
+  //console.log("after diffusePhrase");
+    if (parent.isDemo) { 
+      showPointer();
+      setTimeout(startDemo,2000);
+    }
+  
   } else {
-    //console.log("auSuivant 4");  // fin de phase 1
-    if (parent.isDemo) {
-      hidePointer(); // test demo automatique
-      setTimeout(parent.boutons.displayMenu,2000);
-    } else {
-      gPhase = 2;
-      gNbPhrasesOk = 0;
-      gIgnoreClick = true;
-      parent.boutons.document.getElementById('diffuse').innerHTML = "observez";
-      parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-      parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
-      if (gAffTxt[1][0] == "") {
-        setTimeout (function() {addSuffix(1,0);},gPhase2Delay);  // ligne 8
+      //console.log("auSuivant 4");  // fin de phase 1
+      if (parent.isDemo) {
+        hidePointer(); // test demo automatique
+        
       } else {
-        setTimeout (function() {addSuffix(0,0);},gPhase2Delay);
+        var nEx = pc.corData.length;
+        var nOk = nEx - gNbRate;
+        
+        alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
       }
-     }
+      setTimeout(parent.boutons.showMenu,4000);
+        
+
   } 
 }
 
-function montreTxt1(m) {
-  var serie = parent.ba.serie;
-  var t = gAffTxt[1][m].split(",");
-  
-  var newTxt = "<div>";
 
-  for (var i=0; i<t.length - 1; i++) {
-    var topPos = 20*i + (serie-1) * 20;
-    var tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle'><tr><td>" + t[i] + "</td></tr></table>";
-    newTxt += "<div><span style='line-height:16px;'>"  + tbl + "</span></div>";
-    
-    
-  }
-  newTxt +=  "</div>";
-  ////console.log(newTxt);
-  frames[m].document.getElementById('Sp').innerHTML = newTxt;
+
+function showPointer (){
+  var p = document.getElementById("pointerimg");
+  //console.log("showPointer " + gX0 + " " + gY0);
+    p.style.left = gX0.toString() + "px";
+    p.style.top = gY0.toString() + "px";
+    p.style.visibility = "visible"
 }
-
-function montreTxt2(m) {
-  var serie = parent.ba.serie;
-  var t = gAffTxt[2][m].split(",");
-  
-  var newTxt = "<div>";
-
-  for (var i=0; i<t.length - 1; i++) {
-    var topPos = 20*i + (serie-1) * 20;
-    var tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle'><tr><td>" + t[i] + "</td></tr></table>";
-    newTxt += "<div><span style='line-height:16px;'>"  + tbl + "</span></div>";
-    
-    
-  }
-  newTxt +=  "</div>";
-  ////console.log(newTxt);
-  frames[m+2].document.getElementById('Sp').innerHTML = newTxt;
-}
-
-function addSuffix(m,n) {
-  //alert("addSuffix  m " + m + " n " + n );
-  //var t = txt.split("<br>");
-  var serie = parent.ba.serie;
-  var pref;
-  var tSuf;
-  var t = gAffTxt[1][m].split(",");
-  var suf = spSuffix[serie][m];
-  
-
-  //var newTxt = gAbstractions0[m] + "<div>";
-  var newTxt = "<div>";
-
-  for (var i=0; i<t.length - 1; i++) {
-    var topPos = 20*i + (serie-1) * 20;
-    if (suf == "") {
-      pref = t[i];
-      tSuf="&nbsp";
-    } else {
-      indSuf = t[i].lastIndexOf(suf);
-      pref = t[i].substring(0,indSuf);
-      tSuf = suf;
-    }
-    var w=frames[m].txtSize(pref);
-    var IdP = "Pref"+(i+1);
-    var IdS = "Suff"+(i+1);
-    if (i <= n){
-    
-    tbl = "<table Id='" + IdP + "' style='position:absolute;top:"+topPos+"px;left:1px;vertical-align:middle'><tr><td >" + pref + "</td></tr></table>\
-           <table Id='" + IdS + "' style='position:absolute;top:"+topPos+"px;left:"+(w+2)+"px;vertical-align:middle'><tr><td class='suffix' style='width:22px;border: 1px solid #000;background:#00ff00;text-align:center'>" + tSuf +"</td></tr></table>";
-    ////console.log(tbl);
-    } else {
-      tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle'><tr><td>" + t[i] + "</td></tr></table>";
-    }
-    
-    newTxt += "<span style='line-height:14px;'>"  + tbl + "</span>";
-    
-  }
-  newTxt +=  "</div>";
-  ////console.log(newTxt);
-  frames[m].document.getElementById('Sp').innerHTML = newTxt;
-  $("td.suffix",frames[m].document).each(function(){
-    this.style.backgroundColor = "#00ff00"; 
-  });
-  if (n < t.length -2) { 
-    setTimeout(function() {addSuffix(m,n+1,t)},gPhase2Delay);
-  } else if (m == 0) {
-        //txt2 = frames[1].document.getElementById('Sp').innerHTML;
-        setTimeout (function() {addSuffix(1,0);}, gPhase2Delay);
-  } else if (gAffTxt[1][0] == "") {   // ligne 8
-    setTimeout (function() {cligneMots(1,0);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,1);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,2);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,3);},gPhase2Delay); 
-  } else {
-    setTimeout (function() {cligneMots(0,0);},gPhase2Delay);
-    setTimeout (function() {cligneMots(0,1);},gPhase2Delay);
-    setTimeout (function() {cligneMots(0,2);},gPhase2Delay);
-    setTimeout (function() {cligneMots(0,3);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,0);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,1);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,2);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,3);},gPhase2Delay);
-  }
-}
-function cligneMots(m,n){
-  var IdP = 'Pref' + (n+1);
-  var obj=frames[m].document.getElementById(IdP);
-  cmd = "removeMots2(" + m + "," + n + ");";
-  //alert(cmd);
-  cligne(obj,3,cmd);
-}
-function removeMots2(m,n){
-  var IdP = 'Pref' + (n+1);
-  var IdS = "Suff"+(n+1);
-  frames[m].document.getElementById(IdP).style.visibility = 'hidden';
-  frames[m].animate2(IdS);
-
-  if (gAffTxt[1][0] == "") {
-      setTimeout (function() {collapse(1,0);},gPhase2Delay);  // ligne 8
-  } else {
-      setTimeout (function() {collapse(0,0);},gPhase2Delay);
-      setTimeout (function() {collapse(1,0);},gPhase2Delay);
-  }
-  
-}
-
-
-function collapse(m,n) {
-  var serie = parent.ba.serie;
-  var tSuf;
-  var t = gAffTxt[1][m].split(",");
-  var suf = spSuffix[serie][m];
-  var newTxt = gAbstractions0[m];
-  var Id = "";
-  var col2Txt = "";
-
-  
-  for (var i=0; i<t.length - 1 - n; i++) {
-  
-    var topPos = 20*i + (serie - 1)* 20
-    Id = "Li"+(i+1);
-
-    if (suf == "") {
-      tSuf="&nbsp";
-    } else {
-      tSuf = suf;
-    }
-    
-    col2Txt += "<table Id='" + Id + "' style='position:absolute;top:"+topPos+"px;right:5px;vertical-align:middle'><tr><td  class='suffix' style='width:22px;border: 1px solid #000;background:#00ff00;text-align:center'>" + tSuf +"</td></tr></table>";
-    
-    
-    
-  }
-  newTxt += "<div>";
-  
-  newTxt += "<span style='width:30px;line-height:14px;'>" + col2Txt + "</span>";
-  newTxt += "</div>";
-  ////console.log(newTxt);
-  
-  frames[m].document.getElementById('Sp').innerHTML = newTxt;
-  $("td.suffix",frames[m].document).each(function(){
-
-    this.style.backgroundColor = "#00ff00"; 
-  });
-  if (n < t.length -2) { 
-    frames[m].animate1(Id,2000);
-    setTimeout(function() {collapse(m,n+1);},gPhase2Delay);
-  } else if (m == 1) {
-    setTimeout(parent.boutons.displayMenu,2000);
-  }
-  
-
-}
-function montreAbstractions0(m,n) {
-  ////console.log("montreAbstractions0 m " + m);
-  //if (m == 0 && n == 1) clear_all();
-  var newTxt = "<div class='abstractions' style='visibility:hidden'><span style='float:right;width:34px;line-height:14px;'>";
-  for (var i=1; i <= n; i++) {
-   //alert("i="+i + " " + t[i]);
-   suf = spSuffix[i][m];
-   if (suf == "") {suf="&nbsp"}
-   
-    tbl = "<table style='vertical-align:middle;'><tr><td id='" + m + "'' class='suffix' style='width:31px;border: 1px solid #000;text-align:center'>" + suf +"</td></tr></table>";
-  // tbl = "<table width='12px' height='12px' style='border: 1px solid #000;background:#00ff00'><tr><td style='width:12px;align:center'>" + suf +"</td></tr></table>";
-   if (suf != " ") {newTxt += "<span> " + tbl + " </span>";}
-  }
-  newTxt += "</span></div><div style='clear:both'></div>";
-  ////console.log(newTxt);
-  gAbstractions0[m] = newTxt;
-  frames[m].document.getElementById('Sp').innerHTML = newTxt;
-  $("td.suffix",frames[m].document).each(function(){
-
-    this.style.backgroundColor = "#00ff00"; 
-  });
-
-}
-
-
-
 function hidePointer() {
   document.getElementById('pointerimg').style.visibility = "hidden";
 }
 
-function process_click_global(w){
-  if (gIgnoreClick  && !parent.isDemo) {return;}
-  if (!parent.isDemo) {
-    if (gPhase==1) parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-  }
-  //console.log('clique ' + window.name);
-  var cl = parseInt(w.name.substring(5));
-  var c2 = w.name.substring(6);
-  
-  //console.log(" " + cl + c2);
-  if (gPhase == 2 && cl == 1) {return;}  // click2 pour les noms
-  //var w1 = window.parent;
-  //var top = w1.parent;
-  var pc = top.frames[0];
-  var pcd = pc.corData;
-  //alert(pcd);
-  var i = pc.iData;
-  var j = pc.jData;
-  //console.log("click_global j=",j);
- 
-  if (i < pcd.length && j+1 < pcd[i].length){
-    //alert("clique dans " + cl + " " +i+ " " + j + " " + pcd[i].length);
-    var exp1 =  pcd[i][j+1][0];
-    var exp2 =  pcd[i][j+1][1];
-    if (cl == exp1 && c2 == sp[exp2]) {
-      gNbMotsOk += 1;
-      var txt1 = pcd[i][0];
-      var txt2 = txt1.replace(/,/g,"");
-      var txt3 = txt2.replace(/-/g," ");
-      var txt4 = txt3.replace(/'/g,"' ");
-      var txt5 = txt4.replace(/_/g,"-");
-      //console.log(txt5);
-      
 
-      var txt = txt5.split(" ")[j];
-      //console.log(txt);
-      var tbl = "<table  style='vertical-align:middle'><tr><td>" + txt + "</td></tr></table>";
-      var newTxt = "<div><span style='line-height:16px;'>"  + tbl + "</span></div>";
-      //var newTxt = "<span style='line-height:16px;'>, "  + txt + "</span>";
-      if (gPhase==2) document.getElementById('phrase').innerHTML += txt + " ";
-      //if (gPhase == 1) {
-        ////console.log(" " + exp1 + " " + exp2 + " " + txt);
-        if (exp1 == 1) {  // nom
-          if (gAffTxt[1][exp2-1].indexOf(txt+",") < 0) {
-            if (gPhase == 1) w.document.getElementById('Sp').innerHTML += newTxt;
-            
-            gAffTxt[1][exp2-1] += txt + ",";
-          }
-        }
-        if (exp1 == 2) {  // determinant
-          w.document.getElementById('Sp').innerHTML = newTxt;
-        }
-      //}
-      j += 1;
-      parent.corpus.jData = j;
-      if (j+1 == pcd[i].length) {
-        if (parent.isDemo){  // == 0
-          setTimeout(auSuivant,1500);
-        } else {
-          //gIgnoreClick = true;
-          //parent.boutons.document.getElementById('BstartDemo').style.visibility='hidden';
-          setTimeout(hidePointer,1000);
-          
-          if (parent.isDemo) {
-            gDemoFrame = null;
-            gNbPhrasesOk = 0;
-          }
-        }
-      } else {
-          //parent.corpus.jData = j;
-          if (parent.isDemo) {
-            //alert("setTimeout");
-            var toId = setTimeout(startDemo,1000);
-            }
-        //alert(document.getElementById('Sp').innerHTML);
-        //alert (pcd[i][0].split(" ")[j-2]);
-        
-        }
-    } else {
-      gNbMotsKo += 1;
-    }
-  } else  gNbMotsKo += 1;
-  
-  //window.setTimeout(clearBGC,400);
-}
-function process_click2_global(w,ligne){
-  //console.log("click2_global "  + ligne);
-  if (!parent.isDemo) {
-    if (gPhase==1) parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-  }
-  if (gIgnoreClick) {return;}
-  var pc = top.frames[0];
-  var pcd = pc.corData;
-  //alert(pcd);
-  var i = pc.iData;
-  var j = pc.jData;
-  //console.log("click2_global j=",j);
-  var cl = parseInt(w.name.substring(5));
-  if (i < pcd.length && j+1 < pcd[i].length){
-    //console.log("clique dans " + cl + " " +i+ " " + j + " " + pcd[i].length);
-    var exp1 =  pcd[i][j+1][0];
-    var exp2 =  pcd[i][j+1][1];
-    var exp3 =  pcd[i][j+1][2];
-    var c2 = w.name.substring(6);
-    var col =sp.indexOf(c2); 
-    //alert("1 " + exp1 + " " + cl);
-    //alert("2 " + exp2 + " " + col);
-    //alert("3 " + exp3 + " " + ligne);
-    if (cl == exp1 && col == exp2 && ligne == exp3) {
-      gNbMotsOk += 1;
-      var txt1 = pcd[i][0];
-      var txt2 = txt1.replace(/,/g,"");
-      var txt3 = txt2.replace(/-/g," ");
-      var txt4 = txt3.replace(/'/g,"' ");
-      var txt5 = txt4.replace(/_/g,"-");
-      //console.log(txt5);
-      
 
-      var txt = txt5.split(" ")[j];
-      //console.log (txt);
-      if (exp1 == 1) {  // nom
-        //console.log(gAffTxt[1][exp2-1]);
-        if (gPhase==2) document.getElementById('phrase').innerHTML += txt + " ";
-        else if (gAffTxt[1][exp2-1].indexOf(txt+",") < 0) gAffTxt[1][exp2-1] += txt + ",";
-      }
-            
-      j += 1;
-      parent.corpus.jData = j;
-      if (j+1 == pcd[i].length) {
-        
-          //gIgnoreClick = true;
-          //parent.boutons.document.getElementById('BstartDemo').style.visibility='hidden';
-          setTimeout(hidePointer,1000);
-          clear12();
-          $("#phrase").css("color", "#000000");
-          setTimeout(function() {$("#phrase").css("color", "#aaaaaa");},200);
-          setTimeout(function() {$("#phrase").css("color", "#000000");},400);
-          setTimeout(function() {$("#phrase").css("color", "#aaaaaa");},600);
-          setTimeout(function() {$("#phrase").css("color", "#000000");},800);
-          setTimeout(function() {parent.boutons.document.getElementById('Bvalider').style.visibility='visible';},200);
-        
-      } else {
-          //parent.corpus.jData = j;
-          
-        //alert(document.getElementById('Sp').innerHTML);
-        //alert (pcd[i][0].split(" ")[j-2]);
-        
-        }
-    } else {
-      gNbMotsKo += 1;
-      parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-    }
-  } else  gNbMotsKo += 1;
-  //console.log("ko=",gNbMotsKo);
-}
 function startDemo(){
   //alert("og start demo")
   gIgnoreClick = true;
+  
   //parent.boutons.document.getElementById('BstartDemo').style.visibility='hidden';
   var pc = top.frames[0];
   var pcd = pc.corData;
   //alert(pcd);
-  var i = pc.iData;
-  var j = pc.jData;
-  if (i < pcd.length){
-    var exp1 =  pcd[i][j+1][0];
-    var exp2 =  pcd[i][j+1][1];
-    //alert(exp);
-    gDemoFrame = document.getElementById("F" + exp1 + sp[exp2]);
-    //alert(f);
-    //alert(f.contentWindow.innerHeight);
-    var r = gDemoFrame.getBoundingClientRect(); 
-  
-    var x2 = (r.left + r.right)/2;
-    var y2 = (r.top + r.bottom)/2;
-    //alert(x2);
-    //alert(y2);
-    StartGlide(gX0,gY0,x2,y2);
+  var justesPoint = pcd[pc.iData+1][0] + gFinDePhrase;
+  var mots =$('#phrase').text().split(' ');
+  var phraseTxt = '';
+  for (var j=0; j<mots.length; j++)  {
+    if (j == pcd[pc.iData][2] - 1) phraseTxt += "<span id='s"+j+"' style='background-color:"+gGrise+";' >"+ mots[j]+ "</span>";
+    else phraseTxt += "<span id='s"+j+"' >"+ mots[j]+ "</span>";
+    if (j < mots.length - 1) phraseTxt += ' ';
   }
+  //gsavedPhrase = document.getElementById('phrase').innerHTML;
+  document.getElementById('phrase').innerHTML = phraseTxt;
+      
+  
+  montreNouveau(0);
 }
-
-
-function StartGlide(x1,y1,x2,y2)
-{
-    var p = document.getElementById("pointerimg");
-    //alert("startglide1 " + p.style.left);
-    p.style.left = x1.toString() + "px";
-    p.style.top = y1.toString() + "px";
-    p.style.visibility = "visible";
-    //alert("startglide2");
-    gX0 = x2;
-    gY0 = y2;
-    gNglide = 1;
-    gIntervalId = window.setInterval("Glide('" + x1 + "','" + y1 + "','" + x2 + "','" + y2 + "')",4);
-}
-function Glide(x1,y1,x2,y2)
-{
-    //alert("glide "+gNglide);
-    var p =document.getElementById("pointerimg");
-    var xn = Math.round((gNglide*(x2 - x1))/100.0) + parseInt(x1);
-    var yn = Math.round((gNglide*(y2 - y1))/100.0) + parseInt(y1);
-    gNglide += 1;
-    if (gNglide > 99) {
-    //alert(d);
-        //p.style.visibility = "hidden";
-        window.clearInterval(gIntervalId);
-        //alert(gDemoFrame);
-        gDemoFrame.contentWindow.process_click(1);
-    }else{
-      p.style.left =xn.toString() + "px";
-      p.style.top = yn.toString() + "px";
+function montreNouveau(n) {
+  //console.log('montreNouveau');
+  document.getElementById("Nouveau").style.visibility = 'hidden';
+  var pc = top.frames[0];
+  var pcd = pc.corData;
+  var mots =$('#phrase').text().split(' ');
+  var justesPoint = pcd[pc.iData+1][0] + gFinDePhrase;
+  justes = justesPoint.split(' ');
+  var k = 0;
+  gChars[n] = [];
+  if (n != pcd[pc.iData][2] - 1 && mots[n] != justes[n]){
+    var iCommun = -1;
+    var i=1;
+    while (mots[n].substring(0,i) == justes[n].substring(0,i)) i += 1;
+  //console.log("commun " + i + "  " + justes[n].substring(0,i-1));
+    for (var j = mots[n].length; j > i-1; j--) {
+      gChars[n][k] = mots[n].substring(0,j-1);
+    //console.log(gChars[n][k]);
+      k += 1;
     }
+    for (var j= i; j<justes[n].length+1; j++ ) {
+      gChars[n][k] = justes[n].substring(0,j);
+    //console.log(gChars[k]);
+      k += 1;
+    }
+  //console.log(gChars);
+    var obj =document.getElementById('s' + n);
+    var cmd = "remplace(" + n + ",0)";
+    if (obj) cligne(obj,3,cmd);
+    if (n+1 < mots.length) setTimeout(function() {montreNouveau(n+1);},3000);
+    else setTimeout(parent.boutons.showMenu,4000);
+  }
+  else if (n+1 < mots.length) montreNouveau(n+1);
+  else  setTimeout(parent.boutons.showMenu,2000);
 }
+
+function remplace (n,k) {
+  var pc = top.frames[0];
+  var pcd = pc.corData;
+//console.log("remplace " + n + " " + k);
+  var obj =document.getElementById('s' + n);
+  obj.innerHTML = gChars[n][k];
+  var sp =  document.getElementById('s' +  (pcd[pc.iData][2] - 1));
+    if (sp) {
+      var left = gLeft + sp.offsetLeft;
+      //document.getElementById('Nouveau').style.color="#00ff00";
+      document.getElementById('Nouveau').style.left = "" + left + "px";
+    }
+  if (k+1 < gChars[n].length) setTimeout(function () {remplace(n,k+1);},200);
+}
+
+
+

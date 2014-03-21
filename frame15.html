@@ -1,0 +1,371 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Orthographe grammaticale</title>
+<script type="text/javascript" src="jquery.js"></script>
+
+<script type="text/javascript" src="oGram15.js"></script>
+<script type="text/javascript" src="boutons15.js"></script>
+
+
+<style type="text/css"> 
+
+body {
+ font-family: "Comic Sans MS", sans-serif;
+}
+
+table {
+  table-layout:fixed;
+  left : 0px;
+}
+
+div.box1s {
+ position: absolute;
+ top: 160px; left: 10px;
+ height: 260px; width: 90px;
+ background-color: #00ff00;
+ z-index: 3;}
+
+div.box1p {
+ position: absolute;
+ top: 160px; left: 100px;
+ height: 260px; width: 90px;
+ background-color: #00ff00;
+ z-index: 3;}
+
+div.box2ms {
+ position: absolute;
+ top: 430px; left: 10px;
+ height: 90px; width: 119px;
+ background-color: #ffe000;
+ z-index: 3;}
+
+div.box2fs {
+ position: absolute;
+ top: 430px; left: 129px;
+ height: 90px; width: 118px;
+ background-color: #ffe000;
+ z-index: 3;}
+
+div.box2mp {
+ position: absolute;
+ top: 430px; left: 247px;
+ height: 90px; width: 118px;
+ background-color: #ffe000;
+ z-index: 3;}
+
+div.box2fp {
+ position: absolute;
+ top: 430px; left: 365px;
+ height: 90px; width: 120px;
+ background-color: #ffe000;
+ z-index: 3;}
+
+div.box2b {
+ position: absolute;
+ top: 517px; left: 60px;
+ height: 10px; width: 130px;
+ background-color: #ffe000;
+ z-index: 10;}
+
+div.box3ms {
+ position: absolute;
+ top: 110px; left: 200px;
+ height: 310px; width: 72px;
+ background-color: #9400d3;
+ z-index: 7;}
+
+div.box3fs {
+ position: absolute;
+ top: 110px; left: 272px;
+ height: 310px; width: 70px;
+ background-color: #9400d3;
+ z-index: 6;}
+
+div.box3mp {
+ position: absolute;
+ top: 110px; left: 342px;
+ height: 310px; width: 70px;
+ background-color: #9400d3;
+ z-index: 5;}
+
+div.box3fp {
+ position: absolute;
+ top: 110px; left: 412px;
+ height: 310px; width: 73px;
+ background-color: #9400d3;
+ z-index: 4;}
+
+
+div.box4 {
+ position: absolute;
+ top: 530px; left: 10px;
+ height: 60px; width: 475px;
+ background-color: #ff0000;
+ z-index: 3;}
+
+div.box5 {
+ position: absolute;
+ top: 533px; left: 60px;
+ height: 30px; width: 130px;
+ background-color: #ffe000;
+ z-index: 11;}
+
+div.box6 {
+ position: absolute;
+ top: 10px; left: 10px;
+ height: 90px; width: 475px;
+ color: white;
+ background-color: #a0522d;
+ z-index: 3;}
+
+div.box6b {
+ position: absolute;
+ top: 30px; left: 482px;
+ height: 50px; width: 13px;
+ background-color: #a0522d;
+ z-index: 10;}
+
+div.box7 {
+ position: absolute;
+ top: 110px; left: 495px;
+ height: 410px; width: 475px;
+ background-color: #ff8c00;
+ z-index: 3;}
+
+div.box8 {
+ position: absolute;
+ top: 10px; left: 495px;
+ height: 90px; width: 475px;
+ background-color: #0000ff;
+ z-index: 3;}
+
+div.box9 {
+ position: absolute;
+ top: 30px; left: 498px;
+ height: 50px; width: 70px;
+ background-color: #a0522d;
+ z-index: 10;}
+
+div.box10 {
+ position: absolute;
+ top: 530px; left: 495px;
+ height: 60px; width: 237px;
+ background-color: #000000;
+ z-index: 3;}
+
+div.box11 {
+ position: absolute;
+ top: 530px; left: 732px;
+ height: 60px; width: 238px;
+ background-color: #000000;
+ z-index: 3;}
+
+div.box12 {
+ position: absolute;
+ top: 110px; left: 10px;
+ height: 40px; width: 80px;
+ background-color: #696969;
+ z-index: 3;}
+
+div.box13 {
+ position: absolute;
+ top: 100px; left: 90px;
+ height: 60px; width: 80px;
+ background-color: #696969;
+ z-index: 3;}
+
+div.textinput {
+ position: absolute;
+ top: 655px; left: 50px;
+ height: 40px; width: 980px;
+ background-color: #00ff00;
+ z-index: 3;}
+
+
+div.bordnoir {
+ position: absolute;
+ top: 0px; left: 0px;
+ height: 760px; width: 1280px;
+ background-color: #000000;
+ z-index: 0;}
+ 
+ div.bordvert{
+ position: absolute;
+ top: 30px; left: 100px;
+ height: 700px; width: 1080px;
+ background-color: #00bb00;
+ z-index: 1;}
+ 
+ div.bordblanc {
+ position: absolute;
+ top: 50px; left: 50px;
+ height: 600px; width: 980px;
+ background-color: #ffffff;
+ z-index: 2;}
+
+ #verticalContainerG {
+   position:absolute;
+   top:330px;
+   width:700px;
+   left:-325px;
+   height:40px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    z-index: 5;
+}
+ #verticalContainerD {
+   position:absolute;
+   top:330px;
+   width:700px;
+   left:705px;
+   height:40px;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    z-index: 5;
+}
+
+</style>
+
+<script type="text/javascript">
+ var spSuffix01 = [["",""],["","s"],["","x"],["s","s"],["x","x"],["z","z"],["al","aux"],["ail","aux"]];
+ var spmfSuffix03 = [["","","",""],["","e","s","es"],["x","e","x","es"],["","e","x","es"],["s","e","s","es"],["e","e","es","es"],["","","",""]];
+$(window).load(function(){
+    init();
+});
+
+</script>
+
+</head>
+
+<body>
+
+<div class = "bordnoir">
+<div class = "bordvert">
+<div style="position:absolute; top:5px; left:50px;width:980px;height:40px;">
+ <div Id ="titre" style="font-size:24px; text-align:center"></div>
+</div>
+
+<div  class="textinput" >
+  <span Id ="phrase" style="font-size:26px; margin-left:20px;vertical-align:center";></span>
+</div>
+
+
+  
+<div class = "bordblanc">
+
+
+
+<div class="box1s">
+<iframe id="F1s" name="Frame1s" src="clique.html?version=44" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=254 width=87 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box1p">
+<iframe id="F1p" name="Frame1p" src="clique.html?version=44" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=254 width=86 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box2ms" id = "B2">
+<iframe id = "F2ms" name="Frame2ms" src="clique.html?version=44" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=84 width=116 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box2fs" id = "B2">
+<iframe id = "F2fs" name="Frame2fs" src="clique.html?version=44" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=84 width=117 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box2mp" id = "B2">
+<iframe id = "F2mp" name="Frame2mp" src="clique.html?version=44" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=84 width=117 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box2fp" id = "B2">
+<iframe id = "F2fp" name="Frame2fp" src="clique.html?version=44" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=84 width=116 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box2b">
+<iframe id = "F2b" name="Frame2b" src="clique.html?version=44" style="position:absolute; top:0px; left:3px; background-color: #ffffff;" height=13 width=124 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box3ms">
+<iframe id="F3ms" name="Frame3ms" src="clique.html?version=44" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box3fs">
+<iframe id="F3fs" name="Frame3fs" src="clique.html?version=44" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box3mp">
+<iframe id="F3mp" name="Frame3mp" src="clique.html?version=44" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box3fp">
+<iframe id="F3fp" name="Frame3fp" src="clique.html?version=44" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box4">
+<iframe id = "F4" name="Frame4" src="clique.html?version=44" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=54 width=469 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box5">
+<iframe id = "F5" name="Frame5" src="clique.html?version=44" style="position:absolute; top:0px; left:3px; background-color: #ffffff;" height=27 width=124 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box6">
+<iframe id="F6" name="Frame6" src="clique.html?version=44"  style=" position:absolute; top:3px; left:3px; background-color: #ffffff;" height=84 width=469 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box6b">
+<iframe id = "F6b" name="Frame6b" src="clique.html?version=44" style="position:absolute; top:3px; left:0px; background-color: #ffffff;" height=44 width=13 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box7">
+<iframe id = "F7" name="Frame7" src="clique.html?version=44" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=404 width=469 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box8">
+<iframe id = "F8" name="Frame8" src="clique.html?version=44" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=84 width=469 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box9">
+<iframe id = "F9" name="Frame9" src="clique.html?version=44" style="position:absolute; top:3px; left:0px; background-color: #ffffff;" height=44 width=67 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box10">
+<iframe id = "F10" name="Frame10" src="clique.html?version=44" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=54 width=234 frameborder=0 scrolling = no>
+</iframe></div>
+<div class="box11">
+<iframe id = "F11" name="Frame11" src="clique.html?version=44" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=54 width=234 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box12">
+<iframe id="F12" name="Frame12" src="clique.html?version=44" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=34 width=74 frameborder=0 scrolling = no>
+</iframe></div>
+
+<div class="box13">
+<iframe id="F13" name="Frame13" src="clique.html?version=44" style="position:absolute; top:0px; left:0px; background-color: #ffffff;" height=60 width=110 frameborder=0 scrolling = no>
+</iframe></div>
+</div>
+
+
+<div id='verticalContainerG'>
+<div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
+</div>
+<div id='verticalContainerD'>
+<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >Module 1  V 0.44</div>
+</div>
+
+
+</div>
+</div>
+
+
+<img id="pointerimg" style="visibility:hidden;position:absolute;top:710px;left:500px;z-index:20" SRC="fing5_nw.gif" />
+
+
+</body>
+</html>

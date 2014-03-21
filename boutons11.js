@@ -38,7 +38,7 @@ function rejouer() {
   gNbRejoues += 1;
   clear_all();
   diffusePhrase();
-  document.getElementById('phrase').innerHTML = "";
+  
 
   //document.getElementById('Brecommencer').style.visibility='hidden';
 }
