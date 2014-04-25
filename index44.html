@@ -4,11 +4,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="0">
   <meta http-equiv="Pragma" content="no-cache">
-  <meta name="viewport" content="width=1280, initial-scale=1">
   
+  <meta name="viewport" content="width=1280, initial-scale=1">
+
+
 
 <title>Orthographe grammaticale</title>
-
 
 <script type="text/javascript" src="jquery.js"></script>
 <style type="text/css"> 
@@ -17,22 +18,11 @@ table {
   table-layout:fixed;
   left : 0px;
 }
-html {
-  margin:0;
-  padding:0;
-  background-color:  #666666;
-  -webkit-background-size: cover; /* pour Chrome et Safari */
-  -moz-background-size: cover; /* pour Firefox */
-  -o-background-size: cover; /* pour Opera */
-  background-size: cover; /* version standardisée */
-}
-
 
 body,td,th,div {
  font-family: "Comic Sans MS", sans-serif;
 }
 body {
-  overflow:hidden;
   margin: 0; /* pour éviter les marges */
 }
 #global {
@@ -87,11 +77,6 @@ function html5_audio(){
 function init() {
  //console.log("init 5");
  
-  doResize();
-
-  window.onresize = function (event) {
-    doResize();
-  }
   $(document).keypress(function(e) { 
     if(e.which == 13) { 
       //console.log("main returnkey");// enter pressed 
@@ -101,43 +86,6 @@ function init() {
 
   html5_audio();
 }
-
-function doResize() {
-  if (window.opera) return;
-  var ww = $(window).width();
-  var screenW = screen.width;
-  //if (ww == screenW) return;
-  
-  var element = document.getElementById('main');
-  
-  var scaleH = $(window).height() / 760;
-  var scaleW = $(window).width() / 1280;
-  var scale = scaleH < scaleW ? scaleH : scaleW;
-  //console.log("scale " + scale);
-
-  var ww = $(window).width();
-
-  var translateX = (ww - 1280) / (2);
-  
-  var translateString = ' translateX(' + translateX + 'px)';
-  
-  var transformString = 'scale('+ scale + ')';
-  if (translateX < 0) transformString += translateString;  //nécessaire mais je ne sais pas pourquoi!
-  
-  
-  element.style.webkitTransform = transformString;
-
-  element.style.MozTransform = transformString;
- 
-  element.style.msTransform = transformString;
-
-  //element.style.OTransform = transformString;
-
-  element.style.transform = transformString;
-  
-
-}
-
 
 
 function leave() {
@@ -150,7 +98,7 @@ function corpusInit() {
 }
 function corpusInit2() {
   
-  og.location = 'menu.html?version=45';
+  og.location = 'menu.html?version=44';
   //if (window.File && window.FileList && window.FileReader)//console.log("File OK");
   gPhraseOrder = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
   var pc = corpus;
@@ -170,19 +118,18 @@ function corpusInit2() {
     } else {
        if (ba.program == 1) {
           //console.log("P1A7x " + pc.corData.length);
-          if ( ba.activity == 2 ||  ba.activity == 4) ba.showCarres(pc.corData.length,pc.corData.length);
-          else if ( ba.activity == 7) ba.showCarres(pc.corData.length/2,pc.corData.length/2);
+          if ( ba.activity == 7) ba.showCarres(pc.corData.length/2,pc.corData.length/2);
           else ba.showCarres(pc.corData.length,0);
       } else ba.showCarres(pc.corData.length,0);
     }
     //console.log("frame start");
-    og.location = "frame" +  ba.program + ba.activity + ".html?version=45";
+    og.location = "frame" +  ba.program + ba.activity + ".html?version=44";
   } else {
-    if (ba.activity==2 || ba.activity==4 || ba.activity==6 ) og.location = "frame" +  ba.program + ba.activity + ".html?version=45";
+    if ((ba.program==1 && ba.activity==6) || (ba.program==3 && (ba.activity==1 || ba.activity==3)) || (ba.program==4 && ba.activity==3) || (ba.program==5 && (ba.activity==1 || ba.activity==4))) og.location = "frame" +  ba.program + ba.activity + ".html?version=44";
     else {
-      ba.titre =  "GN " + ba.activity + '- '+ ba.activites[ba.activity][0];
+      ba.titre =  "Démo pour " + ba.activites[ba.activity];
       //console.log(ba.titre);
-      og.location = "startPage" + ba.program + ".html?version=45";
+      og.location = "startPage" + ba.program + ".html?version=44";
       
     }
   }
@@ -286,19 +233,18 @@ function play_sound(url){
 
 </script>
 </head>
-<body id='main' onLoad='javascript:init();'>
+<body onLoad='javascript:init();'>
 <div id='global'>
-
 <iframe id="corpus" name="corpus" src="blank.html" style="position:absolute; top:0px; left:0px; z-index:10; background-color: #000000;" height=100 width=100 frameborder=0 scrolling = no>
 </iframe>
 
-<iframe name="og" src="menu.html?version=45" style="position:absolute; top:0px; left:0px; background-color: #000000;" height=760 width=1280 frameborder=0 scrolling = no>
+<iframe name="og" src="menu.html?version=44" style="position:absolute; top:0px; left:0px; background-color: #000000;" height=760 width=1280 frameborder=0 scrolling = no>
 </iframe>    
     
-<iframe name="ba" src="banner.html?version=45" style="position:absolute; top:100px; left:0px; z-index:10; background-color: #000000;" height=600 width=100 frameborder=0 scrolling = no>
+<iframe name="ba" src="banner.html?version=44" style="position:absolute; top:100px; left:0px; z-index:10; background-color: #000000;" height=600 width=100 frameborder=0 scrolling = no>
 </iframe>    
 
-<iframe name="boutons" src="boutons.html?version=45" style="position:absolute; top:200px; left:1180px; z-index:10; background-color: #000000;" height=560 width=100 frameborder=0 scrolling = no>
+<iframe name="boutons" src="boutons.html?version=44" style="position:absolute; top:200px; left:1180px; z-index:10; background-color: #000000;" height=560 width=100 frameborder=0 scrolling = no>
 </iframe>
 
 <img id="parentPointerimg" style="visibility:hidden;position:absolute;top:710px;left:500px;z-index:20" SRC="fing5_nw.gif" />
