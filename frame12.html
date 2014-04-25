@@ -64,20 +64,28 @@ div.bordnoir {
 
 div.textinput {
  position: absolute;
- top: 655px; left: 50px;
+ top: 635px; left: 50px;
  height: 40px; width: 980px;
  background-color: #00ff00;
+ text-align:center;
  z-index: 3;}
 
-
+div.fondvert {
+ position: absolute;
+ top: 50px; left: 50px;
+ height: 560px; width: 980px;
+ background-color: #00ff00;
+ z-index: 2;}
+ 
 div.mots{
   position:absolute;
   left:0px;
   top:0px;
-  width:150px;
+  width:220px;
   height:40px;
-  font-size:24px;
-  color:#00ff00;
+  font-size:32px;
+  background-color: #00ff00;
+  color:#000000;
 }
 </style>
 <script language=javascript>
@@ -97,13 +105,13 @@ $(window).load(function(){
 <div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
 </div>
 <div id='verticalContainerD'>
-<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >Module 1  V 0.44</div>
+<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " ></div>
 </div>
-<div style="position:absolute; top:0px; left:50px;width:980px;">
+<div style="position:absolute; top:5px; left:50px;width:980px;height:40px;">
  <div Id ="titre" style="font-size:24px;vertical-align:middle;text-align:center"></div>
 </div>
 
-
+<div class = "fondvert">
 
 
 <div Id="t01" class="mots"></div>
@@ -131,13 +139,17 @@ $(window).load(function(){
 <div Id="t23" class="mots"></div>
 <div Id="t24" class="mots"></div>
 
+<img id="pointerimg" style="visibility:hidden;position:absolute;top:710px;left:500px;z-index:20;" SRC="fing5_nw.gif" />
+
+</div>
+
 <div  class="textinput" >
-  <span Id ="phrase" style="font-size:26px; margin-left:20px;vertical-align:center";></span>
+  <span Id ="phrase" style="font-size:26px; vertical-align:center";></span>
 </div>
 
 
 
-<img id="pointerimg" style="visibility:hidden;position:absolute;top:710px;left:500px;z-index:20;" SRC="fing5_nw.gif" />
+
 
 </div>
 </div>

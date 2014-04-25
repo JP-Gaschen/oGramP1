@@ -64,6 +64,7 @@ function init() {
   gPhase = 1;
 
   parent.og.document.getElementById("titre").innerHTML = parent.ba.titre;
+  parent.og.document.getElementById("module").innerHTML =  parent.ba.module;
 
   if (parent.gPhase == 1) {
     gPhase = 1
@@ -83,17 +84,26 @@ function init() {
     clear_all();
 
     // abstractions pour les noms
-    montreAbstractions01(0);
-    montreAbstractions01(1);
+    //montreAbstractions01(0);
+    //montreAbstractions01(1);
+    
+    frames[2].document.getElementById('Sp').innerHTML = "un";
+    frames[3].document.getElementById('Sp').innerHTML = "une";
+    frames[4].document.getElementById('Sp').innerHTML = "des";
+    frames[5].document.getElementById('Sp').innerHTML = "des";
+       
+    //animate1 (id,widthF,leftD,widthD,duration)
+    animate1("p",120,133,124,3000);
+    animate1("s",120,10,123,3000);
+
+    animate3("fp",120,630,124,3000);
+    animate3("mp",120,509,121,3000);
+    animate3("fs",120,388,121,3000);
+    animate3("ms",120,265,123,3000);
   
-    animate3("fp",90,485,94,3000);
-    animate3("mp",90,394,91,3000);
-    animate3("fs",90,303,91,3000);
-    animate3("ms",90,210,93,3000);
   
-  
-    frames[0].registerClick2 ("#00ff00");
-    frames[1].registerClick2 ("#00ff00");
+    //frames[0].registerClick2 ("#00ff00");
+    //frames[1].registerClick2 ("#00ff00");
   
   // abstractions déjà vues pour les adjectifs
     montreAbstractions03(0,parent.ba.serie - 1);
@@ -109,7 +119,8 @@ function init() {
        parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
        window.setTimeout(startDemo,5000);
     } else {
-      parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+      //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+      parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
       parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
       parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
     //parent.ba.showCarres(pc.nPhase1,pcd.length-pc.nPhase1);
@@ -149,7 +160,8 @@ function init() {
     gIgnoreClick = false;
     gNbPhrasesOk=0;
     parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
     parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
     parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
   }
@@ -257,12 +269,39 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=44';
+      parent.og.location = 'menu.html?version=45';
       parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
     }
  
   frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
 }
+
+function animate1 (id,widthF,leftD,widthD,duration) {
+  //console.log("animate1 " + id);
+  ////console.log($("#"+id).position().left);
+  var animF = {};
+  //animF["left"] = "" + left + "px";
+  animF["width"] = "" + widthF + "px";
+  ////console.log(anim['left']);
+  //$("#"+id).each(function() {
+  //  //console.log(this.innerHTML);
+  //  });
+  var didF = "#F1"+id;
+  $(didF).animate(animF,duration);
+  
+  var animD = {};
+  animD["left"] = "" + leftD + "px";
+  animD["width"] = "" + (widthD) + "px";
+
+  ////console.log(anim['left']);
+  //$("#"+id).each(function() {
+  //  //console.log(this.innerHTML);
+  //  });
+  var didD = ".box1"+id;
+  $(didD).animate(animD,duration);
+  
+  //$(did).animate({left:10},2000);
+} 
 
 function animate3 (id,widthF,leftD,widthD,duration) {
   ////console.log("animate2 " + id);
@@ -296,7 +335,7 @@ function animate3 (id,widthF,leftD,widthD,duration) {
 function clear13() {
 var myframes = window.frames;
   
-  var frameNumbers = [2,3,4,5];
+  var frameNumbers = gPhase == 1 ?[0,1] : [2,3,4,5];
   for (var i=0; i<frameNumbers.length; i++) {
     j = frameNumbers[i];
     //console.log(" i " + i + " j " + j + " " + myframes[j].document.getElementById('Sp').innerHTML);
@@ -330,11 +369,11 @@ function auSuivant() {
   } else if (gPhase == 2) {
     ////console.log("auSuivant 3");  // fin de phase 2
     parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-    parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+    //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
     var nEx = pc.corData.length - pc.nPhase1;
     var nOk = nEx - gNbRate;
     alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
-    if (parent.ba.serie == 6) parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=44";
+    if (parent.ba.serie == 6) parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=45";
     else setTimeout(parent.boutons.showMenu,2000);
   } else {
       ////console.log("auSuivant 4");  // fin de phase 1
@@ -348,9 +387,13 @@ function auSuivant() {
         gIgnoreClick = true;
         parent.og.document.getElementById('phrase').innerHTML = "observez";
         parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-        parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+        //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
       
+        
         setTimeout (function() {addSuffix(0,0);},gPhase2Delay);
+        setTimeout (function() {addSuffix(0,1);},gPhase2Delay);
+        setTimeout (function() {addSuffix(0,2);},gPhase2Delay);
+        setTimeout (function() {addSuffix(0,3);},gPhase2Delay);
     }
 
   } 
@@ -380,13 +423,13 @@ function addSuffix(m,n) {
       pref = t[i].substring(0,indSuf);
       tSuf = suf;
     }
-    var w=frames[m+7].txtSize2(pref,16);
+    var w=frames[m+7].txtSize2(pref,20);
     var IdP = "Pref"+(i+1);
     var IdS = "Suff"+(i+1);
     if (i <= n){
     
-    tbl = "<table Id='" + IdP + "' style='position:absolute;top:"+topPos+"px;left:1px;vertical-align:middle'><tr style='height:20px;font-size:16px;'><td >" + pref + "</td></tr></table>\
-           <table Id='" + IdS + "' style='position:absolute;top:"+topPos+"px;left:"+(w+1)+"px;vertical-align:middle'><tr style='height:20px;font-size:16px;'><td class='suffix' style='width:22px;background:#cc60ff;text-align:center'>" + tSuf +"</td></tr></table>";
+    tbl = "<table Id='" + IdP + "' style='position:absolute;top:"+topPos+"px;left:1px;vertical-align:middle'><tr style='height:20px;font-size:20px;'><td >" + pref + "</td></tr></table>\
+           <table Id='" + IdS + "' style='position:absolute;top:"+topPos+"px;left:"+(w+1)+"px;vertical-align:middle'><tr style='height:20px;font-size:20px;'><td class='suffix' style='width:31px;background:#cc60ff;text-align:center'>" + tSuf +"</td></tr></table>";
     ////console.log(tbl);
     } else {
       tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle'><tr><td>" + t[i] + "</td></tr></table>";
@@ -403,12 +446,15 @@ function addSuffix(m,n) {
   });
 
   if (n == 0) {  //if (n < t.length -2) { 
-    setTimeout(function() {addSuffix(m,1,t)},gPhase2Delay);
-    setTimeout(function() {addSuffix(m,2,t)},gPhase2Delay);
-    setTimeout(function() {addSuffix(m,3,t)},gPhase2Delay);
+    //setTimeout(function() {addSuffix(m,1,t)},gPhase2Delay);
+    //setTimeout(function() {addSuffix(m,2,t)},gPhase2Delay);
+    //setTimeout(function() {addSuffix(m,3,t)},gPhase2Delay);
   } else if (m < 3  && n == 3) {
         //txt2 = frames[1].document.getElementById('Sp').innerHTML;
         setTimeout (function() {addSuffix(m+1,0);}, gPhase2Delay);
+        setTimeout (function() {addSuffix(m+1,1);}, gPhase2Delay);
+        setTimeout (function() {addSuffix(m+1,2);}, gPhase2Delay);
+        setTimeout (function() {addSuffix(m+1,3);}, gPhase2Delay);
   } else if (m == 3  && n == 3) {
     // une boucle ici ne fonctionne pas
     setTimeout (function() {cligneMots(0,0);},gPhase2Delay);
@@ -479,13 +525,13 @@ function collapse(m,n) {
       tSuf = suf;
     }
     
-    col2Txt += "<table Id='" + Id + "' style='position:absolute;top:"+topPos+"px;left:25px;vertical-align:middle'><tr><td  class='suffix' style='width:23px; background:#cc60ff;text-align:center;line-height:20px;'>" + tSuf +"</td></tr></table>";    
+    col2Txt += "<table Id='" + Id + "' style='position:absolute;top:"+topPos+"px;left:40px;vertical-align:middle'><tr><td  class='suffix' style='width:31px; background:#cc60ff;text-align:center;line-height:20px;'>" + tSuf +"</td></tr></table>";    
     
     
   }
   newTxt += "<div>";
   
-  newTxt += "<span style='width:23px;line-height:24px;'>" + col2Txt + "</span>";
+  newTxt += "<span style='width:31px;line-height:24px;'>" + col2Txt + "</span>";
   newTxt += "</div>";
   ////console.log(newTxt);
   
@@ -506,7 +552,7 @@ function collapse(m,n) {
 function montreAbstractions01(m) {
   //console.log("montreAbstractions0 m " + m);
   //if (m == 0 && n == 1) clear_all();
-  var newTxt = "<div class='abstractions' style='visibility:hidden;margin-left:25px; margin-right:auto;line-height: 20px'><span style='width:31px; font-size:16px;text-align:center;vertical-align:middle;'>";
+  var newTxt = "<div class='abstractions' style='visibility:hidden;margin-left:25px; margin-right:auto;line-height: 20px'><span style='width:31px; font-size:20px;text-align:center;vertical-align:middle;'>";
   for (var i=1; i < spSuffix01.length; i++) {
    //alert("i="+i + " " + t[i]);
    suf = spSuffix01[i][m];
@@ -537,13 +583,15 @@ function montreAbstractions03(m,n) {
   //alert("montreAbstractions03");
   //if (m == 0 && n == 1) clear_all();
   var serie = parent.ba.serie;
-  var newTxt = "<div class='abstractions' style='visibility:visible;margin-left:25px; margin-right:auto;line-height: 20px;'><span style='width:31px;font-size:16px;text-align:center;vertical-align:middle;'>";
+  var margin = 39;
+  if (gPhase == 2)  margin = 19;
+  var newTxt = "<div class='abstractions' style='visibility:visible;margin-left:" + margin + "px; margin-right:auto;line-height: 20px;'><span style='width:31px;font-size:20px;text-align:center;vertical-align:middle;'>";
   for (var i=1; i <= n; i++) {
    //alert("i="+i + " " + t[i]);
    suf = spmfSuffix03[i][m];
    if (suf == "") {suf="&nbsp"}
    
-    tbl = "<table><tr><td id='" + m + "' class='suffix' style='width:23px;text-align:center'>" + suf +"</td></tr></table>";
+    tbl = "<table><tr><td id='" + m + "' class='suffix' style='width:31px;text-align:center'>" + suf +"</td></tr></table>";
   // tbl = "<table width='12px' height='12px' style='border: 1px solid #000;background:#00ff00'><tr><td style='width:12px;align:center'>" + suf +"</td></tr></table>";
    if (suf != " ") {newTxt += "<span> " + tbl + " </span>";}
   }
@@ -563,16 +611,16 @@ function hidePointer() {
 }
 
 function process_click_global(w){
-  //console.log("click_global ");
+ //console.log("click_global ");
   if (gIgnoreClick  && !parent.isDemo) {return;}
   if (!parent.isDemo) parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-  ////console.log('clique ' + window.name);
+ //console.log('clique ' + window.name);
   var cl = parseInt(w.name.substring(5));
   var c2 = w.name.substring(6);
   
-  if (cl == 1) {return;}  // click2 pour les noms
+  if (gPhase == 2 && cl == 1) {return;}  // click2 pour les noms
   if (gPhase == 2 && cl == 3) {return;}  // click2 pour les adjectifs
-  //console.log("process_click_global " + cl + c2);
+ //console.log("process_click_global " + cl + c2);
   
   //var w1 = window.parent;
   //var top = w1.parent;
@@ -600,11 +648,11 @@ function process_click_global(w){
       var txt = txt5.split(" ")[j];
       //alert (txt);
       var tbl = "<table  style='vertical-align:middle'><tr><td>" + txt + "</td></tr></table>";
-      var newTxt = "<div><span style='line-height:20px;font-size:16px;'>"  + tbl + "</span></div>";
+      var newTxt = "<div><span style='line-height:20px;font-size:20px;'>"  + tbl + "</span></div>";
       document.getElementById('phrase').innerHTML += txt + " ";
       if (gPhase == 1) {
         ////console.log(" " + exp1 + " " + exp2 + " " + txt);
-        if (exp1 == 2) {   // déterminants
+        if (exp1 == 1) {   // noms
           //if (gAffTxt[2][exp2-1].indexOf(txt+",") < 0) {
             w.document.getElementById('Sp').innerHTML += newTxt;
             //gAffTxt[2][exp2-1] += txt + ",";
@@ -713,7 +761,7 @@ function process_click2_global(w,ligne){
       }
     } else {
       gNbMotsKo += 1;
-      parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+      //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
     }
   } else gNbMotsKo += 1;
 
@@ -736,15 +784,12 @@ function startDemo(){
     var r;
     var x2;
     var y2;
-    if (exp3) {
+    if (exp1 == 1) {  //noms 
       gDemoFrame = document.getElementById("F" + exp1 + sp[exp2]);
       r = gDemoFrame.getBoundingClientRect(); 
-      gSuffixTd = $('td.suffix',frames[exp2-1].document).get(exp3 - 1);
-      gDemoLigne = exp3;
-      ////console.log(suf.outerHTML);
-      s = gSuffixTd.getBoundingClientRect();
-      x2 = r.left +(s.left + s.right)/2; 
-      y2 = r.top +(s.top + s.bottom)/2;
+      
+      x2 = (r.left + r.right)/2;
+      y2 = (r.top + r.bottom)/2; 
     } else {
       gDemoFrame = document.getElementById("F" + exp1 + spmf[exp2]);
       r = gDemoFrame.getBoundingClientRect();
@@ -789,8 +834,7 @@ function Glide(x1,y1,x2,y2)
         window.clearInterval(gIntervalId);
         //alert(gDemoFrame);
         var cl = parseInt(gDemoFrame.name.substring(5));
-        if (cl == 1) {gDemoFrame.contentWindow.process_click2(gDemoLigne,1)}
-        else {gDemoFrame.contentWindow.process_click(1);}
+        gDemoFrame.contentWindow.process_click(1);
     }else{
       p.style.left =xn.toString() + "px";
       p.style.top = yn.toString() + "px";

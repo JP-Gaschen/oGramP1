@@ -58,6 +58,7 @@ function init() {
   gInnerHtmlSaved = [["",""],["",""]];
 
   parent.og.document.getElementById("titre").innerHTML =  parent.ba.titre;
+  parent.og.document.getElementById("module").innerHTML =  parent.ba.module;
 
   if (parent.gPhase == 1) {
     gPhase = 1;
@@ -77,19 +78,26 @@ function init() {
     //$(".textinput").css("visibility","hidden");
     montreAbstractions0(0,parent.ba.serie - 1);
     montreAbstractions0(1,parent.ba.serie - 1);
+
+    //animate1 (id,widthF,leftD,widthD,duration)
+    animate1("p",120,133,124,3000);
+    animate1("s",120,10,123,3000);
+    
     if (parent.isDemo){
        parent.ba.hideCarres();
        parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
        window.setTimeout(startDemo,2000);
     } else {
-      parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+      //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+      parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
       parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
       parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
     //parent.ba.showCarres(pc.nPhase1,pcd.length-pc.nPhase1);
     }
   } else {  // phase 2
     $("#phrase").css("color", "#aaaaaa");
-    parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
     parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
     parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
     gNbPhrasesOk = 0;
@@ -101,12 +109,43 @@ function init() {
     gDemoFrame = null;
     montreAbstractions0(0,parent.ba.serie);
     montreAbstractions0(1,parent.ba.serie);
+    
+    
+    
+    
     frames[0].registerClick2 ("#00ff00");
     frames[1].registerClick2 ("#00ff00");
     frames[1].frameElement.style.left = '0px';
   }
   diffusePhrase();
 }
+
+function animate1 (id,widthF,leftD,widthD,duration) {
+  //console.log("animate1 " + id);
+  ////console.log($("#"+id).position().left);
+  var animF = {};
+  //animF["left"] = "" + left + "px";
+  animF["width"] = "" + widthF + "px";
+  ////console.log(anim['left']);
+  //$("#"+id).each(function() {
+  //  //console.log(this.innerHTML);
+  //  });
+  var didF = "#F1"+id;
+  $(didF).animate(animF,duration);
+  
+  var animD = {};
+  animD["left"] = "" + leftD + "px";
+  animD["width"] = "" + (widthD) + "px";
+
+  ////console.log(anim['left']);
+  //$("#"+id).each(function() {
+  //  //console.log(this.innerHTML);
+  //  });
+  var didD = ".box1"+id;
+  $(didD).animate(animD,duration);
+  
+  //$(did).animate({left:10},2000);
+} 
 
 
 function clear_all() {
@@ -174,7 +213,7 @@ function diffusePhrase() {
   saveStartState();
   if (gPhase==2) $("#phrase").css("color", "#aaaaaa");
   parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-  parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+  //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
   //document.getElementById('Brejouer').style.visibility='hidden';
   rediffusePhrase();
 }
@@ -217,7 +256,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=44';
+      parent.og.location = 'menu.html?version=45';
       parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
     }
  
@@ -265,7 +304,7 @@ function auSuivant() {
       var nEx = pc.corData.length - pc.nPhase1;
       var nOk = nEx - gNbRate;
       alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
-      if (parent.ba.serie == 8)parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=44";
+      if (parent.ba.serie == 8)parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=45";
     else setTimeout(parent.boutons.showMenu,2000);
   } else {
     //console.log("auSuivant 4");  // fin de phase 1
@@ -278,17 +317,21 @@ function auSuivant() {
       gIgnoreClick = true;
       document.getElementById('phrase').innerHTML = "observez";
       parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-      parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+      //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
       if (gAffTxt[1][0] == "") {
         setTimeout (function() {addSuffix(1,0);},gPhase2Delay);  // ligne 8
       } else {
         setTimeout (function() {addSuffix(0,0);},gPhase2Delay);
+        setTimeout (function() {addSuffix(0,1);},gPhase2Delay);
+        setTimeout (function() {addSuffix(0,2);},gPhase2Delay);
+        setTimeout (function() {addSuffix(0,3);},gPhase2Delay);
       }
      }
   } 
 }
 
 function montreTxt1(m) {
+  //console.log('montreTxt1');
   var serie = parent.ba.serie;
   var t = gAffTxt[1][m].split(",");
   
@@ -296,17 +339,18 @@ function montreTxt1(m) {
 
   for (var i=0; i<t.length - 1; i++) {
     var topPos = 20*i + (serie-1) * 20;
-    var tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle'><tr><td>" + t[i] + "</td></tr></table>";
+    var tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle;'><tr><td>" + t[i] + "</td></tr></table>";
     newTxt += "<div><span style='line-height:20px;'>"  + tbl + "</span></div>";
     
     
   }
   newTxt +=  "</div>";
-  ////console.log(newTxt);
+  //console.log(newTxt);
   frames[m].document.getElementById('Sp').innerHTML = newTxt;
 }
 
 function montreTxt2(m) {
+  //console.log('montreTxt2');
   var serie = parent.ba.serie;
   var t = gAffTxt[2][m].split(",");
   
@@ -314,13 +358,13 @@ function montreTxt2(m) {
 
   for (var i=0; i<t.length - 1; i++) {
     var topPos = 20*i + (serie-1) * 20;
-    var tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle'><tr><td>" + t[i] + "</td></tr></table>";
+    var tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle;font-size:34px;'><tr><td>" + t[i] + "</td></tr></table>";
     newTxt += "<div><span style='line-height:20px;'>"  + tbl + "</span></div>";
     
     
   }
   newTxt +=  "</div>";
-  ////console.log(newTxt);
+  //console.log(newTxt);
   frames[m+2].document.getElementById('Sp').innerHTML = newTxt;
 }
 
@@ -347,20 +391,20 @@ function addSuffix(m,n) {
       pref = t[i].substring(0,indSuf);
       tSuf = suf;
     }
-    var w=frames[m].txtSize2(pref,16);
+    var w=frames[m].txtSize2(pref,20);
     //console.log(w);
     var IdP = "Pref"+(i+1);
     var IdS = "Suff"+(i+1);
     if (i <= n){
     
-    tbl = "<table Id='" + IdP + "' style='position:absolute;top:"+topPos+"px;left:1px;vertical-align:middle'><tr style='height:20px;font-size:16px;'><td >" + pref + "</td></tr></table>\
-           <table Id='" + IdS + "' style='position:absolute;top:"+topPos+"px;left:"+(w+1)+"px;vertical-align:middle'><tr style='height:20px;font-size:16px;'><td class='suffix' style='width:31px; background:#00ff00;text-align:center'>" + tSuf +"</td></tr></table>";
+    tbl = "<table Id='" + IdP + "' style='position:absolute;top:"+topPos+"px;left:1px;vertical-align:middle'><tr style='height:20px;font-size:20px;'><td >" + pref + "</td></tr></table>\
+           <table Id='" + IdS + "' style='position:absolute;top:"+topPos+"px;left:"+(w+1)+"px;vertical-align:middle'><tr style='height:20px;font-size:20px;'><td class='suffix' style='width:31px; background:#00ff00;text-align:center'>" + tSuf +"</td></tr></table>";
     ////console.log(tbl);
     } else {
       tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle'><tr><td>" + t[i] + "</td></tr></table>";
     }
     
-    newTxt += "<span style='line-height:20px;'>"  + tbl + "</span>";
+    newTxt += "<span style='line-height:20px;font-size:20px;'>"  + tbl + "</span>";
     
   }
   newTxt +=  "</div>";
@@ -370,10 +414,13 @@ function addSuffix(m,n) {
     this.style.backgroundColor = "#00ff00"; 
   });
   if (n < t.length -2) { 
-    setTimeout(function() {addSuffix(m,n+1,t)},gPhase2Delay);
+    //setTimeout(function() {addSuffix(m,n+1,t)},gPhase2Delay);
   } else if (m == 0) {
         //txt2 = frames[1].document.getElementById('Sp').innerHTML;
         setTimeout (function() {addSuffix(1,0);}, gPhase2Delay);
+        setTimeout (function() {addSuffix(1,1);}, gPhase2Delay);
+        setTimeout (function() {addSuffix(1,2);}, gPhase2Delay);
+        setTimeout (function() {addSuffix(1,3);}, gPhase2Delay);
   } else if (gAffTxt[1][0] == "") {   // ligne 8
     setTimeout (function() {cligneMots(1,0);},gPhase2Delay);
     setTimeout (function() {cligneMots(1,1);},gPhase2Delay);
@@ -434,7 +481,7 @@ function collapse(m,n) {
       tSuf = suf;
     }
     
-    col2Txt += "<table Id='" + Id + "' style='position:absolute;top:"+topPos+"px;left:25px;vertical-align:middle'><tr><td  class='suffix' style='width:31px; background:#00ff00;text-align:center;line-height:20px;'>" + tSuf +"</td></tr></table>";
+    col2Txt += "<table Id='" + Id + "' style='position:absolute;top:"+topPos+"px;left:40px;vertical-align:middle'><tr><td  class='suffix' style='width:31px; background:#00ff00;text-align:center;line-height:20px;font-size:20px;'>" + tSuf +"</td></tr></table>";
     
     
     
@@ -464,7 +511,7 @@ function collapse(m,n) {
 function montreAbstractions0(m,n) {
   //console.log("montreAbstractions0 m " + m);
   //if (m == 0 && n == 1) clear_all();
-  var newTxt = "<div class='abstractions' style='visibility:hidden;margin-left:25px; margin-right:auto;line-height: 20px;'><span style='width:31px; font-size:16px;text-align:center;vertical-align:middle;'>";
+  var newTxt = "<div class='abstractions' style='visibility:hidden;margin-left:25px; margin-right:auto;line-height: 20px;'><span style='width:31px; font-size:20px;text-align:center;vertical-align:middle;'>";
   for (var i=1; i <= n; i++) {
    //alert("i="+i + " " + t[i]);
    suf = spSuffix[i][m];
@@ -496,7 +543,7 @@ function process_click_global(w){
   if (gIgnoreClick  && !parent.isDemo) {return;}
   if (!parent.isDemo) {
     if (gPhase==1) parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
   }
   //console.log('clique ' + window.name);
   var cl = parseInt(w.name.substring(5));
@@ -530,7 +577,7 @@ function process_click_global(w){
       var txt = txt5.split(" ")[j];
       //console.log( w.document.getElementById('Sp').innerHTML);
       var tbl = "<table  style='vertical-align:middle'><tr><td>" + txt + "</td></tr></table>";
-      var newTxt = "<div><span style='line-height:20px;font-size:16px;'>"  + tbl + "</span></div>";
+      var newTxt = "<div><span style='line-height:20px;font-size:20px;'>"  + tbl + "</span></div>";
       //var newTxt = "<span style='line-height:16px;'>, "  + txt + "</span>";
       //console.log(newTxt);
       if (gPhase==2) document.getElementById('phrase').innerHTML += txt + " ";
@@ -583,7 +630,7 @@ function process_click2_global(w,ligne){
   //console.log("click2_global "  + ligne);
   if (!parent.isDemo) {
     if (gPhase==1) parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
   }
   if (gIgnoreClick) {return;}
   var pc = top.frames[0];

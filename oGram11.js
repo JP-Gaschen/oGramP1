@@ -27,6 +27,7 @@ function init() {
   gNbMotsKo = 0;
   
   parent.og.document.getElementById("titre").innerHTML =  parent.ba.titre;
+  parent.og.document.getElementById("module").innerHTML =  parent.ba.module;
   //top.moveTo(0,0); 
   //top.resizeTo(1280,800); 
   
@@ -40,11 +41,12 @@ function init() {
   if (parent.isDemo){
      parent.ba.hideCarres();
      parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
-     parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+     //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
      parent.boutons.document.getElementById('Breecouter').style.visibility='hidden';
      window.setTimeout(startDemo,2000);
   } else {
-    parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
     parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
     parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
     //parent.ba.showCarres(pcd.length,0);
@@ -98,7 +100,7 @@ function continuer() {
     }
   } else {
     parent.ba.init();
-    parent.og.location = 'menu.html?version=44';
+    parent.og.location = 'menu.html?version=45';
     parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
   }
  
@@ -108,7 +110,7 @@ function infoCompl() {
   myframes = window.frames;
   gInfoCompl = true;
   document.getElementById("Resume2").style.visibility='hidden';
-  $('#Resume2').attr("src", "infoComplP1A1.html?version=44");
+  $('#Resume2').attr("src", "infoComplP1A1.html?version=45");
   document.getElementById("Bcontinuer").innerHTML = 'Continuer';
   document.getElementById("BinfoCompl").style.visibility='hidden';
   $('#Resume2').load(initResume);
@@ -118,9 +120,10 @@ function clear_all() {
   //frames = document.getElementsByTagName("IFRAME");
   myframes = window.frames;
   for (var i=0; i<myframes.length; i++){
-    //alert(i);
+    //console.log(myframes[i].document.getElementById('Sp').outerHTML);
     myframes[i].document.getElementById('Sp').innerHTML = "";
-    }
+    //console.log(myframes[i].document.getElementById('Sp').outerHTML);
+  }
 }
 
 function clearBGC() {
@@ -132,7 +135,7 @@ function clearBGC() {
 
 
 function auSuivant() {
-  //console.log("Au suivant.11");
+  //console.log("Au suivant 11");
 
   clear_all();
   var pc = parent.corpus;
@@ -155,9 +158,9 @@ function auSuivant() {
         if (nOk == nEx && parent.ba.serie > 1) alert("Vous pouvez, si vous le voulez, passer à l'activité suivante.");
         //alert("fini")};
         parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-        parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+        //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
         parent.boutons.document.getElementById('Breecouter').style.visibility='hidden';
-        if (parent.ba.serie == 4)  parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=44";
+        if (parent.ba.serie == 4)  parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=45";
         else setTimeout(parent.boutons.showMenu,2000);
     }
   } 
@@ -246,7 +249,7 @@ function process_click_global(w){
       //parent.boutons.document.getElementById('Brecommencer').style.visibility='visible';
     }
   } else gNbMotsKo += 1;
-  window.setTimeout(clearBGC,400);
+  //window.setTimeout(clearBGC,400);
 }
 
 

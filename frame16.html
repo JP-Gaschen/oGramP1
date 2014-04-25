@@ -34,14 +34,12 @@ div.bordnoir {
  height: 700px; width: 1080px;
  background-color: #00bb00;
  z-index: 1;}
+ 
 div.textinput {
  position: absolute;
  top: 290px; left: 50px;
- height: 60px; width: 980px;
- background-color: #ffffff;
- border-style : solid;
- border-width : 3px;
- border-color: #999999;
+ height: 70px; width: 980px;
+ background-color: #00ff00;
  z-index: 2;}
 
  #verticalContainerG {
@@ -89,21 +87,21 @@ $(window).load(function(){
 <div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
 </div>
 <div id='verticalContainerD'>
-<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >Module 1  V 0.44</div>
+<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " ></div>
 </div>
-<div style="position:absolute; top:0px; left:50px;width:980px;">
+<div style="position:absolute; top:5px; left:50px;width:980px;height:40px;">
  <div Id ="titre" style="font-size:24px;vertical-align:middle;text-align:center"></div>
 </div>
 
 <div class="textinput">
-  <div Id ="phrase" style="position:absolute; top:0px; left:20px; font-size:30px;" contentEditable='true'> ></div>
+  <div Id ="phrase" spellcheck="false" style="position:absolute; top:13px; left:20px; font-size:30px;" contentEditable='true'> ></div>
 </div>
 
 
 
 
-<div Id="Nouveau" style="visibility:hidden;position:absolute;top:250px;left:50px;z-index:20;font-size:30px;background-color:#dddddd;">Nouveau</div>
-<div Id="Ancien" style="visibility:hidden;position:absolute;top:391px;left:50px;z-index:10;font-size:30px;background-color:#dddddd;">Ancien</div>
+<div Id="Nouveau" style="visibility:hidden;position:absolute;top:250px;left:50px;z-index:20;font-size:30px;background-color:#00bb00;">Nouveau</div>
+<div Id="Ancien" style="visibility:hidden;position:absolute;top:391px;left:50px;z-index:10;font-size:30px;background-color:#00ff00;">Ancien</div>
 <img id="pointerimg" style="visibility:hidden;position:absolute;top:710px;left:500px;z-index:20;" SRC="fing5_nw.gif" />
 
 </div>

@@ -71,6 +71,12 @@ function init() {
   gNbMotsKo = 0;
  
   parent.og.document.getElementById("titre").innerHTML =  parent.ba.titre;
+  parent.og.document.getElementById("module").innerHTML =  parent.ba.module;
+  
+  $(".bouton").hover(function() { 
+        $(this).css('cursor','pointer'); }, function() { 
+        $(this).css('cursor','auto'); 
+  })
   
   diffusePhrase();
   if (parent.isDemo){
@@ -82,10 +88,11 @@ function init() {
   } else {
     parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
     //parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
+    parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
     var serie = parent.ba.serie;
     
     //parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    if (parent.ba.serie == 2) parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    //if (parent.ba.serie == 2) parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
     parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
     
     //for (var i=0; i<6; i++) {console.log(parent.gPhraseOrder[i]);}
@@ -107,8 +114,10 @@ function rediffusePhrase() {
   
   gIgnoreClick = false;
   document.getElementById('phrase').innerHTML=pcd[pc.iData][0];
-
-  if (parent.ba.serie == 2) setTimeout(clearPhrase,1200);
+  var nbMots = pcd[pc.iData][0].split(' ').length;
+  var t = 800 + 300*nbMots;
+ //console.log(nbMots);
+  if (parent.ba.serie == 2) setTimeout(clearPhrase,t);
 }
 
 function clearPhrase () {
@@ -127,7 +136,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=44';
+      parent.og.location = 'menu.html?version=45';
       parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
     }
  

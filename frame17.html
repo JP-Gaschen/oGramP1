@@ -38,13 +38,16 @@ div.bordnoir {
 div.textinput {
  position: absolute;
  top: 290px; left: 50px;
- height: 50px; width: 980px;
- background-color: #ffffff;
- border-style : solid;
- border-width : 3px;
- border-color: #999999;
+ height: 70px; width: 980px;
+ background-color: #00ff00;
  z-index: 2;}
 
+div.bouton {
+ position: absolute;
+ 
+ text-align:center;
+ background-color: #00ff00;
+ z-index: 2;}
  #verticalContainerG {
    position:absolute;
    top:330px;
@@ -91,19 +94,20 @@ $(window).load(function(){
 <div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
 </div>
 <div id='verticalContainerD'>
-<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >Module 1  V 0.44</div>
+<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " ></div>
 </div>
-<div style="position:absolute; top:0px; left:50px;width:980px;">
+<div style="position:absolute; top:5px; left:50px;width:980px;height:40px;">
  <div Id ="titre" style="font-size:24px;vertical-align:middle;text-align:center"></div>
 </div>
 
 
-<div  class="textinput" >
-  <div Id ="phrase" style="font-size:26px; margin-left:20px;vertical-align:center";></div>
+<div class="textinput">
+  <div Id ="phrase" style="position:absolute; top:13px; left:20px; font-size:30px;"> ></div>
 </div>
 
-<button Id="bCorrect" style="font-size:26px;position:absolute;top:400px;left:300px;width:130px" onclick = "javascript:validerOK();"  type="button">Correct</button>
-<button Id="bIncorrect" style="font-size:26px;position:absolute;top:400px;left:500px;width:130px" onclick = "javascript:validerKO();"  type="button">Incorrect</button>
+
+<div Id="bCorrect" class='bouton' style="font-size:26px;position:absolute;top:440px;left:360px;width:130px;" onclick = "javascript:validerOK();"  type="button">Correct</div>
+<div Id="bIncorrect" class='bouton' style="font-size:26px;position:absolute;top:440px;left:590px;width:130px;" onclick = "javascript:validerKO();"  type="button">Incorrect</div>
 
 <img id="pointerimg" style="visibility:hidden;position:absolute;top:710px;left:500px;z-index:20;" SRC="fing5_nw.gif" />
 

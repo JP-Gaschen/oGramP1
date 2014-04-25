@@ -6,7 +6,8 @@ function init() {
 
   
   document.getElementById('Bvalider').style.visibility='hidden';
-  document.getElementById('Brejouer').style.visibility='hidden';
+  //document.getElementById('Brejouer').style.visibility='hidden';
+  document.getElementById('Bconsigne').style.visibility='hidden';
   document.getElementById('Breecouter').style.visibility='hidden';
   document.getElementById('displayMenu').style.visibility='hidden';
   parent.document.getElementById('verbe6').style.visibility='hidden';
@@ -30,7 +31,7 @@ function showMenu() {
 
   parent.ba.hideCarres();
 
-  parent.og.location = 'menu.html?version=44';
+  parent.og.location = 'menu.html?version=45';
 }
 function displayResume() {
   var myFrames = parent.og.window.frames;
@@ -56,7 +57,24 @@ function valider() {
 
 
 function rejouer() {
-  parent.og.rejouer();
+  //parent.og.rejouer();
+}
+
+function consigne () {
+  var dp = "" + parent.ba.program;
+  var da = "" + parent.ba.activity;
+  //while (da.length < 2) {da = "0" + da;}
+  
+  var dirn = "consP" + dp;
+  var fname = dirn + "/" + parent.audioType + "/" + "A" + da;
+  if (parent.ba.activity == 3 || parent.ba.activity == 5) fname += '-' + parent.gPhase;
+  if (parent.ba.activity == 7 && parent.ba.serie == 1) fname += '-A';
+  if (parent.ba.activity == 7 && parent.ba.serie == 2) fname += '-B';
+  var myFrames = parent.og.window.frames;
+  if (myFrames['Resume2']) fname =  dirn + "/" + parent.audioType + "/" + "Res";
+  
+  //console.log(fname);
+  parent.play_sound(fname);
 }
 
 function reecouter() {

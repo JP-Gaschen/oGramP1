@@ -2,7 +2,7 @@ var gNbPhrasesOk;
 
 
 var gNbErrors = 0;
-
+var gSelErrors = 0;
 
 var gNbRate = 0;
 
@@ -10,8 +10,13 @@ var gPlay_html5_audio = false;
 
 var gIgnoreClick = false;
 
-
-
+var gX0,gY0,gx2,gy2;
+var gElemP;
+var gElem;
+var gIdS,gIdP;
+var gDemoPhase;
+var gCligneDelay = 250;
+var gTxt;
 
 var selectedSingulier = 0;
 var motAttendu;
@@ -69,8 +74,12 @@ function init() {
   gNbPhrasesOk = 0;
   gNbMotsOk = 0;
   gNbMotsKo = 0;
- 
+
+  gX0 = 490;
+  gY0 = 500;
+  
   parent.og.document.getElementById("titre").innerHTML =  parent.ba.titre;
+  parent.og.document.getElementById("module").innerHTML =  parent.ba.module;
   parent.gPhraseOrder = parent.randsort(24);
    for (var i=0; i<24; i++)  {
      var j = parent.ranData(i) + 1;
@@ -82,11 +91,11 @@ function init() {
      //console.log(id);
      var mot = document.getElementById(id);
 
-     var lefti = 150 + 150 * (i % 4);
-     var topi = 200 + 50 * parseInt(i/4);
+     var lefti = 50 + 220 * (i % 4);
+     var topi = 140 + 50 * parseInt(i/4);
      mot.style.left = "" + lefti+"px";
      mot.style.top = "" + topi+"px";
-     mot.style.color = "#00ff00";
+     mot.style.color = "#000000";
      //console.log(mot.style.top);
      var mots = pcd[k-1][0].split(' ');
      
@@ -126,7 +135,7 @@ function init() {
     parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
     //for (var i=0; i<6; i++) parent.gPhraseOrder[i] = i;
     showPointer();
-    window.setTimeout(startDemo,4000);
+    window.setTimeout(startDemo,1000);
   } else {
     parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
     //parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
@@ -134,6 +143,7 @@ function init() {
     
     parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
     //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+    parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
     parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
     
     //for (var i=0; i<6; i++) {console.log(parent.gPhraseOrder[i]);}
@@ -150,6 +160,27 @@ function init() {
   //diffusePhrase();
 
 }
+
+//SET CURSOR POSITION
+function setCursor(node,pos){
+    var node = (typeof node == "string" || 
+    node instanceof String) ? document.getElementById(node) : node;
+        if(!node){
+            return false;
+        }else if(node.createTextRange){
+            var textRange = node.createTextRange();
+            textRange.collapse(true);
+            textRange.moveEnd(pos);
+            textRange.moveStart(pos);
+            textRange.select();
+            return true;
+        }else if(node.setSelectionRange){
+            node.setSelectionRange(pos,pos);
+            return true;
+        }
+        return false;
+    }
+
 function selectMot(id,iMot,txt) {
   var pc = parent.corpus;
   var pcd = pc.corData;
@@ -160,14 +191,14 @@ function selectMot(id,iMot,txt) {
   //console.log(pcd[k-1][0]);
   var mots = pcd[k-1][0].split(' ');
   //console.log(document.getElementById(id).style.color);
-  if (document.getElementById(id).style.color == 'rgb(0, 255, 0)') {
+  if (document.getElementById(id).style.color == 'rgb(0, 0, 0)') {
     if (selectedSingulier == 0) {
     
       if (txt == mots[1]) {
         selectedSingulier = k;
-        document.getElementById(id).style.color = '#007700';
+        document.getElementById(id).style.color = '#777777';
       } else {
-        //gNbErrors += 1;
+        gSelErrors += 1;
         //console.log("pas un singulier");
       }
     } else {
@@ -183,25 +214,15 @@ function selectMot(id,iMot,txt) {
         //console.log(phraseTxt);
         document.getElementById('phrase').innerHTML = phraseTxt;
         selectedSingulier = 0;
-        document.getElementById(id).style.color = '#007700';
-        $('#sp1').keyup(function (e) {
-          //console.log(document.getElementById('sp1').innerHTML);
-          document.getElementById('sp1').innerHTML = document.getElementById('sp1').innerHTML.replace(/oe/,'œ');
-          //console.log(document.getElementById('sp1').innerHTML);
-          document.getElementById('sp1').focus();
-        });
-  
-        $('#sp4').keyup(function (e) {
-          //console.log(document.getElementById('sp4').innerHTML);
-          document.getElementById('sp4').innerHTML = document.getElementById('sp4').innerHTML.replace(/oe/,'œ');
-          //console.log(document.getElementById('sp4').innerHTML);
-          document.getElementById('sp1').focus();
-        });
+        document.getElementById(id).style.color = '#777777';
+        
+        
+       
   
         setTimeout(efface,1200);
       } else {
         //console.log("mauvais 2e mot");
-        //gNbErrors += 1;
+        gSelErrors += 1;
       }
     }
   } else {
@@ -238,7 +259,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=44';
+      parent.og.location = 'menu.html?version=45';
       parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
     }
  
@@ -261,6 +282,7 @@ function auSuivant() {
   pc.kData += 1;
   
   gNbErrors = 0;
+  gSelErrors = 0;
   //if (pc.iData < pc.corData.length) {
   if (pc.kData < pc.corData.length) {
     //console.log("auSuivant 1");
@@ -279,7 +301,7 @@ function auSuivant() {
         hidePointer(); // test demo automatique
         
       } else {
-        var nEx = pc.corData.length;
+        var nEx = 2*pc.corData.length;
         var nOk = nEx - gNbRate;
         
         alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
@@ -294,7 +316,7 @@ function auSuivant() {
 
 function showPointer (){
   var p = document.getElementById("pointerimg");
-  //console.log("showPointer " + gX0 + " " + gY0);
+    //console.log("showPointer " + p.height);
     p.style.left = gX0.toString() + "px";
     p.style.top = gY0.toString() + "px";
     p.style.visibility = "visible"
@@ -313,70 +335,138 @@ function startDemo(){
   var pc = top.frames[0];
   var pcd = pc.corData;
   //alert(pcd);
-  var justesPoint = pcd[pc.iData+1][0] + gFinDePhrase;
-  var mots =$('#phrase').text().split(' ');
-  var phraseTxt = '';
-  for (var j=0; j<mots.length; j++)  {
-    if (j == pcd[pc.iData][2] - 1) phraseTxt += "<span id='s"+j+"' style='background-color:"+gGrise+";' >"+ mots[j]+ "</span>";
-    else phraseTxt += "<span id='s"+j+"' >"+ mots[j]+ "</span>";
-    if (j < mots.length - 1) phraseTxt += ' ';
-  }
-  //gsavedPhrase = document.getElementById('phrase').innerHTML;
-  document.getElementById('phrase').innerHTML = phraseTxt;
-      
+  var iDemo = 4;
+  var motS = pcd[iDemo-1][0].split(' ')[1];
+  var motP = pcd[iDemo-1][0].split(' ')[4];
+  //console.log(motS);
+  //console.log(motP);
   
-  montreNouveau(0);
-}
-function montreNouveau(n) {
-  //console.log('montreNouveau');
-  document.getElementById("Nouveau").style.visibility = 'hidden';
-  var pc = top.frames[0];
-  var pcd = pc.corData;
-  var mots =$('#phrase').text().split(' ');
-  var justesPoint = pcd[pc.iData+1][0] + gFinDePhrase;
-  justes = justesPoint.split(' ');
-  var k = 0;
-  gChars[n] = [];
-  if (n != pcd[pc.iData][2] - 1 && mots[n] != justes[n]){
-    var iCommun = -1;
-    var i=1;
-    while (mots[n].substring(0,i) == justes[n].substring(0,i)) i += 1;
-  //console.log("commun " + i + "  " + justes[n].substring(0,i-1));
-    for (var j = mots[n].length; j > i-1; j--) {
-      gChars[n][k] = mots[n].substring(0,j-1);
-    //console.log(gChars[n][k]);
-      k += 1;
-    }
-    for (var j= i; j<justes[n].length+1; j++ ) {
-      gChars[n][k] = justes[n].substring(0,j);
-    //console.log(gChars[k]);
-      k += 1;
-    }
-  //console.log(gChars);
-    var obj =document.getElementById('s' + n);
-    var cmd = "remplace(" + n + ",0)";
-    if (obj) cligne(obj,3,cmd);
-    if (n+1 < mots.length) setTimeout(function() {montreNouveau(n+1);},3000);
-    else setTimeout(parent.boutons.showMenu,4000);
+  for (var i=0; i<24; i++) {
+    n = '' + (i+1);
+    if (i < 9) n = '0' +n;
+    var id="t" + n;
+
+    var moti = document.getElementById(id).innerHTML;
+    if (moti == motS) gIdS = id;
+    if (moti == motP) gIdP = id;
   }
-  else if (n+1 < mots.length) montreNouveau(n+1);
-  else  setTimeout(parent.boutons.showMenu,2000);
+
+  var elemS = document.getElementById(gIdS);
+  
+  gElem = document.getElementById(gIdS);
+  gElemP = document.getElementById(gIdP);
+  
+  x2 = parseInt(elemS.style.left) + 50; 
+  y2 = parseInt(elemS.style.top) + 35;
+  gDemoPhase = 1;
+  setTimeout(function() {StartGlide(gX0,gY0,x2,y2)},2000);
 }
 
-function remplace (n,k) {
-  var pc = top.frames[0];
-  var pcd = pc.corData;
-//console.log("remplace " + n + " " + k);
-  var obj =document.getElementById('s' + n);
-  obj.innerHTML = gChars[n][k];
-  var sp =  document.getElementById('s' +  (pcd[pc.iData][2] - 1));
-    if (sp) {
-      var left = gLeft + sp.offsetLeft;
-      //document.getElementById('Nouveau').style.color="#00ff00";
-      document.getElementById('Nouveau').style.left = "" + left + "px";
+function demoSuite() {
+  hidePointer();
+  if (gDemoPhase == 1) {
+    var txt = document.getElementById(gIdS).innerHTML;
+    selectMot(gIdS,$('.mots').index(document.getElementById(gIdS)),txt);
+    gElem = gElemP;
+    x2 = parseInt(gElem.style.left) + 50; 
+    y2 = parseInt(gElem.style.top) + 35;
+    gDemoPhase = 2;
+    setTimeout(showPointer,1000);
+    setTimeout(function() {StartGlide(gX0,gY0,x2,y2)},2000);
+  } else {
+    var txt = document.getElementById(gIdP).innerHTML;
+    selectMot(gIdP,$('.mots').index(document.getElementById(gIdP)),txt);
+    setTimeout(finitDemo,2000);
+  
+  }
+  
+
+}
+
+function StartGlide(x1,y1,x2,y2) {
+    var p = document.getElementById("pointerimg");
+    //alert("startglide1 " + p.style.left);
+    //console.log("startGlide start " + x1 + " " + y1);
+    //console.log("startGlide end " + x2 + " " + y2);
+    p.style.left = x1.toString() + "px";
+    p.style.top = y1.toString() + "px";
+    p.style.visibility = "visible";
+    //alert("startglide2");
+    gX0 = 490;
+    gY0 = 500;
+    gNglide = 1;
+    gIntervalId = window.setInterval("Glide('" + x1 + "','" + y1 + "','" + x2 + "','" + y2 + "')",8);
+}
+function Glide(x1,y1,x2,y2)
+{
+    //console.log("glide "+gNglide);
+    var p =document.getElementById("pointerimg");
+    var xn = Math.round((gNglide*(x2 - x1))/100.0) + parseInt(x1);
+    var yn = Math.round((gNglide*(y2 - y1))/100.0) + parseInt(y1);
+    //console.log(xn + " " + yn);
+    gNglide += 1;
+    if (gNglide > 99) {
+    //alert(d);
+        p.style.left =x2.toString() + "px";
+        p.style.top = y2.toString() + "px";
+        window.clearInterval(gIntervalId);
+        //alert(gDemoFrame);
+        
+        var cmd="demoSuite()";
+        //var cmd = setTimeout(finitDemo,2000);
+        cligne(gElem,3,cmd);
+        //setTimeout(hidePointer,500);
+    }else{
+      p.style.left =xn.toString() + "px";
+      p.style.top = yn.toString() + "px";
     }
-  if (k+1 < gChars[n].length) setTimeout(function () {remplace(n,k+1);},200);
 }
 
+function prepareRetype() {
+//console.log("prepareRetype");
+//console.log( document.getElementById('phrase').innerHTML);
+  var spanId = 'verbe';
+  var spanIdPlus = '#'+spanId;
+ 
+//console.log(spanIdPlus);
+  var elem = document.getElementById(spanId);
+//console.log(elem.innerHTML);
+//console.log("prepareRetype " + spanId + " " + elem.innerHTML);
+  elem.contentEditable = true;
+  $(spanIdPlus).focus();
+  elem.innerHTML = "&nbsp;";
+  //setTimeout(function() {$('#verbe').focus();},1000);
+  //elem.focus();
 
+  $(spanIdPlus).unbind('keydown');
+   $(spanIdPlus).keydown(function (e) {
+    var keyCode = e.keyCode || e.which;
+    //console.log("keyDown " + keyCode);
+    if (keyCode == 13) {   // return
+    //console.log ("return in prepare ");
+      parent.boutons.valider();
+      return false;
+    }
+     
+  })
+}
+
+function finitDemo() {
+  //console.log("finit demo");
+  gNreveal = 0;
+  reveal();
+  gNreveal = 1;
+  gIntervalId = window.setInterval(reveal,400);
+}
+
+function reveal() {
+  var txt = motAttendu.substring(0,gNreveal);
+  document.getElementById(motReecrit).innerHTML = txt;
+  gNreveal += 1;
+  if (gNreveal > motAttendu.length) {
+    window.clearInterval(gIntervalId);
+    //setTimeout(auSuivant,3000);
+    setTimeout(parent.boutons.showMenu,2000);
+  }
+}
 

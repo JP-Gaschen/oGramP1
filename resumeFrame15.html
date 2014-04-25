@@ -5,7 +5,7 @@
 <title>Orthographe grammaticale</title>
 <script type="text/javascript" src="jquery.js"></script>
 
-<script type="text/javascript" src="oGram15.js?version=44"></script>
+<script type="text/javascript" src="oGram15.js?version=45"></script>
 
 <style type="text/css"> 
 
@@ -72,6 +72,7 @@ function initLocal() {
   $('tr',myFrames['Resume2'].document).addClass('hidden');
   $('tr p',myFrames['Resume2'].document).removeClass('hidden');
   document.getElementById("titre").innerHTML = parent.ba.titre;
+  document.getElementById("module").innerHTML = parent.ba.module;
   $('.hidden',myFrames['Resume2'].document).hide();
 
   continuer();
@@ -87,7 +88,7 @@ function initLocal() {
 <div class = "bordnoir">
 <div class = "bordvert">
 <div class="resume" id="Resume" style="visibility:hidden">
-<iframe id="Resume2" name="Resume2" src="resumeP1A5.html?version=44" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=494 width=974 frameborder=0 scrolling = yes>
+<iframe id="Resume2" name="Resume2" src="resumeP1A5.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=494 width=974 frameborder=0 scrolling = yes>
 </iframe>
 <button Id="Bcontinuer" style="position:absolute; top:530px; left:440px; z-index: 20; width:100px" onclick = "javascript:continuer();"  type="button">Continuer</button>
 </div>
@@ -95,7 +96,7 @@ function initLocal() {
 <div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
 </div>
 <div id='verticalContainerD'>
-<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >Module 1  V 0.44</div>
+<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " ></div>
 </div>
 <div style="position:absolute; top:5px; left:50px;width:980px;height:40px;">
  <div Id ="titre" style="font-size:24px;vertical-align:middle;text-align:center"></div>

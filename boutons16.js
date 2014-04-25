@@ -1,12 +1,13 @@
 
 function valider(n) {
-  n = n || 0
-
-  if (gIgnoreClick && !parent.isDemo) {return;}
+  n = n || 0;
   var pc = parent.corpus;
+  //console.log("valider 16 " + n + " ko " + gNbMotsKo + ' ' + pc.kData);
+  if (gIgnoreClick && !parent.isDemo) {return;}
+  
   var pcd = pc.corData;
   var myFrames = window.frames;
-  //console.log("valider 16 " + n + " ko " + gNbMotsKo + ' ' + pc.kData);
+
   var id = "c" + (pc.kData +1);
   var program = parent.ba.program;
   var activity = parent.ba.activity;
@@ -21,7 +22,7 @@ function valider(n) {
 
   var mots =phraseTxt.split(' ');
   //var mots = document.getElementById('phrase').innerHTML.split(' ');
-  var justesPoint = pcd[pc.iData+1][0].replace(/'/,"' ").replace(/-/,"- ").replace(/&apos;/, "'") + gFinDePhrase;
+  var justesPoint = pcd[pc.iData+1][0].replace(/'/,"' ").replace(/-/,"- ").replace(/&apos;/, "'");
   justes = justesPoint.split(' ');
 
   if (mots.length != justes.length) {

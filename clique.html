@@ -31,8 +31,10 @@ var lastColor;
 var lastPronom;
 
 $(document).ready(function(){
+  //console.log("clique init");
   init();
   $("div").mousedown(function(){
+  //console.log("mousedown on div");
   ////console.log(parent.gDemoFrame);
   if (parent.gIgnoreClick) {return;}
   ////console.log("m-down on div");
@@ -84,14 +86,33 @@ function init(){
     window.document.getElementById('Sp').innerHTML = HTMLTxt;;
     //console.log(window.document.getElementById('Sp').innerHTML);
   }
-}
+  $("#P1").click(function(e){
+     //console.log("clique on P1");
+     e.preventDefault();
+     e.stopPropagation();
+     
+     process_click();;
+  });
+  $("#Sp").mousedown(function(e){
+     //console.log("clique on Sp");
+     e.stopPropagation();
+     
+     process_click();;
+  });
+  $("#P1").hover(function() { 
+        $(this).css('cursor','pointer'); }, function() { 
+        $(this).css('cursor','auto'); 
+  })
 
+  //console.log("init fin");
+} 
+  
 function testClick(i,j){
   //console.log("test click " + i + "  " + j);
   parent.process_click2_global(window,i,j);
 }
 function process_click(demo){
-//console.log("process_click");
+  //console.log("process_click");
   if (parent.parent.isDemo) {
     if (!demo) return;
     //console.log("cligne");
@@ -245,11 +266,12 @@ function animate1 (id,duration) {
   //$("table").each(function () {//console.log($(this).position().top)});
   $("#"+id).animate({top: "-=20px"}, duration);
 }
+
 function animate2 (id,duration) {
   ////console.log("animate2 " + id);
   ////console.log($("#"+id).position().left);
   var anim = {};
-  anim["left"] = "25px";
+  anim["left"] = "40px";
   //anim["left"] = "" +(window.innerWidth-30) + "px";
   ////console.log(anim['left']);
   //$("#"+id).each(function() {
@@ -308,9 +330,8 @@ function getLastTopPos () {
 
 
 <body>
-<div Id="P1" style="position:absolute; background-color: #ffffff; top:0px; left:0px; width:100%; height:100%; padding-left:2px;padding-right:4px" onClick="JavaScript:process_click()">
-<span Id="Sp" style="line-height:20px;font-size:16px;">
-</span>
+<div Id="P1" style="position:absolute; background-color: #ffffff; top:0px; left:0px; width:100%; height:100%; padding-left:2px;padding-right:4px;">
+<span Id="Sp" style="line-height:20px;font-size:20px;"></span>
 </div>
 
 </body>

@@ -13,10 +13,12 @@ function valider() {
 //console.log("valider gNbMotsKo " + gNbMotsKo);
   ////console.log("valider nmots " + pcd[pc.iData].length.toString());
   if (gNbMotsOk ==  pcd[parent.ranData(pc.iData)].length - 1 ) {
-    parent.ba.document.getElementById(id).style.backgroundColor = "#00ff00";
+    
     if (gNbErrors == 0 && gNbRejoues < 2 && gNbMotsKo == 0) {
-        gNbPhrasesOk += 1;
+      parent.ba.document.getElementById(id).style.backgroundColor = "#00ff00";
+      gNbPhrasesOk += 1;
     } else {
+      parent.ba.document.getElementById(id).style.backgroundColor = "#ff0000";
       gNbPhrasesOk = 0;
       gNbRate += 1;
     }

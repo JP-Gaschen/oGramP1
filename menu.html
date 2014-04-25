@@ -65,13 +65,13 @@ div.zoneMenu{
 <script type="text/javascript">
 var activites =[
    [],
-   ["Reconnaître un nom, un déterminant, un adjectif"],
-   ["Se préparer: pluriel des noms"],
-   ["Accorder le nom avec son déterminant"],
-   ["Se préparer : accord des adjectifs"],
-   ["Accorder les adjectifs avec les noms"],
-   ["Maîtriser l'accord déterminant, nom, adjectif"],
-   ["Se tester"]
+   ["Reconnaître un nom, un déterminant, un adjectif",1,6,1],
+   ["Se familiariser avec les différentes sortes de noms",1,10,0],
+   ["Accorder les noms avec leurs déterminants",1,14,1],
+   ["Se familiariser avec les différentes sortes d'adjectifs",1,10,0],
+   ["Accorder les adjectifs avec les noms",1,12,1],
+   ["Maîtriser l'accord déterminant, nom, adjectif",1,6,0],
+   ["Se tester",0,2,0]
   ];
   
   
@@ -100,8 +100,7 @@ var series = [
   ["startSerie(1,2,7,1);","Série 7"],
   ["startSerie(1,2,8,1);","Série 8"],
   ["startSerie(1,2,9,1);","Série 9"],
-  ["startSerie(1,2,10,1);","Série 10"],
-  ["displayResume(1,2);","Résumé"]
+  ["startSerie(1,2,10,1);","Série 10"]
  ],
  [ 
   [],
@@ -134,8 +133,7 @@ var series = [
   ["startSerie(1,4,7,1);","Série 7"],
   ["startSerie(1,4,8,1);","Série 8"],
   ["startSerie(1,4,9,1);","Série 9"],
-  ["startSerie(1,4,10,1);","Série 10"],
-  ["displayResume(1,4);","Résumé"]
+  ["startSerie(1,4,10,1);","Série 10"]
  ],
  [ 
   [],
@@ -162,15 +160,12 @@ var series = [
   ["startSerie(1,6,3,1);","Série 3"],
   ["startSerie(1,6,4,1);","Série 4"],
   ["startSerie(1,6,5,1);","Série 5"],
-  ["startSerie(1,6,6,1);","Série 6"],
-  ["displayResume(1,6);","Résumé"]
+  ["startSerie(1,6,6,1);","Série 6"]
  ],
  [ 
   [],
-  ["startDemo(1,7);","Observer"],
-  ["startSerie(1,7,1,1);","Test A"],
-  ["startSerie(1,7,2,1);","Test B"],
-  ["displayResume(1,6);","Résumé"]
+  ["startSerie(1,7,1,2);","Test A"],
+  ["startSerie(1,7,2,2);","Test B"]
  ]
 ]
 $(window).load( function () {
@@ -184,14 +179,16 @@ $(document).ready( function () {
     parent.ba.activity = 0;
     page2(activity);
   } else {
-    var txt = "<div style='position:absolute; left:50px; font-size:32px; width:800px'>";
+    parent.og.document.getElementById("titre").innerHTML = 'Module 1: Le groupe nominal (GN)';
+    var txt = "<div style='position:absolute; left:40px; font-size:32px; width:880px;background-color : #00bb00;'>";
     var tPos;
     for (var i=1; i<activites.length; i++)  {
       tPos = 50 + 60*i;
     //<a href="#" onclick="dosomething(); return(false);">Some text here</a>
 
 
-      txt += "<a href='#'' id='m"+i+"' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none;' onClick='page2("+i+")'>"+ activites[i]+ "</a>";
+      //txt += "<a href='#'' id='m"+i+"' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none;border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00;' onClick='page2("+i+")'>"+ activites[i][0]+ "</a>";
+      txt += "<a href='#'' id='m"+i+"' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; background-color : #00bb00; width:880px; padding-left:10px;' onClick='page2("+i+")'>"+ i + "- " + activites[i][0]+ "</a>";
     }
   //console.log(txt);
     document.getElementById('zm').innerHTML = txt + "</div>";
@@ -205,23 +202,56 @@ $(document).ready( function () {
 
 function page2(activity) {
   //console.log("page2 pour " + activity);
-  parent.og.document.getElementById("titre").innerHTML =  activites[activity];
+  parent.og.document.getElementById("titre").innerHTML =  'GN ' + activity.toString() + '- ' + activites[activity][0];
+  parent.og.document.getElementById("module").innerHTML = '';
   
   parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
-  var txt = "<div style='position:absolute; left:50px; font-size:32px; width:800px'>";
+  var txt = "<div style='position:absolute; left:20px; font-size:32px; width:940px'>";
+  if (activites[activity][1]) {
+    txt += "<a href='#' style='text-decoration: none; position:absolute; left:380px; top:60px; font-size:32px; line-height:90px; width:180px; color:#000000; background-color : #00bb00;border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00; text-align: center' onClick='"+series[activity][1][0]+";'>"+series[activity][1][1]+"</a>";
+    //console.log(txt);
+  }
   var tPos;
   var lPos;
-  //console.log(series[activity].length);
-  for (var i=1; i<series[activity].length; i++)  {
-    if (i < 10) {
-      tPos = 50*i + 10;
-      lPos = 50;
-    } else {
-      tPos = 50*i - 440;
-      lPos = 400;
+  var txti;
+
+  var nSeries = activites[activity][2];
+  if (activity < 7) {
+    for (var i=1; i<=nSeries; i++)  {
+      var k = i + activites[activity][1];
+      if (nSeries < 11){
+        tPos = 255;
+        lPos = (940 - nSeries*90)/2 + (i-1)*90;
+        txti = i.toString();
+      } else {
+        var grp = 1+parseInt((i-1) / 2);
+        var typ = 1 + ((i-1) % 2);
+        txti = grp.toString() + '-' + typ.toString();
+        if (i <= nSeries/2) {
+          tPos = 210;
+          lPos = (940 - nSeries*45)/2 + (i-1)*90;
+        }else {
+          tPos = 300;
+          lPos = (940 - nSeries*45)/2 + (i-1 -nSeries/2)*90;
+        }
+      }
+      txt += "<a href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:90px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00; text-align: center' onClick='"+series[activity][k][0]+";'>"+txti+"</a>";
     }
-    txt += "<a href='#' style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; color:#000000;text-decoration: none;' onClick='"+series[activity][i][0]+";'>"+series[activity][i][1]+"</a>";
+  } else {
+    for (var i=1; i<=nSeries; i++)  {
+      var k = i + activites[activity][1];
+      tPos = 200;
+      lPos = 170 + (i-1)*400;
+      txt += "<a href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:200px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
+    }
   }
+  
+  if (activites[activity][3]) {
+    var k = activites[activity][1] + activites[activity][2] + 1;
+    txt += "<a href='#' style='text-decoration: none; position:absolute; left:380px; top:450px; font-size:32px; width:180px; line-height:90px; color:#000000; background-color : #00bb00;border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
+    //console.log(txt);
+  }
+  txt += "</div>";
   //console.log(txt);
   document.getElementById('zm').innerHTML = txt + "</div>";
 }
@@ -236,22 +266,23 @@ function startDemo(l,m,n,k,g) {
   parent.isDemo = true;
   parent.gPhase = 1;
   
-  parent.ba.titre = "Démo pour " + parent.ba.activites[m];
+  parent.ba.titre = 'GN ' + m.toString() + '- ' + activites[m][0];
+  parent.ba.module = "Démonstration";
   
   if ((l==3 && m==4) || (l==4 && m==1)) {
-    var fname =  "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=44";
+    var fname =  "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=45";
   //console.log(fname);
-    parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=44";
+    parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=45";
     //parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Série " + n.toString() + " Observer ";
   } else {
-    parent.corpus.location = "corpus" + l.toString() + m.toString() + "Demo.html?version=44";
+    parent.corpus.location = "corpus" + l.toString() + m.toString() + "Demo.html?version=45";
     //parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Observer ";
   }
   $(parent.corpus.contentDocument).ready(function() {
     //console.log("corpus is ready in menu demo");
-    //parent.og.location = "startPage" + l + ".html?version=44";
-  //parent.og.location = "frame" +  l + m + ".html?version=44";
-    //parent.boutons.location = "boutons.html?version=44"; 
+    //parent.og.location = "startPage" + l + ".html?version=45";
+  //parent.og.location = "frame" +  l + m + ".html?version=45";
+    //parent.boutons.location = "boutons.html?version=45"; 
   });
   
 }
@@ -274,36 +305,47 @@ function startSerie(l,m,n,k,g) {
   parent.ba.serie = n;
   parent.ba.group = 0;
   var phaseTxt = "";
+  var txtn = n.toString();
+  
   if (k) {
     parent.gPhase = k;
     phaseTxt = enCoursPhase[l][k];
   }
-  if (g) parent.ba.group = g;
+  if (g) {
+    parent.ba.group = g;
+    txtn = g.toString() + '-' + k.toString();
+  }
 
   parent.isDemo = false;
   //alert(parent.ba.activity);
   
-  parent.ba.titre = activites[m] + " Série " + n.toString() + phaseTxt;
-  parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + ".html?version=44";
+  if (m < 7) parent.ba.titre = 'GN ' + m.toString() + '- ' + activites[m][0];
+  else parent.ba.titre = m.toString() + '- ' + activites[m][0];
+  if (m < 7) parent.ba.module = "Série " + txtn + phaseTxt;
+  else parent.ba.module =  series[m][n][1] + ' ' + phaseTxt;
+  parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + ".html?version=45";
   $(parent.corpus.contentDocument).ready(function() {
   //console.log("corpus is ready in menu serie");
-    //parent.og.location = "frame" +  l + m + ".html?version=44";
-    //parent.boutons.location = "boutons.html?version=44";
+    //parent.og.location = "frame" +  l + m + ".html?version=45";
+    //parent.boutons.location = "boutons.html?version=45";
   });
 
 }
 
 function displayResume(l,m) {
   //console.log("displayResume");
-  //parent.boutons.location = "boutons.html?version=44";
+  //parent.boutons.location = "boutons.html?version=45";
   parent.ba.program = l;
   parent.ba.activity = m;
-  parent.ba.titre = "Résumé pour " +  parent.ba.activites[m];
-  parent.og.location = "resumeFrame" +  l + m + ".html?version=44";
+  parent.ba.titre = "GN " + m + "- " + parent.ba.activites[m][0];
+  parent.ba.module = 'Résumé';
+  parent.og.location = "resumeFrame" +  l + m + ".html?version=45";
+
   //parent.ba.document.getElementById("enCours").style.visibility="visible";
   //parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Résumé ";
   
   parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+  parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
 
 }
 function init() {
@@ -321,7 +363,7 @@ function init() {
 <div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
 </div>
 <div id='verticalContainerD'>
-<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >Module 1  V 0.44</div>
+<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >V 0.45</div>
 </div>
 
 <div style="position:absolute; top:5px; left:50px;width:980px;height:40px;">
