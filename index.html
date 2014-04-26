@@ -54,6 +54,7 @@ var gPhase = 1;
 var gPlay_html5_audio = false;
 var audioType = "";
 var gNbSerieOk = 0;
+var audioElement;
 
 
 
@@ -67,19 +68,26 @@ function wait (ms,pstart) {
 }
 
 function html5_audio(){
-  var a = document.createElement('audio');
+  audioElement = document.createElement('audio');
   //alert(a.canPlayType);
-  if (a.canPlayType) {
+  if (audioElement.canPlayType) {
     //console.log("mpeg " + a.canPlayType('audio/mpeg;'));
-    if ( a.canPlayType('audio/mpeg;').replace(/no/, '')) {
+    if (audioElement.canPlayType('audio/mpeg;').replace(/no/, '')) {
       audioType = 'mp3';
     } else {
        //console.log("ogg " + a.canPlayType('audio/ogg;'));
-      if ( a.canPlayType('audio/ogg;').replace(/no/, '')) {
+      if ( audioElement.canPlayType('audio/ogg;').replace(/no/, '')) {
         audioType = 'ogg';
       }
     }
   }
+  audioElement.setAttribute('autoplay', 'autoplay');
+
+  audioElement.addEventListener("load", function() {
+    //console.log('sound loaded');
+    audioElement.play();
+    }, true);
+
   
   //console.log(audioType);
 }
@@ -265,9 +273,8 @@ function registerV6Click(ligne) {
 
 function play_sound(url){
   if(audioType != ""){
-  var snd = new Audio(url + "." + audioType);
-  snd.load();
-  snd.play();
+    audioElement.setAttribute('src', url + "." + audioType);
+    audioElement.load();
   }else{
 
   //console.log("old sound");
