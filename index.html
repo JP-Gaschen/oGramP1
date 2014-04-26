@@ -106,8 +106,10 @@ function init() {
       if (boutons.document.getElementById('Bvalider').style.visibility == 'visible') boutons.valider();
     } 
   });
-
-  html5_audio();
+  $(document).ready( function () {
+    html5_audio();
+  });
+  
 }
 
 function doResize() {
