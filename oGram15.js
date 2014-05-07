@@ -116,13 +116,14 @@ function init() {
   
     if (parent.isDemo){
        parent.ba.hideCarres();
-       parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
+       parent.enableBouton('displayMenu','menuC.gif');
        window.setTimeout(startDemo,5000);
     } else {
-      //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-      parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
-      parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
-      parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+      
+      parent.enableBouton('Bconsigne','consigneC.gif');
+      parent.enableBouton('Breecouter','ecouterC.gif');
+      parent.enableBouton('displayMenu','menuC.gif');
+      
     //parent.ba.showCarres(pc.nPhase1,pcd.length-pc.nPhase1);
     }
   } else {
@@ -159,11 +160,11 @@ function init() {
     
     gIgnoreClick = false;
     gNbPhrasesOk=0;
-    parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-    parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
-    parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
-    parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+   
+    parent.enableBouton('displayMenu','menuC.gif');
+    parent.enableBouton('Bconsigne','consigneC.gif');
+    parent.enableBouton('Breecouter','ecouterC.gif');
+   
   }
   setTimeout(diffusePhrase,3000);
 }
@@ -229,8 +230,9 @@ function restoreStartState()  {
 function diffusePhrase() {
   //console.log("diffusePhrase");
   saveStartState();
-  parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-  //document.getElementById('Brejouer').style.visibility='hidden';
+  
+  parent.disableBouton('Bvalider','validerD.gif');
+
   rediffusePhrase();
 }
 function rediffusePhrase() {
@@ -270,7 +272,7 @@ function continuer() {
     } else {
       parent.ba.init();
       parent.og.location = 'menu.html?version=45';
-      parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
+     
     }
  
   frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
@@ -368,8 +370,8 @@ function auSuivant() {
     //}  
   } else if (gPhase == 2) {
     ////console.log("auSuivant 3");  // fin de phase 2
-    parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-    //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+     parent.disableBouton('Bvalider','validerD.gif');
+    
     var nEx = pc.corData.length - pc.nPhase1;
     var nOk = nEx - gNbRate;
     alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
@@ -386,8 +388,8 @@ function auSuivant() {
         
         gIgnoreClick = true;
         parent.og.document.getElementById('phrase').innerHTML = "observez";
-        parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-        //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+        parent.disableBouton('Bvalider','validerD.gif');
+        
       
         
         setTimeout (function() {addSuffix(0,0);},gPhase2Delay);
@@ -613,7 +615,7 @@ function hidePointer() {
 function process_click_global(w){
  //console.log("click_global ");
   if (gIgnoreClick  && !parent.isDemo) {return;}
-  if (!parent.isDemo) parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
+  if (!parent.isDemo)  parent.enableBouton('Bvalider','validerC.gif');
  //console.log('clique ' + window.name);
   var cl = parseInt(w.name.substring(5));
   var c2 = w.name.substring(6);
@@ -635,7 +637,7 @@ function process_click_global(w){
     var exp1 =  pcd[i][j+1][0];
     var exp2 =  pcd[i][j+1][1];
     if (cl == exp1 && (c2.length == 1 && c2 == sp[exp2] || (c2.length == 2 && c2 == spmf[exp2]))) {
-      //parent.boutons.document.getElementById('Brecommencer').style.visibility='hidden';
+      
       gNbMotsOk += 1;
       var txt1 = pcd[i][0];
       var txt2 = txt1.replace(/,/g,"");
@@ -693,7 +695,7 @@ function process_click_global(w){
       }
     } else {
       gNbMotsKo += 1;
-      //parent.boutons.document.getElementById('Brecommencer').style.visibility='visible';
+      
     }
   } else  gNbMotsKo += 1;
 
@@ -704,7 +706,7 @@ function process_click2_global(w,ligne){
   //console.log("click2_global " + ligne);
 
   if (gIgnoreClick && !parent.isDemo) {return;}
-  //parent.boutons.document.getElementById('Brecommencer').style.visibility='hidden';
+ 
   var pc = top.frames[0];
   var pcd = pc.corData;
   //alert(pcd);
@@ -761,7 +763,7 @@ function process_click2_global(w,ligne){
       }
     } else {
       gNbMotsKo += 1;
-      //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+      
     }
   } else gNbMotsKo += 1;
 
@@ -770,7 +772,7 @@ function process_click2_global(w,ligne){
 function startDemo(){
   //alert("og start demo")
   gIgnoreClick = true;
-  //parent.boutons.document.getElementById('BstartDemo').style.visibility='hidden';
+ 
   var pc = top.frames[0];
   var pcd = pc.corData;
   //alert(pcd);

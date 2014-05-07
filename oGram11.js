@@ -38,17 +38,17 @@ function init() {
   diffusePhrase();
   
   
+  
+  
   if (parent.isDemo){
      parent.ba.hideCarres();
-     parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
-     //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
-     parent.boutons.document.getElementById('Breecouter').style.visibility='hidden';
      window.setTimeout(startDemo,2000);
   } else {
-    //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-    parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
-    parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
-    parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+ 
+    parent.enableBouton('Bconsigne','consigneC.gif');
+    parent.enableBouton('Breecouter','ecouterC.gif');
+    parent.enableBouton('displayMenu','menuC.gif');
+    
     //parent.ba.showCarres(pcd.length,0);
   }
     //myframes = window.frames;
@@ -57,7 +57,7 @@ function init() {
 
 function diffusePhrase() {
   //console.log("diffusePhrase");
-  parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
+  parent.disableBouton('Bvalider','validerD.gif');
   //document.getElementById('Brejouer').style.visibility='hidden';
   rediffusePhrase();
 }
@@ -86,6 +86,7 @@ function rediffusePhrase() {
   if (parent.isDemo) fname = dirn + "/" + parent.audioType + "/" + "demo" + "d" + sn;
   else fname = dirn + "/" + parent.audioType + "/" + "s" + ds + "d" + sn;
   //console.log(fname);
+  //parent.og.document.getElementById("titre").innerHTML = fname;
   parent.play_sound(fname);
 }
 
@@ -101,7 +102,7 @@ function continuer() {
   } else {
     parent.ba.init();
     parent.og.location = 'menu.html?version=45';
-    parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
+    
   }
  
   frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
@@ -157,9 +158,8 @@ function auSuivant() {
         alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
         if (nOk == nEx && parent.ba.serie > 1) alert("Vous pouvez, si vous le voulez, passer à l'activité suivante.");
         //alert("fini")};
-        parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-        //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
-        parent.boutons.document.getElementById('Breecouter').style.visibility='hidden';
+        
+        
         if (parent.ba.serie == 4)  parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=45";
         else setTimeout(parent.boutons.showMenu,2000);
     }
@@ -171,8 +171,7 @@ function auSuivant() {
 function process_click_global(w){
   if (gIgnoreClick) {return;}
    if (!parent.isDemo) {
-     parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-     //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+     parent.enableBouton('Bvalider','validerC.gif');
    }
 
   //alert('clique' && window.name);
@@ -194,7 +193,7 @@ function process_click_global(w){
     if (cl == exp) {
       gNbMotsOk += 1;
       ////console.log("pcg gNbMotsOk " + gNbMotsOk.toString());
-      //parent.boutons.document.getElementById('Brecommencer').style.visibility='hidden';
+     
       var txt1 = pcd[i][0];
       var txt2 = txt1.replace(/,/g,"");
       var txt3 = txt2.replace(/-/g," ");
@@ -246,7 +245,7 @@ function process_click_global(w){
     } else {
       gNbMotsKo += 1;
       
-      //parent.boutons.document.getElementById('Brecommencer').style.visibility='visible';
+      
     }
   } else gNbMotsKo += 1;
   //window.setTimeout(clearBGC,400);

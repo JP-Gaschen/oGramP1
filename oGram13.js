@@ -85,21 +85,21 @@ function init() {
     
     if (parent.isDemo){
        parent.ba.hideCarres();
-       parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
+       parent.enableBouton('displayMenu','menuC.gif');
        window.setTimeout(startDemo,2000);
     } else {
-      //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-      parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
-      parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
-      parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+      parent.enableBouton('displayMenu','menuC.gif');
+      parent.enableBouton('Bvalider','validerC.gif');
+      parent.enableBouton('Bconsigne','consigneC.gif');
+      parent.enableBouton('Breecouter','ecouterC.gif');
     //parent.ba.showCarres(pc.nPhase1,pcd.length-pc.nPhase1);
     }
   } else {  // phase 2
     $("#phrase").css("color", "#aaaaaa");
-    //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-    parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
-    parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
-    parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+    parent.enableBouton('displayMenu','menuC.gif');
+    parent.enableBouton('Bvalider','validerC.gif');
+    parent.enableBouton('Bconsigne','consigneC.gif');
+    parent.enableBouton('Breecouter','ecouterC.gif');
     gNbPhrasesOk = 0;
     gNbMotsOk = 0;
     gNbMotsKo = 0;
@@ -212,9 +212,9 @@ function diffusePhrase() {
   //console.log("diffusePhrase");
   saveStartState();
   if (gPhase==2) $("#phrase").css("color", "#aaaaaa");
-  parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-  //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
-  //document.getElementById('Brejouer').style.visibility='hidden';
+  parent.disableBouton('Bvalider','validerD.gif');
+
+  
   rediffusePhrase();
 }
 function rediffusePhrase() {
@@ -257,7 +257,7 @@ function continuer() {
     } else {
       parent.ba.init();
       parent.og.location = 'menu.html?version=45';
-      parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
+      
     }
  
   frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
@@ -299,8 +299,7 @@ function auSuivant() {
     //}  
   } else if (gPhase == 2) {
     ////console.log("auSuivant 3");  // fin de phase 2
-    parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-    //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+      parent.disableBouton('Bvalider','validerD.gif');
       var nEx = pc.corData.length - pc.nPhase1;
       var nOk = nEx - gNbRate;
       alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
@@ -316,8 +315,8 @@ function auSuivant() {
       gNbPhrasesOk = 0;
       gIgnoreClick = true;
       document.getElementById('phrase').innerHTML = "observez";
-      parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-      //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
+      parent.disableBouton('Bvalider','validerD.gif');
+      
       if (gAffTxt[1][0] == "") {
         setTimeout (function() {addSuffix(1,0);},gPhase2Delay);  // ligne 8
       } else {
@@ -542,8 +541,7 @@ function hidePointer() {
 function process_click_global(w){
   if (gIgnoreClick  && !parent.isDemo) {return;}
   if (!parent.isDemo) {
-    if (gPhase==1) parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    if (gPhase==1) parent.enableBouton('Bvalider','validerC.gif');
   }
   //console.log('clique ' + window.name);
   var cl = parseInt(w.name.substring(5));
@@ -601,7 +599,7 @@ function process_click_global(w){
           setTimeout(auSuivant,1500);
         } else {
           //gIgnoreClick = true;
-          //parent.boutons.document.getElementById('BstartDemo').style.visibility='hidden';
+         
           setTimeout(hidePointer,1000);
           
           if (parent.isDemo) {
@@ -629,8 +627,8 @@ function process_click_global(w){
 function process_click2_global(w,ligne){
   //console.log("click2_global "  + ligne);
   if (!parent.isDemo) {
-    if (gPhase==1) parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    //parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+    if (gPhase==1) parent.enableBouton('Bvalider','validerC.gif');
+    
   }
   if (gIgnoreClick) {return;}
   var pc = top.frames[0];
@@ -673,7 +671,7 @@ function process_click2_global(w,ligne){
       if (j+1 == pcd[i].length) {
         
           //gIgnoreClick = true;
-          //parent.boutons.document.getElementById('BstartDemo').style.visibility='hidden';
+      
           setTimeout(hidePointer,1000);
           clear12();
           $("#phrase").css("color", "#000000");
@@ -681,7 +679,7 @@ function process_click2_global(w,ligne){
           setTimeout(function() {$("#phrase").css("color", "#000000");},400);
           setTimeout(function() {$("#phrase").css("color", "#aaaaaa");},600);
           setTimeout(function() {$("#phrase").css("color", "#000000");},800);
-          setTimeout(function() {parent.boutons.document.getElementById('Bvalider').style.visibility='visible';},200);
+          setTimeout(function() {parent.enableBouton('Bvalider','validerC.gif');},200);
         
       } else {
           //parent.corpus.jData = j;
@@ -692,7 +690,7 @@ function process_click2_global(w,ligne){
         }
     } else {
       gNbMotsKo += 1;
-      parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
+      
     }
   } else  gNbMotsKo += 1;
   //console.log("ko=",gNbMotsKo);
@@ -700,7 +698,7 @@ function process_click2_global(w,ligne){
 function startDemo(){
   //alert("og start demo")
   gIgnoreClick = true;
-  //parent.boutons.document.getElementById('BstartDemo').style.visibility='hidden';
+  
   var pc = top.frames[0];
   var pcd = pc.corData;
   //alert(pcd);

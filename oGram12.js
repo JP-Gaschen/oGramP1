@@ -132,19 +132,18 @@ function init() {
   
   if (parent.isDemo){
     parent.ba.hideCarres();
-    parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
+    parent.enableBouton('displayMenu','menuC.gif');
     //for (var i=0; i<6; i++) parent.gPhraseOrder[i] = i;
     showPointer();
     window.setTimeout(startDemo,1000);
   } else {
-    parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
-    //parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
-    var serie = parent.ba.serie;
     
-    parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    //parent.boutons.document.getElementById('Brejouer').style.visibility='hidden';
-    parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
-    parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+    var serie = parent.ba.serie;
+    parent.enableBouton('displayMenu','menuC.gif');
+    
+    parent.enableBouton('Bconsigne','consigneC.gif');
+    
+    
     
     //for (var i=0; i<6; i++) {console.log(parent.gPhraseOrder[i]);}
     $('#phrase').keydown(function (e) {
@@ -233,6 +232,7 @@ function selectMot(id,iMot,txt) {
 
 
 function efface(){
+  parent.enableBouton('Bvalider','validerC.gif');
   if (Date.now() % 2) {
     motAttendu = document.getElementById('sp1').innerHTML;
     motReecrit = 'sp1';
@@ -260,7 +260,6 @@ function continuer() {
     } else {
       parent.ba.init();
       parent.og.location = 'menu.html?version=45';
-      parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
     }
  
   frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
@@ -272,6 +271,7 @@ function continuer() {
 function auSuivant() {
 
   //console.log('Au suivant ratés ' + gNbRate);
+  parent.disableBouton('Bvalider','validerD.gif');
   document.getElementById('phrase').innerHTML = "";
   var pc = parent.corpus;
   var pcd = pc.corData;
@@ -331,7 +331,7 @@ function startDemo(){
   //alert("og start demo")
   gIgnoreClick = true;
   
-  //parent.boutons.document.getElementById('BstartDemo').style.visibility='hidden';
+  
   var pc = top.frames[0];
   var pcd = pc.corData;
   //alert(pcd);

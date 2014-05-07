@@ -67,7 +67,7 @@ function init(){
   $(document).keypress(function(e) { 
     if(e.which == 13) { 
       //console.log("clique returnkey");// enter pressed
-      if (parent.parent.boutons.document.getElementById('Bvalider').style.visibility == 'visible')
+      if (!parent.parent.boutons.document.getElementById('Bvalider').disabled)
         parent.parent.boutons.valider();
     } 
   });

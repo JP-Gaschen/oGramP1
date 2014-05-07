@@ -1,16 +1,12 @@
 
-
+var menuLevel = 0;
 function init() {
   //console.log("init boutons");
   
 
+   if (menuLevel == 0) parent.disableBouton('displayMenu','menuD.gif');
+   else parent.enableBouton('displayMenu','menuC.gif');
   
-  document.getElementById('Bvalider').style.visibility='hidden';
-  //document.getElementById('Brejouer').style.visibility='hidden';
-  document.getElementById('Bconsigne').style.visibility='hidden';
-  document.getElementById('Breecouter').style.visibility='hidden';
-  document.getElementById('displayMenu').style.visibility='hidden';
-  parent.document.getElementById('verbe6').style.visibility='hidden';
 
   
   $(document).keydown(function (e) {
@@ -33,6 +29,7 @@ function showMenu() {
 
   parent.og.location = 'menu.html?version=45';
 }
+
 function displayResume() {
   var myFrames = parent.og.window.frames;
 //$('p',myFrames['Resume2'].document).before('<div class="hidden">');

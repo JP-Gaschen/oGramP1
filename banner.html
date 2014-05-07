@@ -24,24 +24,7 @@ body {
    visibility : hidden;
    z-index: 1;}
    
-div.exercice2 {
-   position: absolute;
-   top: 65px;
-   height: 10px; width: 10px;
-   background-color: #ffffff;
-   border-style : solid;
-   border-width : 1px;
-   border-color: #000000;
-   visibility : hidden;
-   z-index: 1;}
 
-div.verticalBar {
- position:absolute;
- top : 0px;
- left : 0px;
- border-left : 1px solid black;
- height : 80px;
-}
 
 </style>
 
@@ -52,16 +35,18 @@ div.verticalBar {
   var group = 0;
   var version = 8;
   var titre = '';
+  var module = '';
   var activites =[
    [],
-   ["Reconnaître un nom, un déterminant, un adjectif"],
-   ["Se préparer: pluriel des noms"],
-   ["Accorder le nom avec son déterminant"],
-   ["Se préparer : accord des adjectifs"],
-   ["Accorder les adjectifs avec les noms"],
-   ["Maîtriser l'accord déterminant, nom, adjectif"],
-   ["Se tester"]
+   ["Reconnaitre un nom, un déterminant, un adjectif",1,6,1],
+   ["Se familiariser avec les différentes sortes de noms",1,10,0],
+   ["Accorder les noms avec leurs déterminants",1,14,1],
+   ["Se familiariser avec les différentes sortes d'adjectifs",1,10,0],
+   ["Accorder les adjectifs avec les noms",1,12,1],
+   ["Maitriser l'accord déterminant, nom, adjectif",1,6,0],
+   ["Se tester",0,2,0]
   ];
+  
   
   $(document).ready( function () {
     init();

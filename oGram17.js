@@ -81,19 +81,15 @@ function init() {
   diffusePhrase();
   if (parent.isDemo){
     parent.ba.hideCarres();
-    parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
+    parent.enableBouton('displayMenu','menuC.gif');
     //for (var i=0; i<6; i++) parent.gPhraseOrder[i] = i;
     showPointer();
     window.setTimeout(startDemo,4000);
   } else {
-    parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
-    //parent.boutons.document.getElementById('Breecouter').style.visibility='visible';
-    parent.boutons.document.getElementById('Bconsigne').style.visibility='visible';
-    var serie = parent.ba.serie;
+    parent.enableBouton('displayMenu','menuC.gif');
+    parent.enableBouton('Bconsigne','consigneC.gif');
     
-    //parent.boutons.document.getElementById('Bvalider').style.visibility='visible';
-    //if (parent.ba.serie == 2) parent.boutons.document.getElementById('Brejouer').style.visibility='visible';
-    parent.boutons.document.getElementById('displayMenu').style.visibility='visible';
+    var serie = parent.ba.serie;
     
     //for (var i=0; i<6; i++) {console.log(parent.gPhraseOrder[i]);}
     
@@ -102,8 +98,7 @@ function init() {
 
  function diffusePhrase() {
   //console.log("diffusePhrase");
-  parent.boutons.document.getElementById('Bvalider').style.visibility='hidden';
-  //document.getElementById('Brejouer').style.visibility='hidden';
+  
   rediffusePhrase();
 }
 function rediffusePhrase() {
@@ -137,7 +132,7 @@ function continuer() {
     } else {
       parent.ba.init();
       parent.og.location = 'menu.html?version=45';
-      parent.boutons.document.getElementById('displayMenu').style.visibility='hidden';
+      
     }
  
   frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
@@ -207,7 +202,7 @@ function startDemo(){
   //alert("og start demo")
   gIgnoreClick = true;
   
-  //parent.boutons.document.getElementById('BstartDemo').style.visibility='hidden';
+  
   var pc = top.frames[0];
   var pcd = pc.corData;
   //alert(pcd);
