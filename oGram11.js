@@ -104,8 +104,9 @@ function continuer() {
     parent.og.location = 'menu.html?version=45';
     
   }
- 
-  frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
+  $('body',frames['Resume2'].document).scrollTop(3000);
+   
+  //frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
 }
 function infoCompl() {
   myframes = window.frames;
