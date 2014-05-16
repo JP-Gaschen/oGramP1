@@ -20,12 +20,12 @@ div.resume{
  background-color: #999999;
  z-index: 10;}
  
- iframe {
-  overflow: scroll;
+ .resume {
+ overflow: scroll;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-
-}
+  -webkit-overflow-scrolling: touch;}
+ 
+ 
 
  div.bordnoir {
  position: absolute;
@@ -94,9 +94,11 @@ function initResume() {
 <div class = "bordvert">
 <div class="resume" id="Resume" style="visibility:hidden">
 <iframe id="Resume2" name="Resume2" src="resumeP1A1.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=494 width=974 frameborder=0 scrolling = yes>
-</iframe>
-<button Id="Bcontinuer" style="position:absolute; top:530px; left:440px; z-index: 20; width:100px" onclick = "javascript:continuer();"  type="button">Continuer</button>
-<button Id="BinfoCompl" style="position:absolute; top:530px; left:600px; z-index: 20; width:250px" onclick = "javascript:infoCompl();"  type="button">Informations complémentaires</button></div>
+</iframe></div>
+
+<div>
+<button Id="Bcontinuer" style="position:absolute; top:580px; left:440px; z-index: 20; width:100px" onclick = "javascript:continuer();"  type="button">Continuer</button>
+<button Id="BinfoCompl" style="position:absolute; top:580px; left:600px; z-index: 20; width:250px" onclick = "javascript:infoCompl();"  type="button">Informations complémentaires</button></div>
 
 <div id='verticalContainerG'>
 <div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
