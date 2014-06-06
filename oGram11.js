@@ -15,8 +15,8 @@ var gIgnoreClick = false;
 var gInfoCompl = false;
 
 function init() {
-  console.log("init frame11");
-  parent.ajusteVert();
+  //console.log("init frame11");
+  //parent.ajusteVert();
   var pc = parent.corpus;
   var pcd = pc.corData;
   pc.iData = 0;
