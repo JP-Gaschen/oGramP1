@@ -15,7 +15,8 @@ var gIgnoreClick = false;
 var gInfoCompl = false;
 
 function init() {
-
+  console.log("init frame11");
+  parent.ajusteVert();
   var pc = parent.corpus;
   var pcd = pc.corData;
   pc.iData = 0;
@@ -53,6 +54,7 @@ function init() {
   }
     //myframes = window.frames;
     //myframes[3].document.getElementById('Sp').innerHTML = "1234567890123456789012345678901234567890";
+
 }
 
 function diffusePhrase() {
@@ -104,8 +106,10 @@ function continuer() {
     parent.og.location = 'menu.html?version=45';
     
   }
-  $('body',frames['Resume2'].document).scrollTop(3000);
-   
+  //$('body',frames['Resume2'].document).scrollTop(3000);
+  $('body',frames['Resume2'].document).animate({ scrollTop: 3000 }, 500);
+  //frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
+ 
   //frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
 }
 function infoCompl() {
