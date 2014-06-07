@@ -87,7 +87,7 @@ function html5_audio(){
 
   audioElement.addEventListener("load", function() {
     //console.log('sound loaded');
-    audioElement.play();
+    setTimeout(audioElement.play,400);
     }, true);
 
   
