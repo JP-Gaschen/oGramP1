@@ -6,63 +6,22 @@
   <meta http-equiv="Pragma" content="no-cache">
   <title></title>
   <script type="text/javascript" src="jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="oGramM1.css">
+  
 <style type="text/css"> 
-body {
-  font-family: "Comic Sans MS", sans-serif;
-}
 
 
-div.bordnoir {
- position: absolute;
- top: 0px; left: 0px;
- height: 720px; width: 1280px;
- background-color: #666666;
- z-index: 0;}
- 
-div.bordvert{
- position: absolute;
- top: 10px; left: 100px;
- height: 700px; width: 1080px;
- background-color: #00bb00;
- z-index: 1;}
- 
-  #verticalContainerG {
-   position:absolute;
-   top:330px;
-   width:700px;
-   left:-325px;
-   height:40px;
-    -webkit-transform: rotate(270deg);
-    -moz-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    z-index: 5;
-}
- #verticalContainerD {
-   position:absolute;
-   top:330px;
-   width:700px;
-   left:705px;
-   height:40px;
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
-    z-index: 5;
-}
 
-div.zoneMenu{
- position: absolute;
- top: 50px; left: 50px;
- height: 600px; width: 980px;
- background-color: #00ff00;
- z-index: 2;}
 
 </style>
 
 <script type="text/javascript">
+
+$(window).load( function () {
+ parent.ajusteVert();
+ ////console.log("menu ready");
+ });
+ 
 var activites =[
    [],
    ["Reconnaitre un nom, un déterminant, un adjectif",1,6,1],
@@ -169,31 +128,43 @@ var series = [
  ]
 ]
 
-$(window).load( function () {
- ////console.log("menu ready");
- });
+
+
  
+// document.onclick = function (event) {
+//  var ev = event;
+//  menuClick(ev);
+// }
+  
 $(document).ready( function () {
   var activity = parent.ba.activity;
-  //console.log("menu document ready");
-  if (activity > 0) {
+  
+  //console.log("menu document ready for activity " + activity + " level " + parent.boutons.menuLevel);
+  if (activity > 0 && parent.boutons.menuLevel > 0) {
     parent.ba.activity = 0;
     page2(activity);
-  } else {
     parent.boutons.menuLevel = 1;
+    //parent.ba.activity = 0;
+   
+  } else {  
+    parent.ba.activity = 0;
+    parent.boutons.menuLevel = 0;
     parent.og.document.getElementById("titre").innerHTML = 'Module 1: Le groupe nominal (GN)';
-    var txt = "<div style='position:absolute; left:40px; font-size:32px; width:880px;background-color : #00bb00;'>";
+    var txt = "<div class='vert1' style='position:absolute; left:50px; font-size:31px; width:880px;'>";
+    //console.log(txt);
     var tPos;
     for (var i=1; i<activites.length; i++)  {
-      tPos = 50 + 60*i;
+      tPos = 95 + 60*(i-1);  // was 60
     //<a href="#" onclick="dosomething(); return(false);">Some text here</a>
 
 
       //txt += "<a href='#'' id='m"+i+"' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none;border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00;' onClick='page2("+i+")'>"+ activites[i][0]+ "</a>";
-      txt += "<a href='#'' id='m"+i+"' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; background-color : #00bb00; width:880px; padding-left:10px;' onClick='page2("+i+")'>"+ i + "- " + activites[i][0]+ "</a>";
+      txt += "<a href='#' id='m"+i+"' class='vert1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; text-align:center; width:30px; padding-left:1px; height:50px;' onClick='page2("+i+")'>"+ i +  "</a>";
+      txt += "<a href='#' id='n"+i+"' class='vert1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; width:850px; left:30px; height:50px;' onClick='page2("+i+")'> - " + activites[i][0]+ "</a>";
     }
-  //console.log(txt);
+    //console.log(txt);
     document.getElementById('zm').innerHTML = txt + "</div>";
+    parent.ajusteVert();
   }
 
   
@@ -202,9 +173,24 @@ $(document).ready( function () {
 
 } ) ;
 
+function menuClick(event) {
+  //console.log("menu click level " + parent.boutons.menuLevel);
+  if (parent.boutons.menuLevel > 0) return;
+  //console.log("activity " + parent.ba.activity);
+  //console.log("level " + parent.boutons.menuLevel);
+  //console.log(event.target.id);
+  parent.vertStatus = 3 - parent.vertStatus;
+  //console.log("click in menu " + parent.vertStatus);
+  parent.ajusteVert();
+}
+
 function page2(activity) {
-  //console.log("page2 pour " + activity);
-  parent.og.document.getElementById("titre").innerHTML =  'GN ' + activity.toString() + '- ' + activites[activity][0];
+  //console.log("page2 pour " + activity + " bg " + parent.menuBg + " fg " + parent.menuFg);
+  parent.ba.document.getElementById("Binformation").style.visibility = 'hidden';
+  parent.ajusteVert();
+  parent.boutons.menuLevel = 1;
+  parent.ba.activity = activity;
+  parent.og.document.getElementById("titre").innerHTML =  'GN ' + activity.toString() + ' - ' + activites[activity][0];
   parent.og.document.getElementById("module").innerHTML = '';
   
   parent.enableBouton('displayMenu','menuC.gif');
@@ -213,9 +199,9 @@ function page2(activity) {
   parent.disableBouton('Breecouter','ecouterD.gif');
 
   
-  var txt = "<div style='position:absolute; left:20px; font-size:32px; width:940px'>";
+  var txt = "<div class='vert1' style='position:absolute; left:20px; font-size:32px; width:940px'>";
   if (activites[activity][1]) {
-    txt += "<a href='#' style='text-decoration: none; position:absolute; left:380px; top:60px; font-size:32px; line-height:90px; width:180px; color:#000000; background-color : #00bb00;border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00; text-align: center' onClick='"+series[activity][1][0]+";'>"+series[activity][1][1]+"</a>";
+    txt += "<a href='#' style='text-decoration: none; position:absolute; left:380px; top:60px; font-size:32px; line-height:90px; width:180px; color:#000000; background-color : "+parent.menuFg+";border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][1][0]+";'>"+series[activity][1][1]+"</a>";
     //console.log(txt);
   }
   var tPos;
@@ -242,20 +228,20 @@ function page2(activity) {
           lPos = (940 - nSeries*45)/2 + (i-1 -nSeries/2)*90;
         }
       }
-      txt += "<a href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:90px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00; text-align: center' onClick='"+series[activity][k][0]+";'>"+txti+"</a>";
+      txt += "<a href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:90px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; background-color : "+parent.menuFg+"; text-align: center' onClick='"+series[activity][k][0]+";'>"+txti+"</a>";
     }
   } else {
     for (var i=1; i<=nSeries; i++)  {
       var k = i + activites[activity][1];
-      tPos = 200;
+      tPos = 255;
       lPos = 170 + (i-1)*400;
-      txt += "<a href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:200px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
+      txt += "<a href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:200px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; background-color : "+parent.menuFg+"; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
     }
   }
   
   if (activites[activity][3]) {
     var k = activites[activity][1] + activites[activity][2] + 1;
-    txt += "<a href='#' style='text-decoration: none; position:absolute; left:380px; top:450px; font-size:32px; width:180px; line-height:90px; color:#000000; background-color : #00bb00;border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
+    txt += "<a href='#' style='text-decoration: none; position:absolute; left:380px; top:450px; font-size:32px; width:180px; line-height:90px; color:#000000; background-color : "+parent.menuBg+";border-style : solid; border-width : 1px; border-color: #000000; background-color : "+parent.menuFg+"; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
     //console.log(txt);
   }
   txt += "</div>";
@@ -263,7 +249,9 @@ function page2(activity) {
   document.getElementById('zm').innerHTML = txt + "</div>";
 }
 
+
 function startDemo(l,m,n,k,g) {
+  parent.boutons.menuLevel = 2;
   parent.ba.program = l;
   parent.ba.activity = m;
   parent.ba.serie = n;
@@ -273,16 +261,16 @@ function startDemo(l,m,n,k,g) {
   parent.isDemo = true;
   parent.gPhase = 1;
   
-  parent.ba.titre = 'GN ' + m.toString() + '- ' + activites[m][0];
-  parent.ba.module = "Démonstration";
+  parent.ba.titre = 'GN ' + m.toString() + ' - ' + activites[m][0];
+  parent.ba.module = "Observer";
   
   if ((l==3 && m==4) || (l==4 && m==1)) {
-    var fname =  "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=45";
+    var fname =  "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=46";
   //console.log(fname);
-    parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=45";
+    parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + "Demo.html?version=46";
     //parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Série " + n.toString() + " Observer ";
   } else {
-    parent.corpus.location = "corpus" + l.toString() + m.toString() + "Demo.html?version=45";
+    parent.corpus.location = "corpus" + l.toString() + m.toString() + "Demo.html?version=46";
     //parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Observer ";
   }
   parent.enableBouton('displayMenu','menuC.gif');
@@ -292,14 +280,17 @@ function startDemo(l,m,n,k,g) {
   parent.disableBouton('Breecouter','ecouterD.gif');
 
   $(parent.corpus.contentDocument).ready(function() {
+    parent.ajusteVert();
     //console.log("corpus is ready in menu demo");
-    //parent.og.location = "startPage" + l + ".html?version=45";
-  //parent.og.location = "frame" +  l + m + ".html?version=45";
-    //parent.boutons.location = "boutons.html?version=45"; 
+    //parent.og.location = "startPage" + l + ".html?version=46";
+  //parent.og.location = "frame" +  l + m + ".html?version=46";
+    //parent.boutons.location = "boutons.html?version=46"; 
   });
   
 }
 function startSerie(l,m,n,k,g) {
+  parent.ajusteVert();
+  parent.boutons.menuLevel = 2;
   var enCoursPhase = [
     [],
     [""," Expérimenter"," S'évaluer"],
@@ -332,11 +323,11 @@ function startSerie(l,m,n,k,g) {
   parent.isDemo = false;
   //alert(parent.ba.activity);
   
-  if (m < 7) parent.ba.titre = 'GN ' + m.toString() + '- ' + activites[m][0];
+  if (m < 7) parent.ba.titre = 'GN ' + m.toString() + ' - ' + activites[m][0];
   else parent.ba.titre = m.toString() + '- ' + activites[m][0];
   if (m < 7) parent.ba.module = "Série " + txtn + phaseTxt;
   else parent.ba.module =  series[m][n][1] + ' ' + phaseTxt;
-  parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + ".html?version=45";
+  parent.corpus.location = "corpus" + l.toString() + m.toString() + n.toString() + ".html?version=46";
   
   parent.enableBouton('displayMenu','menuC.gif');
   
@@ -346,20 +337,22 @@ function startSerie(l,m,n,k,g) {
   
   $(parent.corpus.contentDocument).ready(function() {
   //console.log("corpus is ready in menu serie");
-    //parent.og.location = "frame" +  l + m + ".html?version=45";
-    //parent.boutons.location = "boutons.html?version=45";
+    //parent.og.location = "frame" +  l + m + ".html?version=46";
+    //parent.boutons.location = "boutons.html?version=46";
   });
 
 }
 
 function displayResume(l,m) {
+  parent.boutons.menuLevel = 2;
+  parent.ajusteVert();
   //console.log("displayResume");
-  //parent.boutons.location = "boutons.html?version=45";
+  //parent.boutons.location = "boutons.html?version=46";
   parent.ba.program = l;
   parent.ba.activity = m;
-  parent.ba.titre = "GN " + m + "- " + parent.ba.activites[m][0];
+  parent.ba.titre = "GN " + m + " - " + parent.ba.activites[m][0];
   parent.ba.module = 'Résumé';
-  parent.og.location = "resumeFrame" +  l + m + ".html?version=45";
+  parent.og.location = "resumeFrame" +  l + m + ".html?version=46";
 
   //parent.ba.document.getElementById("enCours").style.visibility="visible";
   //parent.ba.document.getElementById("enCours").innerHTML="Programme " +  l.toString() + " Activité " + m.toString() + " Résumé ";
@@ -377,20 +370,20 @@ function init() {
 </head>
 <body >
 <div class = "bordnoir">
-<div class = "bordvert">
+<div class = "bordvert vert1">
 
 <div id='verticalContainerG'>
 <div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
 </div>
 <div id='verticalContainerD'>
-<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >V 0.45</div>
+<div Id ="module" style="font-size:24px; vertical-align:middle; text-align:center; " >V 0.46</div>
 </div>
 
 <div style="position:absolute; top:5px; left:50px;width:980px;height:40px;">
  <div Id ="titre" style="font-size:24px;  text-align:center;"></div>
 </div>
 
-<div class = "zoneMenu" id="zm"></div>
+<div class = "zoneCentrale vert2" id="zm"></div>
 
 
 

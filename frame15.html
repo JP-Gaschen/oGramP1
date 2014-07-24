@@ -8,17 +8,10 @@
 <script type="text/javascript" src="oGram15.js"></script>
 <script type="text/javascript" src="boutons15.js"></script>
 
+<link rel="stylesheet" type="text/css" href="oGramM1.css">
+
 
 <style type="text/css"> 
-
-body {
- font-family: "Comic Sans MS", sans-serif;
-}
-
-table {
-  table-layout:fixed;
-  left : 0px;
-}
 
 div.box1s {
  position: absolute;
@@ -184,53 +177,7 @@ div.textinput {
  z-index: 3;}
 
 
-div.bordnoir {
- position: absolute;
- top: 0px; left: 0px;
- height: 720px; width: 1280px;
- background-color: #666666;
- z-index: 0;}
- 
- div.bordvert{
- position: absolute;
- top: 10px; left: 100px;
- height: 700px; width: 1080px;
- background-color: #00bb00;
- z-index: 1;}
- 
- div.bordblanc {
- position: absolute;
- top: 50px; left: 50px;
- height: 600px; width: 980px;
- background-color: #ffffff;
- z-index: 2;}
 
- #verticalContainerG {
-   position:absolute;
-   top:330px;
-   width:700px;
-   left:-325px;
-   height:40px;
-    -webkit-transform: rotate(270deg);
-    -moz-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    z-index: 5;
-}
- #verticalContainerD {
-   position:absolute;
-   top:330px;
-   width:700px;
-   left:705px;
-   height:40px;
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
-    z-index: 5;
-}
 
 </style>
 
@@ -238,7 +185,8 @@ div.bordnoir {
  var spSuffix01 = [["",""],["","s"],["","x"],["s","s"],["x","x"],["z","z"],["al","aux"],["ail","aux"]];
  var spmfSuffix03 = [["","","",""],["","e","s","es"],["x","e","x","es"],["","e","x","es"],["s","e","s","es"],["e","e","es","es"],["","","",""]];
 $(window).load(function(){
-    init();
+  parent.ajusteVert();
+  init();
 });
 
 </script>
@@ -248,106 +196,106 @@ $(window).load(function(){
 <body>
 
 <div class = "bordnoir">
-<div class = "bordvert">
+<div class = "bordvert vert1">
 <div style="position:absolute; top:5px; left:50px;width:980px;height:40px;">
  <div Id ="titre" style="font-size:24px;vertical-align:middle;text-align:center"></div>
 </div>
 
 <div  class="textinput" >
-  <span Id ="phrase" style="font-size:26px; margin-left:20px;vertical-align:center";></span>
+  <div Id ="phrase" style="font-size:26px; text-align:center; vertical-align:center";></div>
 </div>
 
 
   
-<div class = "bordblanc">
+<div class = "bordblanc" id="bordBlanc">
 
 
 
 <div class="box1s">
-<iframe id="F1s" name="Frame1s" src="clique.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=254 width=87 frameborder=0 scrolling = no>
+<iframe id="F1s" name="Frame1s" src="clique.html?version=46" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=254 width=87 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box1p">
-<iframe id="F1p" name="Frame1p" src="clique.html?version=45" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=254 width=86 frameborder=0 scrolling = no>
+<iframe id="F1p" name="Frame1p" src="clique.html?version=46" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=254 width=86 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box2ms" id = "B2">
-<iframe id = "F2ms" name="Frame2ms" src="clique.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=84 width=116 frameborder=0 scrolling = no>
+<iframe id = "F2ms" name="Frame2ms" src="clique.html?version=46" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=84 width=116 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box2fs" id = "B2">
-<iframe id = "F2fs" name="Frame2fs" src="clique.html?version=45" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=84 width=117 frameborder=0 scrolling = no>
+<iframe id = "F2fs" name="Frame2fs" src="clique.html?version=46" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=84 width=117 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box2mp" id = "B2">
-<iframe id = "F2mp" name="Frame2mp" src="clique.html?version=45" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=84 width=117 frameborder=0 scrolling = no>
+<iframe id = "F2mp" name="Frame2mp" src="clique.html?version=46" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=84 width=117 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box2fp" id = "B2">
-<iframe id = "F2fp" name="Frame2fp" src="clique.html?version=45" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=84 width=116 frameborder=0 scrolling = no>
+<iframe id = "F2fp" name="Frame2fp" src="clique.html?version=46" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=84 width=116 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box2b">
-<iframe id = "F2b" name="Frame2b" src="clique.html?version=45" style="position:absolute; top:0px; left:3px; background-color: #ffffff;" height=13 width=124 frameborder=0 scrolling = no>
+<iframe id = "F2b" name="Frame2b" src="clique.html?version=46" style="position:absolute; top:0px; left:3px; background-color: #ffffff;" height=13 width=124 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box3ms">
-<iframe id="F3ms" name="Frame3ms" src="clique.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
+<iframe id="F3ms" name="Frame3ms" src="clique.html?version=46" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box3fs">
-<iframe id="F3fs" name="Frame3fs" src="clique.html?version=45" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
+<iframe id="F3fs" name="Frame3fs" src="clique.html?version=46" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box3mp">
-<iframe id="F3mp" name="Frame3mp" src="clique.html?version=45" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
+<iframe id="F3mp" name="Frame3mp" src="clique.html?version=46" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box3fp">
-<iframe id="F3fp" name="Frame3fp" src="clique.html?version=45" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
+<iframe id="F3fp" name="Frame3fp" src="clique.html?version=46" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=304 width=69 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box4">
-<iframe id = "F4" name="Frame4" src="clique.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=54 width=469 frameborder=0 scrolling = no>
+<iframe id = "F4" name="Frame4" src="clique.html?version=46" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=54 width=469 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box5">
-<iframe id = "F5" name="Frame5" src="clique.html?version=45" style="position:absolute; top:0px; left:3px; background-color: #ffffff;" height=27 width=124 frameborder=0 scrolling = no>
+<iframe id = "F5" name="Frame5" src="clique.html?version=46" style="position:absolute; top:0px; left:3px; background-color: #ffffff;" height=27 width=124 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box6">
-<iframe id="F6" name="Frame6" src="clique.html?version=45"  style=" position:absolute; top:3px; left:3px; background-color: #ffffff;" height=84 width=469 frameborder=0 scrolling = no>
+<iframe id="F6" name="Frame6" src="clique.html?version=46"  style=" position:absolute; top:3px; left:3px; background-color: #ffffff;" height=84 width=469 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box6b">
-<iframe id = "F6b" name="Frame6b" src="clique.html?version=45" style="position:absolute; top:3px; left:0px; background-color: #ffffff;" height=44 width=13 frameborder=0 scrolling = no>
+<iframe id = "F6b" name="Frame6b" src="clique.html?version=46" style="position:absolute; top:3px; left:0px; background-color: #ffffff;" height=44 width=13 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box7">
-<iframe id = "F7" name="Frame7" src="clique.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=404 width=469 frameborder=0 scrolling = no>
+<iframe id = "F7" name="Frame7" src="clique.html?version=46" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=404 width=469 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box8">
-<iframe id = "F8" name="Frame8" src="clique.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=84 width=469 frameborder=0 scrolling = no>
+<iframe id = "F8" name="Frame8" src="clique.html?version=46" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=84 width=469 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box9">
-<iframe id = "F9" name="Frame9" src="clique.html?version=45" style="position:absolute; top:3px; left:0px; background-color: #ffffff;" height=44 width=67 frameborder=0 scrolling = no>
+<iframe id = "F9" name="Frame9" src="clique.html?version=46" style="position:absolute; top:3px; left:0px; background-color: #ffffff;" height=44 width=67 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box10">
-<iframe id = "F10" name="Frame10" src="clique.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=54 width=234 frameborder=0 scrolling = no>
+<iframe id = "F10" name="Frame10" src="clique.html?version=46" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=54 width=234 frameborder=0 scrolling = no>
 </iframe></div>
 <div class="box11">
-<iframe id = "F11" name="Frame11" src="clique.html?version=45" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=54 width=234 frameborder=0 scrolling = no>
+<iframe id = "F11" name="Frame11" src="clique.html?version=46" style="position:absolute; top:3px; left:1px; background-color: #ffffff;" height=54 width=234 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box12">
-<iframe id="F12" name="Frame12" src="clique.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=34 width=74 frameborder=0 scrolling = no>
+<iframe id="F12" name="Frame12" src="clique.html?version=46" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=34 width=74 frameborder=0 scrolling = no>
 </iframe></div>
 
 <div class="box13">
-<iframe id="F13" name="Frame13" src="clique.html?version=45" style="position:absolute; top:0px; left:0px; background-color: #ffffff;" height=60 width=110 frameborder=0 scrolling = no>
+<iframe id="F13" name="Frame13" src="clique.html?version=46" style="position:absolute; top:0px; left:0px; background-color: #ffffff;" height=60 width=110 frameborder=0 scrolling = no>
 </iframe></div>
 </div>
 

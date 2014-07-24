@@ -8,37 +8,15 @@
 <script type="text/javascript" src="oGram17.js"></script>
 <script type="text/javascript" src="boutons17.js"></script>
 
+<link rel="stylesheet" type="text/css" href="oGramM1.css">
+
 <style type="text/css"> 
 
-table {
-  table-layout:fixed;
-  left : 0px;
-}
-
-body {
- font-family: "Comic Sans MS", sans-serif;
-}
-
-
-
-div.bordnoir {
- position: absolute;
- top: 0px; left: 0px;
- height: 720px; width: 1280px;
- background-color: #666666;
- z-index: 0;}
- 
- div.bordvert{
- position: absolute;
- top: 10px; left: 100px;
- height: 700px; width: 1080px;
- background-color: #00bb00;
- z-index: 1;}
 
 div.textinput {
  position: absolute;
- top: 290px; left: 50px;
- height: 70px; width: 980px;
+ top: 265px; left: 50px;
+ height: 70px; width: 880px;
  background-color: #00ff00;
  z-index: 2;}
 
@@ -48,38 +26,14 @@ div.bouton {
  text-align:center;
  background-color: #00ff00;
  z-index: 2;}
- #verticalContainerG {
-   position:absolute;
-   top:330px;
-   width:700px;
-   left:-325px;
-   height:40px;
-    -webkit-transform: rotate(270deg);
-    -moz-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    z-index: 5;
-}
- #verticalContainerD {
-   position:absolute;
-   top:330px;
-   width:700px;
-   left:705px;
-   height:40px;
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
-    z-index: 5;
-}
+ 
 
 
 </style>
 <script language=javascript>
 
 $(window).load(function(){
+  parent.ajusteVert();
   init();
 });
 
@@ -89,7 +43,7 @@ $(window).load(function(){
 <body>
 
 <div class = "bordnoir">
-<div class = "bordvert">
+<div class = "bordvert vert1">
 <div id='verticalContainerG'>
 <div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
 </div>
@@ -100,17 +54,18 @@ $(window).load(function(){
  <div Id ="titre" style="font-size:24px;vertical-align:middle;text-align:center"></div>
 </div>
 
-
-<div class="textinput">
+<div class="zoneCentrale vert2" id="bordBlanc">
+<div Id="phraseDiv" class="textinput vert1">
   <div Id ="phrase" style="position:absolute; top:13px; left:20px; font-size:30px;"> ></div>
 </div>
 
 
-<div Id="bCorrect" class='bouton' style="font-size:26px;position:absolute;top:440px;left:360px;width:130px;" onclick = "javascript:validerOK();"  type="button">Correct</div>
-<div Id="bIncorrect" class='bouton' style="font-size:26px;position:absolute;top:440px;left:590px;width:130px;" onclick = "javascript:validerKO();"  type="button">Incorrect</div>
+<div Id="bCorrect" class='bouton vert1' style="font-size:26px;position:absolute;top:440px;left:295px;width:130px;" onclick = "javascript:validerOK();"  type="button">Correct</div>
+<div Id="bIncorrect" class='bouton vert1' style="font-size:26px;position:absolute;top:440px;left:555px;width:130px;" onclick = "javascript:validerKO();"  type="button">Incorrect</div>
 
 <img id="pointerimg" style="visibility:hidden;position:absolute;top:710px;left:500px;z-index:20;" SRC="fing5_nw.gif" />
 
+</div>
 </div>
 </div>
 

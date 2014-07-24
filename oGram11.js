@@ -15,8 +15,7 @@ var gIgnoreClick = false;
 var gInfoCompl = false;
 
 function init() {
-  //console.log("init frame11");
-  //parent.ajusteVert();
+  //console.log("init 11");
   var pc = parent.corpus;
   var pcd = pc.corData;
   pc.iData = 0;
@@ -54,7 +53,6 @@ function init() {
   }
     //myframes = window.frames;
     //myframes[3].document.getElementById('Sp').innerHTML = "1234567890123456789012345678901234567890";
-
 }
 
 function diffusePhrase() {
@@ -97,31 +95,17 @@ function continuer() {
   if ($('.hidden',frames[0].document).length) {
     $('.hidden:first',frames[0].document).show();
     $('.hidden:first',frames[0].document).removeClass("hidden");
-    if ($('.hidden',frames[0].document).length == 0) {
-      document.getElementById("Bcontinuer").innerHTML = 'Quitter';
-      if (!gInfoCompl) document.getElementById("BinfoCompl").style.visibility = 'visible';
-    }
+    if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
   } else {
     parent.ba.init();
-    parent.og.location = 'menu.html?version=45';
+    parent.og.location = 'menu.html?version=46';
     
   }
-  //$('body',frames['Resume2'].document).scrollTop(3000);
-  $('body',frames['Resume2'].document).animate({ scrollTop: 3000 }, 500);
-  //frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
- 
+  $('body',frames['Resume2'].document).scrollTop(3000);
   //frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
 }
-function infoCompl() {
-  myframes = window.frames;
-  gInfoCompl = true;
-  document.getElementById("Resume2").style.visibility='hidden';
-  $('#Resume2').attr("src", "infoComplP1A1.html?version=45");
-  document.getElementById("Bcontinuer").innerHTML = 'Continuer';
-  document.getElementById("BinfoCompl").style.visibility='hidden';
-  $('#Resume2').load(initResume);
-  
-}
+
+
 function clear_all() {
   //frames = document.getElementsByTagName("IFRAME");
   myframes = window.frames;
@@ -160,12 +144,13 @@ function auSuivant() {
     } else {
         var nEx = pc.corData.length;
         var nOk = nEx - gNbRate;
-        alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
+        parent.boutons.pageResultats(nOk, nEx);
+        //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
         if (nOk == nEx && parent.ba.serie > 1) alert("Vous pouvez, si vous le voulez, passer à l'activité suivante.");
         //alert("fini")};
         
         
-        if (parent.ba.serie == 4)  parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=45";
+        if (parent.ba.serie == 4)  parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=46";
         else setTimeout(parent.boutons.showMenu,2000);
     }
   } 

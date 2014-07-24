@@ -56,7 +56,9 @@ var audioType = "";
 var gNbSerieOk = 0;
 var audioElement;
 
-
+var vertStatus = 1;
+var menuBg = '#00ff00';
+var menuFg = '#00bb00';
 
 function wait (ms,pstart) {
   var start = pstart || new Date().getTime();
@@ -83,15 +85,23 @@ function html5_audio(){
   }
 
   //console.log(audioType);
-  audioElement.setAttribute('autoplay', 'autoplay');
+  audioElement.setAttribute('autoplay', 'true');
 
-  audioElement.addEventListener("load", function() {
-    //console.log('sound loaded');
-    setTimeout(audioElement.play,400);
-    }, true);
+  //audioElement.addEventListener("loadedmetadata", function() {
+  //  console.log('sound meta loaded');
+    //setTimeout(audioElement.play,400);
+  //  setTimeout(audioElement.play(),2000);
+  //  }, true);
 
-  
+  audioElement.addEventListener("loadedmetadata", function(e) {
+    console.log('sound loaded ' + audioElement.duration);
+
+    //setTimeout(audioElement.play(),2000);
+    
+    audioElement.play();
+    });
   //console.log(audioType);
+  //play_sound("silence");
   play_sound("silence");
 }
 
@@ -193,7 +203,7 @@ function corpusInit2() {
   } else {
     if (ba.activity==2 || ba.activity==4 || ba.activity==6 ) og.location = "frame" +  ba.program + ba.activity + ".html?version=45";
     else {
-      ba.titre =  "GN " + ba.activity + '- '+ ba.activites[ba.activity][0];
+      ba.titre =  "GN " + ba.activity + ' - '+ ba.activites[ba.activity][0];
       //console.log(ba.titre);
       og.location = "startPage" + ba.program + ".html?version=45";
       
@@ -278,7 +288,7 @@ function registerV6Click(ligne) {
 
 function play_sound(url){
   if(audioType != ""){
-    //console.log('audioType ' + audioType + ' Play ' + url);
+    console.log('audioType ' + audioType + ' Play ' + url);
     audioElement.setAttribute('src', url + "." + audioType);
     audioElement.load();
   }else{
@@ -303,7 +313,36 @@ function enableBouton(bName,img) {
    //console.log(bName);
    boutons.document.getElementById(bName).src = img;
    boutons.document.getElementById(bName).disabled = true;
- }  
+ }
+ 
+ function ajusteVert() {
+  var vert1 =  '#00ff00';
+  var vert2 =  '#00bb00';
+  //console.log("ajuste " + parent.vertStatus);
+  if (vertStatus == 1) {
+    menuFg = vert1;
+    menuBg = vert2;
+    $(".vert1",frames[1].document).each(function(){
+      this.style.backgroundColor = vert1; 
+    });
+    $(".vert2",frames[1].document).each(function(){
+      this.style.backgroundColor = vert2; 
+    });
+  } else {
+    menuFg = vert2;
+    menuBg = vert1;
+    $(".vert1",frames[1].document).each(function(){
+      //console.log("vert1 color avant " + this.style.backgroundColor);
+      //console.log("vertId " + this.id);
+      this.style.backgroundColor = vert2;
+      //console.log("vert1 color après " + this.style.backgroundColor);
+    });
+    $(".vert2",frames[1].document).each(function(){
+      this.style.backgroundColor = vert1; 
+    });
+  }
+}
+ 
 //-->
 
 </script>
@@ -317,7 +356,7 @@ function enableBouton(bName,img) {
 <iframe name="og" src="menu.html?version=45" style="position:absolute; top:0px; left:0px; background-color: #666666;" height=760 width=1280 frameborder=0 scrolling = no>
 </iframe>    
     
-<iframe name="ba" src="banner.html?version=45" style="position:absolute; top:0px; left:0px; z-index:10; background-color: #666666;" height=600 width=100 frameborder=0 scrolling = no>
+<iframe name="ba" src="banner.html?version=45" style="position:absolute; top:0px; left:0px; z-index:10; background-color: #666666;" height=700 width=100 frameborder=0 scrolling = no>
 </iframe>    
 
 <iframe name="boutons" src="boutons.html?version=45" style="position:absolute; top:10px; left:1180px; z-index:10; background-color: #666666;" height=700 width=100 frameborder=0 scrolling = no>

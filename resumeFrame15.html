@@ -5,13 +5,11 @@
 <title>Orthographe grammaticale</title>
 <script type="text/javascript" src="jquery.js"></script>
 
-<script type="text/javascript" src="oGram15.js?version=45"></script>
+<script type="text/javascript" src="oGram15.js?version=46"></script>
+
+<link rel="stylesheet" type="text/css" href="oGramM1.css">
 
 <style type="text/css"> 
-
-body {
- font-family: "Comic Sans MS", sans-serif;
-}
 
 div.resume{
  position: absolute;
@@ -20,57 +18,20 @@ div.resume{
  background-color: #999999;
  z-index: 10;}
  
- div.bordnoir {
- position: absolute;
- top: 0px; left: 0px;
- height: 760px; width: 1280px;
- background-color: #000000;
- z-index: 0;}
- 
- div.bordvert{
- position: absolute;
- top: 30px; left: 100px;
- height: 700px; width: 1080px;
- background-color: #00bb00;
- z-index: 1;}
- #verticalContainerG {
-   position:absolute;
-   top:330px;
-   width:700px;
-   left:-325px;
-   height:40px;
-    -webkit-transform: rotate(270deg);
-    -moz-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    z-index: 5;
-}
- #verticalContainerD {
-   position:absolute;
-   top:330px;
-   width:700px;
-   left:705px;
-   height:40px;
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
-    z-index: 5;
-}
+
 
 </style>
 
 <script type="text/javascript">
 
 function initLocal() {
-  //console.log("init resumeFrame 5");
+  parent.ajusteVert();
+  //console.log("init resumeFrame");
   myFrames = window.frames;
 
   $('p',myFrames['Resume2'].document).addClass('hidden');
   $('tr',myFrames['Resume2'].document).addClass('hidden');
-  $('td p',myFrames['Resume2'].document).removeClass('hidden');
+  $('tr p',myFrames['Resume2'].document).removeClass('hidden');
   document.getElementById("titre").innerHTML = parent.ba.titre;
   document.getElementById("module").innerHTML = parent.ba.module;
   $('.hidden',myFrames['Resume2'].document).hide();
@@ -86,9 +47,9 @@ function initLocal() {
 </head>
 <body onLoad="javascript:initLocal();">
 <div class = "bordnoir">
-<div class = "bordvert">
+<div class = "bordvert vert1">
 <div class="resume" id="Resume" style="visibility:hidden">
-<iframe id="Resume2" name="Resume2" src="resumeP1A5.html?version=45" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=494 width=974 frameborder=0 scrolling = yes>
+<iframe id="Resume2" name="Resume2" src="resumeP1A5.html?version=46" style="position:absolute; top:3px; left:3px; background-color: #ffffff;" height=494 width=974 frameborder=0 scrolling = yes>
 </iframe>
 <button Id="Bcontinuer" style="position:absolute; top:530px; left:440px; z-index: 20; width:100px" onclick = "javascript:continuer();"  type="button">Continuer</button>
 </div>

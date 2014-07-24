@@ -131,7 +131,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=45';
+      parent.og.location = 'menu.html?version=46';
       
     }
  
@@ -174,8 +174,8 @@ function auSuivant() {
       } else {
         var nEx = pc.corData.length;
         var nOk = nEx - gNbRate;
-        
-        alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
+        parent.boutons.pageResultats(nOk, nEx);
+        //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
       }
       setTimeout(parent.boutons.showMenu,4000);
         

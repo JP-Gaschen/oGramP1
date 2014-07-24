@@ -20,7 +20,8 @@ var gMot;
 var gsavedPhrase;
 var gPhrase;
 var gChars = [[]];
-var gGrise = '#00bb00';
+var gGrise = '#dddddd';
+
 
 
 
@@ -121,8 +122,8 @@ function init() {
   parent.og.document.getElementById("titre").innerHTML =  parent.ba.titre;
   parent.og.document.getElementById("module").innerHTML =  parent.ba.module;
   
-  document.getElementById("Nouveau").style.backgroundColor=gGrise;
-  document.getElementById("Ancien").style.backgroundColor='#00ff00';
+  document.getElementById("Nouveau").style.backgroundColor=parent.vertFg;
+  document.getElementById("Ancien").style.backgroundColor=parent.vertBg;
   
   
   $('#phrase').keydown(function (e) {
@@ -260,7 +261,7 @@ function rediffusePhrase () {
     if (j > jMot ) phraseApres += "<span>" + mots[j] + "</span>";
   }
   if (phraseAvant != '') phraseAvant += ' ';
-  gPhrase = phraseAvant + "<span id='nnn' contentEditable='false' style='color:#00ff00;'>" + pcd[i][1] +"</span>" + phraseApres;
+  gPhrase = phraseAvant + "<span id='nnn' contentEditable='false' style='color:"+parent.menuFg+";'>" + pcd[i][1] +"</span>" + phraseApres;
   //gPhrase = phraseAvant + "<span id='nnn'>" + pcd[i][1] +"</span>" + phraseApres;
   //console.log(phraseTxt);
   //console.log(gPhrase);
@@ -286,7 +287,7 @@ function rediffusePhrase () {
   nouv.style.left = '' + leftOffset + 'px';
   nouv.innerHTML = pcd[i][1].replace(/-/,"");
   nouv.style.visibility = 'hidden';
-  nouv.style.backgroundColor=gGrise;
+  nouv.style.backgroundColor=parent.menuFg;
   nouv.style.lineHeight = '34px';
   
 
@@ -295,8 +296,9 @@ function rediffusePhrase () {
   anc.innerHTML = mots[pcd[i][2]-1].replace(/-/,"");
   if (mots[pcd[i][2]-1] == "s'") anc.innerHTML += " " + mots[pcd[i][2]];
   anc.style.visibility = 'hidden';
-  anc.style.backgroundColor='#00ff00';
-  setTimeout(function() {anime()},1000);
+  anc.style.backgroundColor=parent.menuFg; // essai
+  if (i == 0 || pcd[i-1].length == 1) setTimeout(function() {anime()},3000);
+  else setTimeout(function() {anime()},1000);
 }
 function anime() {
   var pc = parent.corpus;
@@ -305,7 +307,7 @@ function anime() {
   var i = parent.ranData(pc.iData);
   
   var mot = document.getElementById('s'+(pcd[i][2]-1));
-  mot.style.color='#00ff00';
+  mot.style.color=parent.menuFg;
   if (mot.innerHTML.length > pcd[i][1].length) {
     mot.innerHTML= pcd[i][1] + mot.innerHTML.substring(pcd[i][1].length);
   //console.log(mot.innerHTML);
@@ -327,12 +329,13 @@ function move() {
   var pcd = pc.corData;
   var nouv = document.getElementById('Nouveau');
   nouv.style.visibility = 'visible';
-  nouv.style.top = '' + (167 + gNmove) + 'px';
+  nouv.style.top = '' + (142 + gNmove) + 'px';
   var anc = document.getElementById('Ancien');
   anc.style.visibility = 'visible';
   anc.style.top = '' + (306 + gNmove) + 'px';
   gNmove += 1;
   if (gNmove == 40) ajuste();
+  if (gNmove == 120) nouv.style.backgroundColor = parent.menuBg;
   if (gNmove > 140) {
     window.clearInterval(gIntervalId);
     //nouv.style.visibility = 'hidden';
@@ -340,7 +343,7 @@ function move() {
     gMot.style.color = '#000000';
     document.getElementById("Nouveau").innerHTML = pcd[parent.ranData(pc.iData)][1];
     //console.log("'" + document.getElementById("Nouveau").innerHTML + "'");
-    document.getElementById("Nouveau").style.backgroundColor=gGrise;
+    document.getElementById("Nouveau").style.backgroundColor=parent.menuBg;
     //document.getElementById("Nouveau").style.visibility='hidden';
   //console.log(document.getElementById('phrase').innerHTML);
   //console.log($('#phrase').text());
@@ -398,7 +401,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=45';
+      parent.og.location = 'menu.html?version=46';
       
     }
  
@@ -410,11 +413,11 @@ function continuer() {
 
 function auSuivant() {
 
-//console.log('Au suivant');
+  
   document.getElementById('phrase').innerHTML = "";
   var pc = parent.corpus;
   var pcd = pc.corData;
-  //console.log("Au suivant og... " + pc.iData );
+  //console.log('Au suivant ' + pc.iData + ' ' + pcd[pc.iData].length );
   
 
   if ((pc.iData+2) % 4 == 0) {
@@ -447,7 +450,8 @@ function auSuivant() {
         var nOk = nEx - gNbRate;
         document.getElementById("Ancien").style.visibility = 'hidden';
         document.getElementById("Nouveau").style.visibility = 'hidden';
-        alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
+        parent.boutons.pageResultats(nOk, nEx);
+        //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
       }
       setTimeout(parent.boutons.showMenu,4000);
         
@@ -482,7 +486,7 @@ function startDemo(){
   var mots =$('#phrase').text().split(' ');
   var phraseTxt = '';
   for (var j=0; j<mots.length; j++)  {
-    if (j == pcd[pc.iData][2] - 1) phraseTxt += "<span id='s"+j+"' style='background-color:" + gGrise + ";' >"+ mots[j]+ "</span>";
+    if (j == pcd[pc.iData][2] - 1) phraseTxt += "<span id='s"+j+"' style='background-color:" + parent.menuFg + ";' >"+ mots[j]+ "</span>";
     else phraseTxt += "<span id='s"+j+"' >"+ mots[j]+ "</span>";
     if (j < mots.length - 1) phraseTxt += ' ';
   }

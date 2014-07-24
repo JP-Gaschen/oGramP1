@@ -71,12 +71,12 @@ function showCarres (n1,n2) {
     $(this).css("backgroundColor","#ffffff");
     var ind = 1 + $(".exercice").index(this);
     if (ind <= n1) {
-      var top = 50 + ind*25;
+      var top = 60 + (ind-1)*25;
       $(this).css("top","" + top + "px");
       var leftPos = 30;
       $(this).css("left","" + leftPos + "px");
     } else  if (ind <= n1 + n2){
-      var top = 50 + (ind-n1)*25;
+      var top = 60 + (ind-n1-1)*25;
       $(this).css("top","" + top + "px");
       
       var leftPos = 60;
@@ -86,6 +86,10 @@ function showCarres (n1,n2) {
     
   });
   
+}
+
+function information () {
+  console.log("Information tbi");
 }
   </script>
   </head>
@@ -132,6 +136,6 @@ function showCarres (n1,n2) {
   <div class="exercice" id = "c38"></div>
   <div class="exercice" id = "c39"></div>
   <div class="exercice" id = "c40"></div>
-
+<img  src='informationC.gif' width=60 height=60 alt='Information' title='Information' Id="Binformation" style="position:absolute; top:590px; right:20px; z-index:20;"  onclick = "javascript:information();"  >
   </body>
 </html>

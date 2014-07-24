@@ -9,7 +9,7 @@ function valider() {
   var id = "c" + (pc.iData - (gPhase - 1)*pc.nPhase1 + 1);
   var program = parent.ba.program;
   var activity = parent.ba.activity;
-  ////console.log("valider gNbMotsOk " + parent.og.gNbMotsOk.toString());
+  //console.log("valider gNbMotsOk " + gNbMotsOk + " " + gNbErrors + " " + gNbMotsKo );
   ////console.log("valider nmots " + pcd[pc.iData].length.toString());
   //if (gNbMotsOk ==  pcd[parent.ranData(pc.iData)].length - 1 && gNbMotsKo == 0) {
   

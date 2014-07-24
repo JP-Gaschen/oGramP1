@@ -9,7 +9,8 @@ var gPlay_html5_audio = false;
 var gIntervalId;
 var gNglide;
 var gNbRate = 0;
-var gPhase = 1;
+var gPhase = 1
+var gLeftPos = 21;
 
 var gIgnoreClick = false;
 var gInnerHtmlSaved = [[]];
@@ -21,12 +22,12 @@ var gAffTxt = [[]];
 var gSavedAffTxt = [[]];
 var sp = ["","s","p"];
 
-
-
+var gSuffixStyle = "position:absolute;font-size:18px;height:24px;line-height:18px;text-align:center;width:36px;background-color:#00ff00;";
+var gPrefixStyle = "position:absolute;font-size:18px;height:24px;line-height:18px;";
 
 function cligne(obj,n,cmd) {
   gCligne = 0;
-  //alert("cligne n" + n);
+  //console.log("cligne n" + n + "  " + obj);
   window.setTimeout(function() {hideCligne(obj,n,cmd)},gCligneDelay);
 }
 function hideCligne(obj,n,cmd) {
@@ -71,6 +72,7 @@ function init() {
     gNbPhrasesOk = 0;
     gNbMotsOk = 0;
     gNbMotsKo = 0;
+    gLeftPos = 42;
   
   //top.moveTo(0,0); 
   //top.resizeTo(1280,800); 
@@ -104,6 +106,7 @@ function init() {
     gNbMotsOk = 0;
     gNbMotsKo = 0;
     gPhase = 2;
+    gLeftPos = 21;
     parent.corpus.iData = parent.corpus.nPhase1;
     parent.corpus.jData = 0;
     gDemoFrame = null;
@@ -256,7 +259,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=45';
+      parent.og.location = 'menu.html?version=46';
       
     }
  
@@ -286,6 +289,7 @@ function auSuivant() {
   gNbMotsKo = 0;
   if (gPhase == 1 && ((parent.isDemo && pc.iData < pc.corData.length) || pc.iData < pc.nPhase1)) {
     //console.log("auSuivant 1");
+
     pc.jData = 0;
     diffusePhrase();
     
@@ -302,9 +306,10 @@ function auSuivant() {
       parent.disableBouton('Bvalider','validerD.gif');
       var nEx = pc.corData.length - pc.nPhase1;
       var nOk = nEx - gNbRate;
-      alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
-      if (parent.ba.serie == 8)parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=45";
-    else setTimeout(parent.boutons.showMenu,2000);
+      parent.boutons.pageResultats(nOk, nEx);
+      //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
+      if (parent.ba.serie == 8)parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=46";
+    else setTimeout(parent.boutons.showMenu,4000);
   } else {
     //console.log("auSuivant 4");  // fin de phase 1
     if (parent.isDemo) {
@@ -368,7 +373,7 @@ function montreTxt2(m) {
 }
 
 function addSuffix(m,n) {
-  //alert("addSuffix  m " + m + " n " + n );
+  //console.log("addSuffix  m " + m + " n " + n );
   //var t = txt.split("<br>");
   var serie = parent.ba.serie;
   var pref;
@@ -377,11 +382,12 @@ function addSuffix(m,n) {
   var suf = spSuffix[serie][m];
   
 
-  //var newTxt = gAbstractions0[m] + "<div>";
-  var newTxt = "<div>";
+  var newTxt = gAbstractions0[m];
+  frames[m].document.getElementById('Sp').innerHTML = newTxt;
+  var newTxt = "";
 
   for (var i=0; i<t.length - 1; i++) {
-    var topPos = 24*i + (serie-1) * 24;
+    var topPos = 25*i;
     if (suf == "") {
       pref = t[i];
       tSuf="&nbsp";
@@ -390,70 +396,66 @@ function addSuffix(m,n) {
       pref = t[i].substring(0,indSuf);
       tSuf = suf;
     }
-    var w=frames[m].txtSize2(pref,20);
+    var w=frames[m].txtSize2(pref,18);
     //console.log(w);
     var IdP = "Pref"+(i+1);
     var IdS = "Suff"+(i+1);
-    if (i <= n){
+    var txt1 = "<span Id='" + IdP + "' class='prefix' style='" + gPrefixStyle + "left:1px;'>" + pref + "</span>";
+
+    var txt2 = "<span Id='" + IdS + "' class='suffix' style='" + gSuffixStyle + "left:"+(w+3)+"px;'>" + tSuf + "</span>";
     
-    tbl = "<table Id='" + IdP + "' style='position:absolute;top:"+topPos+"px;left:1px;vertical-align:middle'><tr style='height:20px;font-size:20px;'><td >" + pref + "</td></tr></table>\
-           <table Id='" + IdS + "' style='position:absolute;top:"+topPos+"px;left:"+(w+1)+"px;vertical-align:middle'><tr style='height:20px;font-size:20px;'><td class='suffix' style='width:31px; background:#00ff00;text-align:center'>" + tSuf +"</td></tr></table>";
-    ////console.log(tbl);
-    } else {
-      tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle'><tr><td>" + t[i] + "</td></tr></table>";
-    }
-    
-    newTxt += "<span style='line-height:20px;font-size:20px;'>"  + tbl + "</span>";
+    newTxt += "<div style='height:25px;position:absolute;top:"+topPos+"px;'>" + txt1 + txt2 + "</div>";
     
   }
-  newTxt +=  "</div>";
-  ////console.log(newTxt);
-  frames[m].document.getElementById('Sp').innerHTML = newTxt;
-  $("td.suffix",frames[m].document).each(function(){
-    this.style.backgroundColor = "#00ff00"; 
-  });
+  //newTxt +=  "</div>";
+  //console.log(newTxt);
+  
+  frames[m].document.getElementById('Sub').innerHTML = newTxt;
+  //console.log(frames[m].document.getElementById('Sub').innerHTML);
+  
+  
+
+  //alert("wait");
   if (n < t.length -2) { 
     //setTimeout(function() {addSuffix(m,n+1,t)},gPhase2Delay);
-  } else if (m == 0) {
+  } else {
+    if (m == 0) {
         //txt2 = frames[1].document.getElementById('Sp').innerHTML;
         setTimeout (function() {addSuffix(1,0);}, gPhase2Delay);
         setTimeout (function() {addSuffix(1,1);}, gPhase2Delay);
         setTimeout (function() {addSuffix(1,2);}, gPhase2Delay);
         setTimeout (function() {addSuffix(1,3);}, gPhase2Delay);
-  } else if (gAffTxt[1][0] == "") {   // ligne 8
-    setTimeout (function() {cligneMots(1,0);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,1);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,2);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,3);},gPhase2Delay); 
-  } else {
-    setTimeout (function() {cligneMots(0,0);},gPhase2Delay);
-    setTimeout (function() {cligneMots(0,1);},gPhase2Delay);
-    setTimeout (function() {cligneMots(0,2);},gPhase2Delay);
-    setTimeout (function() {cligneMots(0,3);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,0);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,1);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,2);},gPhase2Delay);
-    setTimeout (function() {cligneMots(1,3);},gPhase2Delay);
+    }
+    if (m == 1){
+      setTimeout (function() {cligneMots(0,0);},gPhase2Delay);
+      setTimeout (function() {cligneMots(0,1);},gPhase2Delay);
+      setTimeout (function() {cligneMots(0,2);},gPhase2Delay);
+      setTimeout (function() {cligneMots(0,3);},gPhase2Delay);
+      setTimeout (function() {cligneMots(1,0);},gPhase2Delay);
+      setTimeout (function() {cligneMots(1,1);},gPhase2Delay);
+      setTimeout (function() {cligneMots(1,2);},gPhase2Delay);
+      setTimeout (function() {cligneMots(1,3);},gPhase2Delay);
+    }
   }
 }
 function cligneMots(m,n){
   var IdP = 'Pref' + (n+1);
+  //console.log("Cligne Idp " + IdP + " m " + m + " n " + n); 
   var obj=frames[m].document.getElementById(IdP);
   cmd = "removeMots2(" + m + "," + n + ");";
   //alert(cmd);
   cligne(obj,3,cmd);
 }
 function removeMots2(m,n){
+  var t = gAffTxt[1][m].split(",");
   var IdP = 'Pref' + (n+1);
   var IdS = "Suff"+(n+1);
   frames[m].document.getElementById(IdP).style.visibility = 'hidden';
-  frames[m].animate2(IdS);
 
-  if (gAffTxt[1][0] == "") {
-      setTimeout (function() {collapse(1,0);},gPhase2Delay);  // ligne 8
-  } else {
-      setTimeout (function() {collapse(0,0);},gPhase2Delay);
-      setTimeout (function() {collapse(1,0);},gPhase2Delay);
+  frames[m].animate2(IdS,(gLeftPos));
+
+  if (n == t.length -2 ) {
+      setTimeout (function() {collapse(m,0);},gPhase2Delay);
   }
   
 }
@@ -461,17 +463,22 @@ function removeMots2(m,n){
 
 function collapse(m,n) {
   var serie = parent.ba.serie;
+  var pc = parent.corpus;
   var tSuf;
   var t = gAffTxt[1][m].split(",");
   var suf = spSuffix[serie][m];
   var newTxt = gAbstractions0[m];
   var Id = "";
   var col2Txt = "";
+  var tbl;
+  //console.log("Collapse  m " + m + " n " + n); 
+  frames[m].document.getElementById('Sp').innerHTML = newTxt;
+  newTxt = "";
 
   
   for (var i=0; i<t.length - 1 - n; i++) {
   
-    var topPos = 24*i + (serie - 1)* 24;
+    var tPos = 25*i;
     Id = "Li"+(i+1);
 
     if (suf == "") {
@@ -479,29 +486,31 @@ function collapse(m,n) {
     } else {
       tSuf = suf;
     }
+    //var zi = 10;  z-index:"+zi+"
+    tbl = "<span  style='position:absolute;left:"+(gLeftPos)+"px;text-align:center;' class='suffix'>" + tSuf +"</span>";
     
-    col2Txt += "<table Id='" + Id + "' style='position:absolute;top:"+topPos+"px;left:40px;vertical-align:middle'><tr><td  class='suffix' style='width:31px; background:#00ff00;text-align:center;line-height:20px;font-size:20px;'>" + tSuf +"</td></tr></table>";
-    
-    
+    newTxt += "<div Id='" + Id + "' style='position:absolute;height:25px;top:" + tPos + "px;'>" + tbl + "</div>";
     
   }
-  newTxt += "<div>";
   
-  newTxt += "<span style='width:31px;line-height:24px;'>" + col2Txt + "</span>";
-  newTxt += "</div>";
-  ////console.log(newTxt);
-  
-  frames[m].document.getElementById('Sp').innerHTML = newTxt;
-  $("td.suffix",frames[m].document).each(function(){
-
+  //console.log(newTxt);
+  //console.log(Id);
+  frames[m].document.getElementById('Sub').innerHTML = newTxt;
+  $("span.suffix",frames[m].document).each(function(){
+    this.style.fontSize = '18px';
+    this.style.width = '36px';
+    this.style.height = '24px';
+    this.style.lineHeight = '18px';
     this.style.backgroundColor = "#00ff00"; 
   });
-  if (n < t.length -2) { 
-    frames[m].animate1(Id,2000);
+  if (n < t.length -2) {
+    frames[m].animate1(Id,25,1000);
     setTimeout(function() {collapse(m,n+1);},gPhase2Delay);
   } else if (m == 1) {
-
-    setTimeout(parent.boutons.showMenu,2000);
+      var nEx = pc.corData.length - pc.nPhase1;
+      var nOk = nEx - gNbRate;
+      parent.boutons.pageResultats(nOk, nEx);
+      setTimeout(parent.boutons.showMenu,4000);
     
   }
   
@@ -510,25 +519,28 @@ function collapse(m,n) {
 function montreAbstractions0(m,n) {
   //console.log("montreAbstractions0 m " + m);
   //if (m == 0 && n == 1) clear_all();
-  var newTxt = "<div class='abstractions' style='visibility:hidden;margin-left:25px; margin-right:auto;line-height: 20px;'><span style='width:31px; font-size:20px;text-align:center;vertical-align:middle;'>";
+
+  var newTxt = "<div class='abstractions' style='visibility:visible;margin-left:"+gLeftPos+"px; margin-right:auto;'>"
+
   for (var i=1; i <= n; i++) {
+    var tPos = 1 + (i-1)* 25;
    //alert("i="+i + " " + t[i]);
    suf = spSuffix[i][m];
    if (suf == "") {suf="&nbsp"}
    
-    //tbl = "<table style='vertical-align:middle;'><tr><td id='" + m + "'' class='suffix' style='width:31px;border: 1px solid #000;text-align:center'>" + suf +"</td></tr></table>";
-    tbl = "<table><tr><td id='" + m + "' class='suffix' style='width:31px;'>" + suf +"</td></tr></table>";
-  // tbl = "<table width='12px' height='12px' style='border: 1px solid #000;background:#00ff00'><tr><td style='width:12px;align:center'>" + suf +"</td></tr></table>";
-   if (suf != " ") {newTxt += "<span> " + tbl + " </span>";}
+    var txt = "<span id='" + m + "' class='suffix' style='" + gSuffixStyle + "'>" + suf +"</span>";
+   
+   if (suf != " ") {newTxt += "<div style='position:absolute;top:"+tPos+"px;'>" + txt + "</div>";}
   }
-  newTxt += "</span></div>";
+
+  
+  var tPos = 1 + n * 25;
+  newTxt += "</div><div Id='Sub' style='position:absolute;top:"+tPos+"px;'></div>" ;
   //console.log(newTxt);
   gAbstractions0[m] = newTxt;
+  
   frames[m].document.getElementById('Sp').innerHTML = newTxt;
-  $("td.suffix",frames[m].document).each(function(){
-
-    this.style.backgroundColor = "#00ff00"; 
-  });
+  
 
 }
 
@@ -546,7 +558,7 @@ function process_click_global(w){
   //console.log('clique ' + window.name);
   var cl = parseInt(w.name.substring(5));
   var c2 = w.name.substring(6);
-  
+  var serie = parent.ba.serie;
   //console.log(" " + cl + c2);
   if (gPhase == 2 && cl == 1) {return;}  // click2 pour les noms
   //var w1 = window.parent;
@@ -572,10 +584,11 @@ function process_click_global(w){
       //console.log(txt5);
       
 
-      var txt = txt5.split(" ")[j];
+      var txt = txt5.split(" ")[j]; 
       //console.log( w.document.getElementById('Sp').innerHTML);
-      var tbl = "<table  style='vertical-align:middle'><tr><td>" + txt + "</td></tr></table>";
-      var newTxt = "<div><span style='line-height:20px;font-size:20px;'>"  + tbl + "</span></div>";
+      var tbl = "<span style='line-height:18px;font-size:18px;height:25px'>" + txt + "</span>";
+      //var newTxt = "<div><span style='line-height:20px;font-size:20px;'>"  + tbl + "</span></div>";
+       var newTxt = "<div style='height:25px;'>"  + tbl + "</div>";
       //var newTxt = "<span style='line-height:16px;'>, "  + txt + "</span>";
       //console.log(newTxt);
       if (gPhase==2) document.getElementById('phrase').innerHTML += txt + " ";
@@ -583,7 +596,7 @@ function process_click_global(w){
         ////console.log(" " + exp1 + " " + exp2 + " " + txt);
         if (exp1 == 1) {  // nom
           if (gAffTxt[1][exp2-1].indexOf(txt+",") < 0) {
-            if (gPhase == 1) w.document.getElementById('Sp').innerHTML += newTxt;
+            if (gPhase == 1) w.document.getElementById('Sub').innerHTML += newTxt;
             
             gAffTxt[1][exp2-1] += txt + ",";
           }

@@ -10,6 +10,8 @@ var gIntervalId;
 var gNglide;
 var gNbRate = 0;
 var gPhase = 1;
+var gLeftPos = 15;
+
 var gIgnoreClick = false;
 var gAffTxt = [[]];
 var gSavedAffTxt = [[]];
@@ -29,6 +31,10 @@ var spmf = ["","ms","fs","mp","fp"];
 
 var gSuffixTd;
 var gDemoLigne;
+
+var gSuffixStyle = "position:absolute;font-size:22px;height:31px;line-height:24px;text-align:center;width:36px;background-color:#cc60ff;";
+var gPrefixStyle = "position:absolute;font-size:22px;height:31px;line-height:24px;";
+
 
 function cligne(obj,n,cmd) {
   gCligne = 0;
@@ -77,6 +83,7 @@ function init() {
     gNbPhrasesOk = 0;
     gNbMotsOk = 0;
     gNbMotsKo = 0;
+    gLeftPos = 42;
   
   //top.moveTo(0,0); 
   //top.resizeTo(1280,800); 
@@ -134,6 +141,7 @@ function init() {
     parent.corpus.iData = parent.corpus.nPhase1;
     parent.corpus.jData = 0;
     gDemoFrame = null;
+    gLeftPos = 15;
     
     montreAbstractions01(0);
     montreAbstractions01(1);
@@ -271,7 +279,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=45';
+      parent.og.location = 'menu.html?version=46';
      
     }
  
@@ -357,6 +365,7 @@ function auSuivant() {
   gNbMotsOk = 0;
   if (gPhase == 1 && ((parent.isDemo && pc.iData < pc.corData.length) || pc.iData < pc.nPhase1)) {
   ////console.log("auSuivant 1");
+
     pc.jData = 0;
     diffusePhrase();
     
@@ -374,9 +383,10 @@ function auSuivant() {
     
     var nEx = pc.corData.length - pc.nPhase1;
     var nOk = nEx - gNbRate;
-    alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
-    if (parent.ba.serie == 6) parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=45";
-    else setTimeout(parent.boutons.showMenu,2000);
+    parent.boutons.pageResultats(nOk, nEx);
+    //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
+    if (parent.ba.serie == 6) parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=46";
+    else setTimeout(parent.boutons.showMenu,4000);
   } else {
       ////console.log("auSuivant 4");  // fin de phase 1
       if (parent.isDemo) {
@@ -404,7 +414,7 @@ function auSuivant() {
 
 function addSuffix(m,n) {
   
-  //alert("addSuffix  m " + m + " n " + n );
+  //console.log("addSuffix  m " + m + " n " + n );
   //var t = txt.split("<br>");
   var serie = parent.ba.serie;
   var pref;
@@ -413,10 +423,11 @@ function addSuffix(m,n) {
   var suf = spmfSuffix03[serie][m];
   
 
-  var newTxt = gAbstractions03[m] + "<div>";
-
+  var newTxt = gAbstractions03[m];
+  frames[m+7].document.getElementById('Sp').innerHTML = newTxt;
+  var newTxt = "";
   for (var i=0; i<t.length - 1; i++) {
-    var topPos = 24*i + (serie-1) * 24;
+    var topPos = 33*i;
     if (suf == "") {
       pref = t[i];
       tSuf="&nbsp";
@@ -425,27 +436,18 @@ function addSuffix(m,n) {
       pref = t[i].substring(0,indSuf);
       tSuf = suf;
     }
-    var w=frames[m+7].txtSize2(pref,20);
+    var w=frames[m+7].txtSize2(pref,22);
     var IdP = "Pref"+(i+1);
     var IdS = "Suff"+(i+1);
-    if (i <= n){
+    var txt1 = "<span Id='" + IdP + "' class='prefix' style='" + gPrefixStyle + "left:1px;'>" + pref + "</span>";
+
+    var txt2 = "<span Id='" + IdS + "' class='suffix' style='" + gSuffixStyle + "left:"+(w+3)+"px;'>" + tSuf + "</span>";
     
-    tbl = "<table Id='" + IdP + "' style='position:absolute;top:"+topPos+"px;left:1px;vertical-align:middle'><tr style='height:20px;font-size:20px;'><td >" + pref + "</td></tr></table>\
-           <table Id='" + IdS + "' style='position:absolute;top:"+topPos+"px;left:"+(w+1)+"px;vertical-align:middle'><tr style='height:20px;font-size:20px;'><td class='suffix' style='width:31px;background:#cc60ff;text-align:center'>" + tSuf +"</td></tr></table>";
-    ////console.log(tbl);
-    } else {
-      tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle'><tr><td>" + t[i] + "</td></tr></table>";
-    }
-    
-    newTxt += "<span style='line-height:20px;'>"  + tbl + "</span>";
-    
-  }
-  newTxt +=  "</div>";
+    newTxt += "<div style='height:33px;position:absolute;top:"+topPos+"px;'>" + txt1 + txt2 + "</div>";
+  } 
+
   ////console.log(newTxt);
-  frames[m+7].document.getElementById('Sp').innerHTML = newTxt;
-  $("td.suffix",frames[m+7].document).each(function(){
-    this.style.backgroundColor = "#cc60ff"; 
-  });
+  frames[m+7].document.getElementById('Sub').innerHTML = newTxt;
 
   if (n == 0) {  //if (n < t.length -2) { 
     //setTimeout(function() {addSuffix(m,1,t)},gPhase2Delay);
@@ -478,7 +480,7 @@ function addSuffix(m,n) {
   }
 }
 function cligneMots(m,n){
-  //console.log("m " + m + " n " + n);
+  //console.log("cligne m " + m + " n " + n);
   Id = 'Pref' + (n+1);
   var obj=frames[m+7].document.getElementById(Id);
   cmd = "removeMots2(" + m + "," + n + ");";
@@ -490,7 +492,7 @@ function removeMots2(m,n){
   var IdP = "Pref"+(n+1);
   var IdS = "Suff"+(n+1);
   frames[m+7].document.getElementById(IdP).style.visibility = 'hidden';
-  frames[m+7].animate2(IdS);
+  frames[m+7].animate2(IdS,(gLeftPos));
   //if (m < 3 ) {
    //   setTimeout (function() {cligneMots(m+1,n);}, gPhase2Delay);
   // }// else if (n == 3) {
@@ -506,6 +508,7 @@ function removeMots2(m,n){
 
 
 function collapse(m,n) {
+  //console.log("collapse m " + m + " n " + n);
   var serie = parent.ba.serie;
   var tSuf;
   var t = gAffTxt[3][m].split(",");
@@ -513,12 +516,15 @@ function collapse(m,n) {
   var newTxt = gAbstractions03[m];
   var Id = "";
   var col2Txt = "";
+  var pc = parent.corpus;
 
+  frames[m+7].document.getElementById('Sp').innerHTML = newTxt;
+  newTxt = "";
   //console.log("collapse(" + m + "," + n + ");");
   
   for (var i=0; i<t.length - 1 - n; i++) {
   
-    var topPos = 24*i + (serie - 1)* 24;
+    var tPos = 33*i;
     Id = "Li"+(i+1);
 
     if (suf == "") {
@@ -526,26 +532,26 @@ function collapse(m,n) {
     } else {
       tSuf = suf;
     }
+     var txt = "<span id='" + m + "' class='suffix' style='" + gSuffixStyle + "left:"+(gLeftPos)+"px;'>" + suf +"</span>";
+    //tbl = "<span  style='position:absolute;left:"+(gLeftPos)+"px;text-align:center;' class='suffix'>" + tSuf +"</span>";
     
-    col2Txt += "<table Id='" + Id + "' style='position:absolute;top:"+topPos+"px;left:40px;vertical-align:middle'><tr><td  class='suffix' style='width:31px; background:#cc60ff;text-align:center;line-height:20px;'>" + tSuf +"</td></tr></table>";    
+    newTxt += "<div Id='" + Id + "' style='position:absolute;height:33px;top:" + tPos + "px;'>" + txt + "</div>";
     
     
   }
-  newTxt += "<div>";
   
-  newTxt += "<span style='width:31px;line-height:24px;'>" + col2Txt + "</span>";
-  newTxt += "</div>";
   ////console.log(newTxt);
   
-  frames[m+7].document.getElementById('Sp').innerHTML = newTxt;
-  $("td.suffix",frames[m+7].document).each(function(){
-    this.style.backgroundColor = "#cc60ff"; 
-  });
+  frames[m+7].document.getElementById('Sub').innerHTML = newTxt;
+  
   if (n < t.length -2) {
-    frames[m+7].animate1(Id,2000);
+    frames[m+7].animate1(Id,34,2000);
     setTimeout(function() {collapse(m,n+1);},gPhase2Delay);
     } else if (m == 3) {
-      setTimeout(parent.boutons.showMenu,2000);
+      var nEx = pc.corData.length - pc.nPhase1;
+      var nOk = nEx - gNbRate;
+      parent.boutons.pageResultats(nOk, nEx);
+      setTimeout(parent.boutons.showMenu,4000);
     }
   
 
@@ -554,25 +560,28 @@ function collapse(m,n) {
 function montreAbstractions01(m) {
   //console.log("montreAbstractions0 m " + m);
   //if (m == 0 && n == 1) clear_all();
-  var newTxt = "<div class='abstractions' style='visibility:hidden;margin-left:25px; margin-right:auto;line-height: 20px'><span style='width:31px; font-size:20px;text-align:center;vertical-align:middle;'>";
+  var newTxt = "<div class='abstractions' style='visibility:hidden;margin-left:21px; margin-right:auto;'>"
+
   for (var i=1; i < spSuffix01.length; i++) {
    //alert("i="+i + " " + t[i]);
+   var tPos = 1 + (i-1)* 33;
    suf = spSuffix01[i][m];
    if (suf == "") {suf="&nbsp"}
    
     //tbl = "<table style='vertical-align:middle;'><tr><td id='" + m + "'' class='suffix' style='width:31px;border: 1px solid #000;text-align:center'>" + suf +"</td></tr></table>";
-    tbl = "<table><tr><td id='" + m + "' class='suffix' style='width:31px;'>" + suf +"</td></tr></table>";
-  // tbl = "<table width='12px' height='12px' style='border: 1px solid #000;background:#00ff00'><tr><td style='width:12px;align:center'>" + suf +"</td></tr></table>";
-   if (suf != " ") {newTxt += "<span> " + tbl + " </span>";}
+   var txt = "<span id='" + m + "' class='suffix' style='" + gSuffixStyle + "'>" + suf +"</span>";
+   
+   if (suf != " ") {newTxt += "<div style='position:absolute;top:"+tPos+"px;'>" + txt + "</div>";}
   }
-  newTxt += "</span></div>";
+  newTxt += "</div>";
+  
   //console.log(newTxt);
   gAbstractions01[m] = newTxt;
-  frames[m].document.getElementById('Sp').innerHTML = newTxt;
-  $("td.suffix",frames[m].document).each(function(){
+  //console.log(newTxt);
 
-    this.style.backgroundColor = "#00ff00"; 
-  });
+  frames[m].document.getElementById('Sp').innerHTML = newTxt;
+  
+  
 
 }
 
@@ -585,26 +594,26 @@ function montreAbstractions03(m,n) {
   //alert("montreAbstractions03");
   //if (m == 0 && n == 1) clear_all();
   var serie = parent.ba.serie;
-  var margin = 39;
-  if (gPhase == 2)  margin = 19;
-  var newTxt = "<div class='abstractions' style='visibility:visible;margin-left:" + margin + "px; margin-right:auto;line-height: 20px;'><span style='width:31px;font-size:20px;text-align:center;vertical-align:middle;'>";
+
+  var newTxt = "<div class='abstractions' style='visibility:hidden;margin-left:" + gLeftPos + "px; margin-right:auto;'>"
   for (var i=1; i <= n; i++) {
    //alert("i="+i + " " + t[i]);
+   var tPos = 1 + 33*(i-1);
    suf = spmfSuffix03[i][m];
    if (suf == "") {suf="&nbsp"}
    
-    tbl = "<table><tr><td id='" + m + "' class='suffix' style='width:31px;text-align:center'>" + suf +"</td></tr></table>";
-  // tbl = "<table width='12px' height='12px' style='border: 1px solid #000;background:#00ff00'><tr><td style='width:12px;align:center'>" + suf +"</td></tr></table>";
-   if (suf != " ") {newTxt += "<span> " + tbl + " </span>";}
+    var txt = "<span id='" + m + "' class='suffix' style='" + gSuffixStyle + "'>" + suf +"</span>";
+   
+   if (suf != " ") {newTxt += "<div style='position:absolute;top:"+tPos+"px;'>" + txt + "</div>";}
+    
   }
-  newTxt += "</span></div>"
+
+  var tPos = 1 + n * 33;
+  newTxt += "</div><div Id='Sub' style='position:absolute;top:"+tPos+"px;'></div>" ;
   ////console.log(newTxt);
   gAbstractions03[m] = newTxt;
   frames[m+7].document.getElementById('Sp').innerHTML = newTxt;
-  $("td.suffix",frames[m+7].document).each(function(){
-    this.style.backgroundColor = "#cc60ff"; 
-  });
-
+  
 }
 
 
@@ -622,7 +631,7 @@ function process_click_global(w){
   
   if (gPhase == 2 && cl == 1) {return;}  // click2 pour les noms
   if (gPhase == 2 && cl == 3) {return;}  // click2 pour les adjectifs
- //console.log("process_click_global " + cl + c2);
+  //console.log("process_click_global " + cl + c2);
   
   //var w1 = window.parent;
   //var top = w1.parent;
@@ -637,7 +646,7 @@ function process_click_global(w){
     var exp1 =  pcd[i][j+1][0];
     var exp2 =  pcd[i][j+1][1];
     if (cl == exp1 && (c2.length == 1 && c2 == sp[exp2] || (c2.length == 2 && c2 == spmf[exp2]))) {
-      
+
       gNbMotsOk += 1;
       var txt1 = pcd[i][0];
       var txt2 = txt1.replace(/,/g,"");
@@ -649,8 +658,8 @@ function process_click_global(w){
 
       var txt = txt5.split(" ")[j];
       //alert (txt);
-      var tbl = "<table  style='vertical-align:middle'><tr><td>" + txt + "</td></tr></table>";
-      var newTxt = "<div><span style='line-height:20px;font-size:20px;'>"  + tbl + "</span></div>";
+      var tbl = "<span style='line-height:22px;font-size:22px;height:33px'>" + txt + "</span>";
+      var newTxt = "<div style='height:33px;'>"  + tbl + "</div>";
       document.getElementById('phrase').innerHTML += txt + " ";
       if (gPhase == 1) {
         ////console.log(" " + exp1 + " " + exp2 + " " + txt);
@@ -663,11 +672,11 @@ function process_click_global(w){
         }
         if (exp1 == 3) {  // exp1 = 3 : adjectifs
           if (gAffTxt[3][exp2-1].indexOf(txt+",") < 0) {
-            adjOldText = w.document.getElementById('Sp').innerHTML;
+            adjOldText = w.document.getElementById('Sub').innerHTML;
             adjWindow = w;
             adjInd = exp2 - 1;
-            w.document.getElementById('Sp').innerHTML += newTxt;
-            adjFullText[adjInd] = w.document.getElementById('Sp').innerHTML;
+            w.document.getElementById('Sub').innerHTML += newTxt;
+            adjFullText[adjInd] = w.document.getElementById('Sub').innerHTML;
             //if (parent.ba.serie > 1 || gAffTxt[3][exp2-1] != "" )
             //  setTimeout(function(){
             //  w.document.getElementById('Sp').innerHTML = oldText;
@@ -697,8 +706,9 @@ function process_click_global(w){
       gNbMotsKo += 1;
       
     }
-  } else  gNbMotsKo += 1;
-
+  } else  {
+    gNbMotsKo += 1;
+  }
   //window.setTimeout(clearBGC,400);
 }
 

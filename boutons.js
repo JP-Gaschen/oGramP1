@@ -1,9 +1,10 @@
 
 var menuLevel = 0;
-function init() {
-  //console.log("init boutons");
-  
 
+function init() {
+  //console.log("init boutons level " + menuLevel);
+  
+   if (menuLevel > 0) menuLevel = menuLevel - 1;
    if (menuLevel == 0) parent.disableBouton('displayMenu','menuD.gif');
    else parent.enableBouton('displayMenu','menuC.gif');
   
@@ -20,14 +21,34 @@ function init() {
   });
  
 }
+
+function pageResultats (n1, n2) {
+  
+  var txt = "<div class='vert2' style='position:absolute; left:0px; width:980px; height:600px;'>";
+  txt += "<div class='vert1' style='position:absolute; left:50px; top:200px;width:880px; height:200px;'>";
+  txt += "<div style='position:absolute;font-size:32px; top:20px;width:880px; text-align:center;'>Vous avez réussi " + n1 + " exercices sur " + n2 + " : " + n1 + "/" + n2 + "</div>";
+  txt += "<div style='position:absolute;font-size:32px; top:100px;width:880px; text-align:center;'>" + n1 + "/" + n2 + " correspond à " + Math.round(100*n1/n2) + " %</div>";
+  
+   txt += "</div>";
+  //console.log(txt);
+  //console.log(parent.ba.activity);
+  if (parent.ba.activity == 2 || parent.ba.activity == 4) {
+    parent.og.document.getElementById("phraseDiv").style.visibility = 'hidden';
+  }
+
+  parent.og.document.getElementById("bordBlanc").innerHTML = txt + '</div>';
+  parent.ajusteVert();
+}
+
 function showMenu() {
   //console.log("showMenu");
   init();
   //parent.ba.location.reload();
 
   parent.ba.hideCarres();
+  parent.ba.document.getElementById("Binformation").style.visibility = 'visible';
 
-  parent.og.location = 'menu.html?version=45';
+  parent.og.location = 'menu.html?version=46';
 }
 
 function displayResume() {

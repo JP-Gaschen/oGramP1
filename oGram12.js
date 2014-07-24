@@ -59,7 +59,6 @@ function showCligne(obj,n,cmd) {
 
 function init() {
   ////console.log("init og");
-  
   gPhase = parent.gPhase;
 
 
@@ -92,7 +91,7 @@ function init() {
      var mot = document.getElementById(id);
 
      var lefti = 50 + 220 * (i % 4);
-     var topi = 140 + 50 * parseInt(i/4);
+     var topi = 130 + 50 * parseInt(i/4);
      mot.style.left = "" + lefti+"px";
      mot.style.top = "" + topi+"px";
      mot.style.color = "#000000";
@@ -259,7 +258,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=45';
+      parent.og.location = 'menu.html?version=46';
     }
  
   frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
@@ -286,6 +285,7 @@ function auSuivant() {
   //if (pc.iData < pc.corData.length) {
   if (pc.kData < pc.corData.length) {
     //console.log("auSuivant 1");
+    //parent.boutons.pageResultats(4,5);
     pc.jData = 0;
     
     
@@ -303,8 +303,8 @@ function auSuivant() {
       } else {
         var nEx = 2*pc.corData.length;
         var nOk = nEx - gNbRate;
-        
-        alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
+        parent.boutons.pageResultats(nOk, nEx);
+        //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
       }
       setTimeout(parent.boutons.showMenu,4000);
         
