@@ -29,16 +29,17 @@ function initResume() {
   //console.log("init resumeFrame");
   myFrames = window.frames;
 
-  $('p',myFrames['Resume2'].document).addClass('hidden');
-  $('.hidden',myFrames['Resume2'].document).hide();
-  continuer();
-  
-  
-  document.getElementById("Resume").style.visibility='visible';
+  if (navigator.platform !== 'iPad') {
+    $('p',myFrames['Resume2'].document).addClass('hidden');
+    $('.hidden',myFrames['Resume2'].document).hide();
+    continuer();
+    document.getElementById("Resume").style.visibility='visible';
+    
+    myFrames['Resume2'].window.scrollTo(0,3000); //
+  }
   document.getElementById("Resume2").style.visibility='visible';
   document.getElementById("titre").innerHTML = parent.ba.titre;
   document.getElementById("module").innerHTML = parent.ba.module;
-  myFrames['Resume2'].window.scrollTo(0,3000); //
 }
 
 </script>
