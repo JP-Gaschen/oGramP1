@@ -36,10 +36,11 @@ function initLocal() {
     
     $('.hidden',myFrames['Resume2'].document).hide();
     continuer();
-    document.getElementById("Resume").style.visibility='visible';
+    //document.getElementById("Resume").style.visibility='visible';
     myFrames['Resume2'].window.scrollTo(0,3000); //
    
-  }
+  } else document.getElementById("Bcontinuer").style.visibility='hidden';
+  document.getElementById("Resume").style.visibility='visible';
   document.getElementById("Resume2").style.visibility='visible';
   
   document.getElementById("titre").innerHTML = parent.ba.titre;
