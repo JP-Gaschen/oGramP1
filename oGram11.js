@@ -30,7 +30,7 @@ function init() {
   parent.og.document.getElementById("module").innerHTML =  parent.ba.module;
   //top.moveTo(0,0); 
   //top.resizeTo(1280,800); 
-  
+ 
   
   clear_all();
   

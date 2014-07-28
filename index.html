@@ -92,7 +92,7 @@ function html5_audio(){
     //setTimeout(audioElement.play,400);
   //  setTimeout(audioElement.play(),2000);
   //  }, true);
-  alert("addEventListener");
+  //alert("addEventListener");
   audioElement.addEventListener("loadedmetadata", function(e) {
     alert('sound loaded ' + audioElement.duration);
 
@@ -289,7 +289,7 @@ function registerV6Click(ligne) {
 
 function play_sound(url){
   if(audioType != ""){
-    alert('audioType ' + audioType + ' Play ' + url);
+    //alert('audioType ' + audioType + ' Play ' + url);
     audioElement.setAttribute('src', url + "." + audioType);
     audioElement.load();
   }else{
