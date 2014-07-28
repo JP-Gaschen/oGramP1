@@ -94,7 +94,7 @@ function html5_audio(){
   //  }, true);
   //alert("addEventListener");
   audioElement.addEventListener("loadedmetadata", function(e) {
-    alert('sound loaded ' + audioElement.duration);
+    //alert('sound loaded ' + audioElement.duration);
 
     //setTimeout(audioElement.play(),2000);
     
@@ -102,7 +102,7 @@ function html5_audio(){
     });
   //console.log(audioType);
   //play_sound("silence");
-  play_sound("silence");
+  //play_sound("silence");
 }
 
 function init() {
@@ -343,36 +343,6 @@ function enableBouton(bName,img) {
     });
   }
 }
-
-
-function enableAudio(element, audio, onEnd){
-  var callback = false,
-      click    = false;
-
-  click = function(e){
-    var forceStop = function () {
-          audio.removeEventListener('play', forceStop, false);
-          audio.pause();
-          element.removeEventListener('touchstart', click, false);
-          if(onEnd) onEnd();
-        },
-        progress  = function () {
-          audio.removeEventListener('canplaythrough', progress, false);
-          if (callback) callback();
-        };
-
-    audio.addEventListener('play', forceStop, false);    audio.addEventListener('canplaythrough', progress, false);
-    try { 
-      audio.play();
-    } catch (e) {
-      callback = function () {        callback = false;
-        audio.play();
-      };
-    }
-  };
-  element.addEventListener('touchstart', click, false);
-}
-
 
 
 //-->

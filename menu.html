@@ -130,7 +130,7 @@ var series = [
 
 
 
- 
+var firstSound = true;
 // document.onclick = function (event) {
 //  var ev = event;
 //  menuClick(ev);
@@ -139,9 +139,13 @@ var series = [
 $(document).ready( function () {
   var activity = parent.ba.activity;
   document.onclick = (function(e) {
-  //alert("doc click"); 
-    parent.play_sound("silence");
+    //alert(firstSound); 
+    if (firstSound) {
+      parent.play_sound("silence");
+      firstSound = false;
+    }
   });
+  
   //console.log("menu document ready for activity " + activity + " level " + parent.boutons.menuLevel);
   if (activity > 0 && parent.boutons.menuLevel > 0) {
     parent.ba.activity = 0;
